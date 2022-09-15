@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">GroceryApp</string>
+    <string name="btn_create_account">Create Account</string>
+    <string name="lbl_already_have_acc">Already have an account?</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="lbl_first_name">First Name</string>
+    <string name="lbl_last_name">Last Name</string>
+    <string name="lbl_email">Email</string>
+    <string name="lbl_phone_nr">Phone Number</string>
+    <string name="lbl_password">Password</string>
+    <string name="lbl_password_again">Type password again</string>
+
 </resources>
