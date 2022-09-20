@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, navigate to main_view
-                        val intent = Intent(this,MainView::class.java)
+                        val intent = Intent(this,HomeActivity::class.java)
                         startActivity(intent)
 
                         Toast.makeText(baseContext, "Success", Toast.LENGTH_SHORT)

@@ -14,7 +14,10 @@
         android:theme="@style/Theme.GroceryApp"
         tools:targetApi="31">
         <activity
-            android:name=".MainView"
+            android:name=".StoresActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"

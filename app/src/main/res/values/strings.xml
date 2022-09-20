@@ -9,5 +9,6 @@
     <string name="lbl_phone_nr">Phone Number</string>
     <string name="lbl_password">Password</string>
     <string name="lbl_password_again">Type password again</string>
+    <string name="btn_stores">Stores</string>
 
 </resources>

@@ -56,7 +56,7 @@ class RegisterActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
 
-                    val intent = Intent(this,MainView::class.java)
+                    val intent = Intent(this,HomeActivity::class.java)
                     startActivity(intent)
 
                     Toast.makeText(baseContext, "Success",
