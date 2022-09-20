@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         private fun performLogin(){
             val email: EditText = findViewById(R.id.editTextTextEmailAddress)
-            val password: EditText = findViewById(R.id.editTextTextEmailAddress2)
+            val password: EditText = findViewById(R.id.editTextTextPassword)
 
             if(email.text.isEmpty() || password.text.isEmpty()){
                 Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
