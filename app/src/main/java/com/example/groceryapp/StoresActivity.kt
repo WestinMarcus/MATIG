@@ -5,7 +5,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ListView
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.ktx.firestore
 
@@ -19,6 +21,7 @@ class StoresActivity : AppCompatActivity() {
         val db = Firebase.firestore
         val storeList = mutableListOf<String>()
         val storeAdressList = mutableListOf<String>()
+        var arrayAdapter: ArrayAdapter<*>
 
         db.collection("store list").document("Butik info").collection("Coop")
             .get()
@@ -31,8 +34,12 @@ class StoresActivity : AppCompatActivity() {
 
                     Log.d(TAG, "${document.id} => ${document.data}")
                 }
+                var mListView = findViewById<ListView>(R.id.lvStores)
+                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
+                mListView.adapter = arrayAdapter
+
                 // print storeList
-                for((index, storeName) in storeList.withIndex())
+                /*for((index, storeName) in storeList.withIndex())
                 {
                     Log.i(TAG, "store at index: $index is $storeName")
                 }
@@ -40,11 +47,13 @@ class StoresActivity : AppCompatActivity() {
                 for((index, storeAdress) in storeAdressList.withIndex())
                 {
                     Log.i(TAG, "store at index: $index is $storeAdress")
-                }
+                }*/
+
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents.", exception)
             }
+
 
     }
 
