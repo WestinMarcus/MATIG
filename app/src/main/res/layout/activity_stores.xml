@@ -27,9 +27,7 @@
                 android:layout_weight="4"
                 android:padding="10sp"
                 android:text="column1"
-                android:textSize="20sp"
-
-                />
+                android:textSize="20sp"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -41,22 +39,12 @@
                 android:text="column2"
                 android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="4"
-                android:padding="10sp"
-                android:text="column3"
-                android:textSize="20sp" />
-
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -66,9 +54,7 @@
                 android:layout_weight="4"
                 android:padding="10sp"
                 android:text="r1c1"
-                android:textSize="20sp"
-
-                />
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -80,6 +66,12 @@
                 android:text="r1c2"
                 android:textSize="20sp" />
 
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -87,7 +79,17 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="4"
                 android:padding="10sp"
-                android:text="r1c3"
+                android:text="r2c1"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="4"
+                android:padding="10sp"
+                android:text="r2c2"
                 android:textSize="20sp" />
 
         </TableRow>
