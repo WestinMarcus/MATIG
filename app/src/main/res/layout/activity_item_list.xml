@@ -7,6 +7,7 @@
     tools:context=".ItemListActivity">
 
     <ListView
+        android:id="@+id/lvFoodItems"
         android:layout_width="410dp"
         android:layout_height="697dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,11 +24,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
