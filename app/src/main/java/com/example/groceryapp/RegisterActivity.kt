@@ -29,7 +29,7 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val registerButton: Button = findViewById(R.id.button4)
+        val registerButton: Button = findViewById(R.id.button)
 
         registerButton.setOnClickListener{
             performSignUp()
@@ -39,8 +39,8 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun performSignUp(){
-        val email = findViewById<EditText>(R.id.editTextTextPersonName3)
-        val password = findViewById<EditText>(R.id.editTextTextPassword)
+        val email = findViewById<EditText>(R.id.editTextTextEmailAddress3)
+        val password = findViewById<EditText>(R.id.editTextTextPassword2)
 
         if(email.text.isEmpty() || password.text.isEmpty()){
             Toast.makeText(this,"Please fill all fields", Toast.LENGTH_SHORT)
