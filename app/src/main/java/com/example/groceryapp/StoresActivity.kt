@@ -38,6 +38,7 @@ class StoresActivity : AppCompatActivity() {
                             for (document in result)
                             {
                                 storeList.add(document.id)
+
                                 storeAdressList.add(document.getString("Adress") ?: "default")
 
                                 Log.d(TAG, "${document.id} => ${document.data}")
@@ -55,7 +56,7 @@ class StoresActivity : AppCompatActivity() {
         mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectedStore = parent.getItemAtPosition(position)
             val intent = Intent(this, ItemListActivity::class.java)
-            intent.putExtra("arg", "$selectedStore")
+            intent.putExtra("store", "$selectedStore")
 
             startActivity(intent)
         }
