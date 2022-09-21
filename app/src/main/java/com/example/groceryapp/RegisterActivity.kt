@@ -3,10 +3,7 @@ package com.example.groceryapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -36,25 +33,31 @@ class RegisterActivity : AppCompatActivity() {
         registerButton.setOnClickListener{
             performSignUp()
         }
-
-
-
     }
 
     private fun performSignUp(){
         val db = Firebase.firestore
 
-        val email = findViewById<EditText>(R.id.editTextTextEmailAddress3)
-        val password = findViewById<EditText>(R.id.editTextTextPassword2)
+        var email = findViewById<EditText>(R.id.editTextTextEmailAddress3)
+        var password = findViewById<EditText>(R.id.editTextTextPassword2)
         var firstName = findViewById<EditText>(R.id.editTextTextEmailAddress4)
         var lastName = findViewById<EditText>(R.id.editTextTextEmailAddress5)
         var phoneNum = findViewById<EditText>(R.id.editTextPhone)
+        var dateOfBirth = findViewById<DatePicker>(R.id.datePicker)
+        var zipCode = findViewById<EditText>(R.id.editTextTextPostalAddress)
+        var adressField = findViewById<EditText>(R.id.adress)
+        var city = findViewById<EditText>(R.id.city)
 
-        val inputEmail = email.text.toString()
-        val inputPassword = password.text.toString()
+        var inputEmail = email.text.toString()
+        var inputPassword = password.text.toString()
         var inputFirstName = firstName.text.toString()
         var inputLastName = lastName.text.toString()
         var inputPhone = phoneNum.text.toString()
+        var inputDateOfBirth = dateOfBirth.toString()
+        var inputZipCode = zipCode.text.toString()
+        var inputAdress = adressField.text.toString()
+        var inputCity = city.text.toString()
+        
 
         if(email.text.isEmpty() || password.text.isEmpty()){
             Toast.makeText(this,"Please fill all fields", Toast.LENGTH_SHORT)
@@ -63,9 +66,13 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         val user1 = hashMapOf(
-            "firstName" to inputFirstName,
-            "last" to inputLastName,
-            "PhoneNumber" to inputPhone,
+            "First name" to inputFirstName,
+            "Last name" to inputLastName,
+            "Phone number" to inputPhone,
+            "Date of birth" to inputDateOfBirth,
+            "Zip Code" to inputZipCode,
+            "Adress" to inputAdress,
+            "City" to inputCity,
         )
 
         auth.createUserWithEmailAndPassword(inputEmail, inputPassword)
