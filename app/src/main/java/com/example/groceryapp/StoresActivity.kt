@@ -5,9 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
+import android.widget.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.ktx.firestore
 
@@ -37,6 +35,13 @@ class StoresActivity : AppCompatActivity() {
                 var mListView = findViewById<ListView>(R.id.lvStores)
                 arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
                 mListView.adapter = arrayAdapter
+                mListView.onItemClickListener = AdapterView.OnItemClickListener {
+                    parent, view, position, id ->
+                    val selectedItem = parent.getItemAtPosition(position)
+
+                    Toast.makeText(baseContext, "$selectedItem",
+                        Toast.LENGTH_SHORT).show()
+                }
 
                 // print storeList
                 /*for((index, storeName) in storeList.withIndex())
@@ -55,7 +60,7 @@ class StoresActivity : AppCompatActivity() {
             }
 
 
+        }
+
+
     }
-
-
-}
