@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.ktx.firestore
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -22,6 +23,7 @@ class RegisterActivity : AppCompatActivity() {
 
         // Initialize Firebase Auth
         auth = Firebase.auth
+
 
         val loginText: TextView = findViewById(R.id.LogInHere_now)
         loginText.setOnClickListener{
@@ -36,11 +38,23 @@ class RegisterActivity : AppCompatActivity() {
         }
 
 
+
     }
 
     private fun performSignUp(){
+        val db = Firebase.firestore
+
         val email = findViewById<EditText>(R.id.editTextTextEmailAddress3)
         val password = findViewById<EditText>(R.id.editTextTextPassword2)
+        var firstName = findViewById<EditText>(R.id.editTextTextEmailAddress4)
+        var lastName = findViewById<EditText>(R.id.editTextTextEmailAddress5)
+        var phoneNum = findViewById<EditText>(R.id.editTextPhone)
+
+        val inputEmail = email.text.toString()
+        val inputPassword = password.text.toString()
+        var inputFirstName = firstName.text.toString()
+        var inputLastName = lastName.text.toString()
+        var inputPhone = phoneNum.text.toString()
 
         if(email.text.isEmpty() || password.text.isEmpty()){
             Toast.makeText(this,"Please fill all fields", Toast.LENGTH_SHORT)
@@ -48,14 +62,23 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        val inputEmail = email.text.toString()
-        val inputPassword = password.text.toString()
+        val user1 = hashMapOf(
+            "firstName" to inputFirstName,
+            "last" to inputLastName,
+            "PhoneNumber" to inputPhone,
+        )
 
         auth.createUserWithEmailAndPassword(inputEmail, inputPassword)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
 
+                    db.collection("users") //Koppla userId
+                        .add(user1)
+                        .addOnSuccessListener {
+                        }
+                        .addOnFailureListener {
+                        }
+                    // Sign in success, update UI with the signed-in user's information
                     val intent = Intent(this,HomeActivity::class.java)
                     startActivity(intent)
 
