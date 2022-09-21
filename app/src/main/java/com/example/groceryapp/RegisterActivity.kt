@@ -55,12 +55,13 @@ class RegisterActivity : AppCompatActivity() {
         var inputFirstName = firstName.text.toString()
         var inputLastName = lastName.text.toString()
         var inputPhone = phoneNum.text.toString()
+        var inputDateOfBirth: String? = null
 
         val today = Calendar.getInstance()
-        var inputDateOfBirth = dateOfBirth.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH))
+        dateOfBirth.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH))
         { view, year, month, day ->
             val month = month + 1
-            val msg = "You Selected: $day/$month/$year"
+            inputDateOfBirth = ": $day/$month/$year"
         }
 
         var inputZipCode = zipCode.text.toString()
