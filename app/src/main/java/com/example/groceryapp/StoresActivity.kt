@@ -17,50 +17,54 @@ class StoresActivity : AppCompatActivity() {
         //-------------------------------------------------
         //adds new users collection with new document containing a user
         val db = Firebase.firestore
+        val storeChainList = mutableListOf<String>()
         val storeList = mutableListOf<String>()
         val storeAdressList = mutableListOf<String>()
+
         var arrayAdapter: ArrayAdapter<*>
+        val mListView = findViewById<ListView>(R.id.lvStores)
 
-        db.collection("store list").document("Butik info").collection("Coop")
+        db.collection("Store chains")
             .get()
-            // result gets all documents in collection
-            .addOnSuccessListener { result ->
-                for (document in result)
-                {
-                    storeList.add(document.id)
-                    storeAdressList.add(document.getString("Adress") ?: "default")
-
-                    Log.d(TAG, "${document.id} => ${document.data}")
+            .addOnSuccessListener { chainList ->
+                for (document in chainList) {
+                    storeChainList.add(document.id)
                 }
-                var mListView = findViewById<ListView>(R.id.lvStores)
-                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
-                mListView.adapter = arrayAdapter
-                mListView.onItemClickListener = AdapterView.OnItemClickListener {
-                    parent, view, position, id ->
-                    val selectedItem = parent.getItemAtPosition(position)
-
-                    Toast.makeText(baseContext, "$selectedItem",
-                        Toast.LENGTH_SHORT).show()
-                }
-
-                // print storeList
-                /*for((index, storeName) in storeList.withIndex())
+                for(chainName in storeChainList)
                 {
-                    Log.i(TAG, "store at index: $index is $storeName")
+                    db.collection("store list").document("Butik info").collection("$chainName")
+                        .get()
+                        .addOnSuccessListener { result ->
+                            for (document in result)
+                            {
+                                storeList.add(document.id)
+                                storeAdressList.add(document.getString("Adress") ?: "default")
+
+                                Log.d(TAG, "${document.id} => ${document.data}")
+                            }
+                            arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
+                            mListView.adapter = arrayAdapter
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.w(TAG, "Error getting documents.", exception)
+                        }
                 }
-
-                for((index, storeAdress) in storeAdressList.withIndex())
-                {
-                    Log.i(TAG, "store at index: $index is $storeAdress")
-                }*/
-
             }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
-            }
+            .addOnFailureListener { }
 
+        mListView.onItemClickListener = AdapterView.OnItemClickListener {
+                parent, view, position, id ->
+            val selectedItem = parent.getItemAtPosition(position)
 
+        Toast.makeText(baseContext, "$selectedItem",
+            Toast.LENGTH_SHORT).show()
         }
 
-
     }
+
+
+}
+/*for((index, storeName) in storeList.withIndex())
+{
+    Log.i(TAG, "index: $index is $storeName")
+}*/
