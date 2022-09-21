@@ -52,13 +52,14 @@ class StoresActivity : AppCompatActivity() {
             }
             .addOnFailureListener { }
 
-        mListView.onItemClickListener = AdapterView.OnItemClickListener {
-                parent, view, position, id ->
-            val selectedItem = parent.getItemAtPosition(position)
+        mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            val selectedStore = parent.getItemAtPosition(position)
+            val intent = Intent(this, ItemListActivity::class.java)
+            intent.putExtra("arg", "$selectedStore")
 
-        Toast.makeText(baseContext, "$selectedItem",
-            Toast.LENGTH_SHORT).show()
+            startActivity(intent)
         }
+
 
     }
 
