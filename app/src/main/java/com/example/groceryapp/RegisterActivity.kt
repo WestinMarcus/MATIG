@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.ktx.firestore
+import java.util.*
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -48,12 +49,20 @@ class RegisterActivity : AppCompatActivity() {
         var adressField = findViewById<EditText>(R.id.adress)
         var city = findViewById<EditText>(R.id.city)
 
+
         var inputEmail = email.text.toString()
         var inputPassword = password.text.toString()
         var inputFirstName = firstName.text.toString()
         var inputLastName = lastName.text.toString()
         var inputPhone = phoneNum.text.toString()
-        var inputDateOfBirth = dateOfBirth.toString()
+
+        val today = Calendar.getInstance()
+        var inputDateOfBirth = dateOfBirth.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH))
+        { view, year, month, day ->
+            val month = month + 1
+            val msg = "You Selected: $day/$month/$year"
+        }
+
         var inputZipCode = zipCode.text.toString()
         var inputAdress = adressField.text.toString()
         var inputCity = city.text.toString()
