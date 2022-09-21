@@ -19,6 +19,7 @@ class StoresActivity : AppCompatActivity() {
         val db = Firebase.firestore
 
         // Create a new user with a first and last name
+        /*
         val user1 = hashMapOf(
             "first" to "Ada",
             "last" to "Lovelace",
@@ -30,7 +31,7 @@ class StoresActivity : AppCompatActivity() {
             "last" to "Turing",
             "born" to 1912
         )
-        /*
+
         // Add a new document with a generated ID
         db.collection("users")
             .add(user2)
