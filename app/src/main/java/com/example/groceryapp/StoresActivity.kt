@@ -58,13 +58,10 @@ class StoresActivity : AppCompatActivity() {
             val intent = Intent(this, ItemListActivity::class.java)
             intent.putExtra("store", "$selectedStore")
 
+
             startActivity(intent)
         }
-
-
     }
-
-
 }
 /*for((index, storeName) in storeList.withIndex())
 {
