@@ -13,7 +13,7 @@
         android:layout_height="43dp"
         android:ems="10"
         android:hint="@string/lbl_password"
-        android:inputType="textEmailAddress"
+        android:inputType="textPassword"
         android:textColorHint="#E1DBDB"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
