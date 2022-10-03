@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -32,8 +33,8 @@ class MainActivity : AppCompatActivity() {
 
         loginButton.setOnClickListener {
            performLogin()
-           //val intent = Intent(this, HomeActivity::class.java)
-           //startActivity(intent)
+            //val intent = Intent(this, HomeActivity::class.java)
+            //startActivity(intent)
         }
 
     }
@@ -71,4 +72,21 @@ class MainActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT).show()
                 }
         }
+
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        updateUI(currentUser)
+    }
+
+    private fun updateUI(user: FirebaseUser?) {
+        if (user != null) {
+            // Signed in
+            val intent = Intent(this,HomeActivity::class.java)
+            startActivity(intent)
+        } else {
+        }
+    }
+
 }
