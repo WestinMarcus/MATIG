@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
+
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,10 +13,18 @@ class HomeActivity : AppCompatActivity() {
 
 
         val storesBtn = findViewById(R.id.btnStores) as Button
+        //val userBtn = findViewById(R.id.userProfile) as Button
 
         storesBtn.setOnClickListener {
             val intent = Intent(this, StoresActivity::class.java)
             startActivity(intent)
         }
+
+            /*
+        userBtn.setOnClickListener {
+            val intent = Intent(this, UserProfileActivity::class.java)
+            startActivity(intent)
+        }
+            */
     }
 }
