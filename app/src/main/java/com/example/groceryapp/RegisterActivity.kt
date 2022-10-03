@@ -75,7 +75,7 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        val user1 = hashMapOf(
+        val user = hashMapOf(
             "First name" to inputFirstName,
             "Last name" to inputLastName,
             "Phone number" to inputPhone,
@@ -89,12 +89,17 @@ class RegisterActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
 
+                    val currentUser = Firebase.auth.currentUser
+                    val userid = currentUser?.uid
+
                     db.collection("users") //Koppla userId
-                        .add(user1)
+                        .document("$userid")
+                        .set(user)
                         .addOnSuccessListener {
                         }
                         .addOnFailureListener {
                         }
+
                     // Sign in success, update UI with the signed-in user's information
                     val intent = Intent(this,HomeActivity::class.java)
                     startActivity(intent)
@@ -116,8 +121,5 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error occured ${it.localizedMessage}", Toast.LENGTH_SHORT)
                     .show()
             }
-
-
     }
-
 }

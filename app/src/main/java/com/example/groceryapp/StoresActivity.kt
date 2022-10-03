@@ -6,8 +6,11 @@ import android.content.Intent
 import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.os.IResultReceiver.Default
 import android.util.Log
 import android.widget.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.ktx.firestore
 import java.util.*
@@ -26,8 +29,12 @@ class StoresActivity : AppCompatActivity() {
         val mListView = findViewById<ListView>(R.id.lvStores)
 
         val coordinateList = mutableListOf<String>()
-        var tempCoord = ""
-        var coordinates = ""
+
+        val uAddress = getUserAddress()
+        Log.i(TAG, "Returned user address: $uAddress")
+
+        //val (userLat, userLong) = convertAddressToCoordinates(uAddress)
+        //Log.w(TAG, "User Lat, Long: $userLat, $userLong")
 
         db.collection("Store chains")
             .get()
@@ -37,23 +44,23 @@ class StoresActivity : AppCompatActivity() {
                 }
                 for(chainName in storeChainList)
                 {
-                    db.collection("store list").document("Butik info").collection("$chainName")
+                    db.collection("store list")
+                        .document("Butik info")
+                        .collection("$chainName")
                         .get()
                         .addOnSuccessListener { result ->
                             for (document in result)
                             {
                                 storeList.add(document.id)
                                 storeAdressList.add(document.getString("Adress") ?: "default")
-                                tempCoord = document.getString("Coordinates") ?: "default"
+                                val tempCoord = document.getString("Coordinates") ?: "default"
 
                                 if(tempCoord != "default")
                                 {
                                     coordinateList.add(tempCoord)
-
-                                    printAddressAndCoordinates(storeAdressList.last(), coordinateList.last())
-
-                                    val (lat, lng) = convertAddressToCoordinates(storeAdressList)
-                                    Log.w(TAG, "Converted Lat, Long: ${lat}, ${lng}")
+                                    Log.i(TAG, "Address: ${storeAdressList.last()}, coordinates: ${coordinateList.last()}")
+                                    val (storeLat, storeLong) = convertAddressToCoordinates(storeAdressList.last())
+                                    Log.i(TAG, "Store Lat, Long: ${storeLat}, ${storeLong}")
                                 }
                             }
 
@@ -72,30 +79,44 @@ class StoresActivity : AppCompatActivity() {
             val intent = Intent(this, ItemListActivity::class.java)
             intent.putExtra("store", "$selectedStore")
 
-
             startActivity(intent)
         }
-
-    }
-    fun printAddressAndCoordinates(storeAddress: String, coordinates: String)
-    {
-        Log.w(TAG, "Address: ${storeAddress}, coordinates: ${coordinates}")
     }
 
-    fun convertAddressToCoordinates(storeAddressList: List<String>): Pair<String, String>
+    private fun convertAddressToCoordinates(address: String): Pair<String, String>
     {
         val geocode = Geocoder(this, Locale.getDefault())
-        val addressList = geocode.getFromLocationName(storeAddressList.last(), 1)
+        val addressList = geocode.getFromLocationName(address, 1)
 
-        var lat = String.format("%.5f", addressList.get(0).latitude)
-        var lng = String.format("%.4f", addressList.get(0).longitude)
+        val lat = String.format("%.5f", addressList.get(0).latitude)
+        val long = String.format("%.4f", addressList.get(0).longitude)
 
         //Log.i(TAG, "Latitude: ${lat}, Longitude: ${lng}")
-        return Pair(lat, lng)
+        return Pair(lat, long)
+    }
+    fun getUserAddress(): String
+    {
+        Log.i(TAG, "Start of getUserAddress")
+        val user = Firebase.auth.currentUser
+        val uid = user?.uid
+        Log.i(TAG, "User id: ${uid}")
+
+        var userAddress = ""
+        val db = Firebase.firestore
+        db.collection("users").document("$uid")
+            .get()
+            .addOnSuccessListener { document ->
+                userAddress = document.getString("Adress") ?: "default"
+                Log.i(TAG, "userAddress: $userAddress")
+                Log.i(TAG, "Middle of getUserAddress, in SuccessListener")
+
+            }
+            .addOnFailureListener {
+                Log.i(TAG, "Error: FailureListener")
+            }
+
+        Log.i(TAG, "End of getUserAddress")
+        return userAddress
     }
 
 }
-/*for((index, storeName) in storeList.withIndex())
-{
-    Log.i(TAG, "index: $index is $storeName")
-}*/
