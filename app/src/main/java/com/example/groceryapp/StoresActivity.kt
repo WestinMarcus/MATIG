@@ -50,31 +50,33 @@ class StoresActivity : AppCompatActivity() {
         db.collection("Store chains")
             .get()
             .addOnSuccessListener { chainList ->
-                val (userLat, userLong) = convertAddressToCoordinates(userAddress)
-
                 for (document in chainList) {
                     storeChainList.add(document.id)
                 }
+
+                Log.w(TAG, "pre convertAddressToCoord")
+                val (userLat, userLong) = convertAddressToCoordinates(userAddress)
+                Log.w(TAG, "post convertAddressToCoord")
+
                 for(chainName in storeChainList)
                 {
                     db.collection("store list")
                         .document("Butik info")
-                        .collection(chainName)
+                        .collection("$chainName")
                         .get()
                         .addOnSuccessListener { result ->
                             for (document in result)
                             {
                                 storeList.add(document.id)
                                 storeAdressList.add(document.getString("Adress") ?: "default")
-                                val tempCoord = document.getString("Coordinates") ?: "default"
 
-                                if(tempCoord != "default")
-                                {
-                                    val (storeLat, storeLong) = convertAddressToCoordinates(storeAdressList.last())
-                                    val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
+                                // MAKE NEW LIST AND SAVE DISTANCE TO ALL STORES
 
-                                    Log.i(TAG, "Distance from user to ${storeList.last()}: $distance")
-                                }
+                                val (storeLat, storeLong) = convertAddressToCoordinates(storeAdressList.last())
+                                val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
+
+                                Log.i(TAG, "Distance from user to ${storeList.last()}: $distance")
+
                             }
                             arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
                             mListView.adapter = arrayAdapter
@@ -99,12 +101,12 @@ class StoresActivity : AppCompatActivity() {
     private fun calculateDistance(userCoord: Pair<String, String>, storeCoord: Pair<String, String>): Int
     {
         val startPoint = Location("User")
-        startPoint.setLatitude(userCoord.first.toDouble())
-        startPoint.setLongitude(userCoord.second.toDouble())
+        startPoint.latitude = userCoord.first.toDouble()
+        startPoint.longitude = userCoord.second.toDouble()
 
         val endPoint = Location("Store")
-        endPoint.setLatitude(storeCoord.first.toDouble())
-        endPoint.setLongitude(storeCoord.second.toDouble())
+        endPoint.latitude = storeCoord.first.toDouble()
+        endPoint.longitude = storeCoord.second.toDouble()
 
         val distance = startPoint.distanceTo(endPoint).toDouble()
 
