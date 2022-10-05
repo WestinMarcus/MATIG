@@ -1,19 +1,21 @@
 package com.example.groceryapp
 
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import android.location.Geocoder
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.os.IResultReceiver.Default
 import android.util.Log
 import android.widget.*
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.ktx.firestore
 import java.util.*
+import kotlinx.coroutines.*
+import kotlin.collections.List
+import kotlin.system.*
 
 class StoresActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,17 +30,28 @@ class StoresActivity : AppCompatActivity() {
         var arrayAdapter: ArrayAdapter<*>
         val mListView = findViewById<ListView>(R.id.lvStores)
 
-        val coordinateList = mutableListOf<String>()
+        val user = Firebase.auth.currentUser
+        val uid = user?.uid
+        var userAddress = ""
 
-        val uAddress = getUserAddress()
-        Log.i(TAG, "Returned user address: $uAddress")
-
-        //val (userLat, userLong) = convertAddressToCoordinates(uAddress)
-        //Log.w(TAG, "User Lat, Long: $userLat, $userLong")
+        runBlocking {
+            db.collection("users").document("$uid")
+                .get()
+                .addOnSuccessListener { document ->
+                    val uCity = document.getString("City") ?: "Default"
+                    userAddress = document.getString("Adress") ?: "Default"
+                    userAddress += ", $uCity"
+                }
+                .addOnFailureListener {
+                    Log.i(TAG, "FailureListener in block")
+                }
+        }
 
         db.collection("Store chains")
             .get()
             .addOnSuccessListener { chainList ->
+                val (userLat, userLong) = convertAddressToCoordinates(userAddress)
+
                 for (document in chainList) {
                     storeChainList.add(document.id)
                 }
@@ -46,7 +59,7 @@ class StoresActivity : AppCompatActivity() {
                 {
                     db.collection("store list")
                         .document("Butik info")
-                        .collection("$chainName")
+                        .collection(chainName)
                         .get()
                         .addOnSuccessListener { result ->
                             for (document in result)
@@ -57,23 +70,23 @@ class StoresActivity : AppCompatActivity() {
 
                                 if(tempCoord != "default")
                                 {
-                                    coordinateList.add(tempCoord)
-                                    Log.i(TAG, "Address: ${storeAdressList.last()}, coordinates: ${coordinateList.last()}")
                                     val (storeLat, storeLong) = convertAddressToCoordinates(storeAdressList.last())
-                                    Log.i(TAG, "Store Lat, Long: ${storeLat}, ${storeLong}")
+                                    val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
+
+                                    Log.i(TAG, "Distance from user to ${storeList.last()}: $distance")
                                 }
                             }
-
                             arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
                             mListView.adapter = arrayAdapter
                         }
                         .addOnFailureListener { exception ->
-                            Log.w(TAG, "Error getting documents.", exception)
+                            Log.e(TAG, "Error getting documents.", exception)
                         }
                 }
             }
-            .addOnFailureListener { }
-
+            .addOnFailureListener {
+                Log.e(TAG, "Error: FailureListener")
+            }
         mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectedStore = parent.getItemAtPosition(position)
             val intent = Intent(this, ItemListActivity::class.java)
@@ -83,40 +96,31 @@ class StoresActivity : AppCompatActivity() {
         }
     }
 
+    private fun calculateDistance(userCoord: Pair<String, String>, storeCoord: Pair<String, String>): Int
+    {
+        val startPoint = Location("User")
+        startPoint.setLatitude(userCoord.first.toDouble())
+        startPoint.setLongitude(userCoord.second.toDouble())
+
+        val endPoint = Location("Store")
+        endPoint.setLatitude(storeCoord.first.toDouble())
+        endPoint.setLongitude(storeCoord.second.toDouble())
+
+        val distance = startPoint.distanceTo(endPoint).toDouble()
+
+        return distance.toInt()
+    }
+
     private fun convertAddressToCoordinates(address: String): Pair<String, String>
     {
         val geocode = Geocoder(this, Locale.getDefault())
         val addressList = geocode.getFromLocationName(address, 1)
 
-        val lat = String.format("%.5f", addressList.get(0).latitude)
-        val long = String.format("%.4f", addressList.get(0).longitude)
+        val lat = String.format("%.5f", addressList.first().latitude)
+        val long = String.format("%.4f", addressList.first().longitude)
 
-        //Log.i(TAG, "Latitude: ${lat}, Longitude: ${lng}")
         return Pair(lat, long)
-    }
-    fun getUserAddress(): String
-    {
-        Log.i(TAG, "Start of getUserAddress")
-        val user = Firebase.auth.currentUser
-        val uid = user?.uid
-        Log.i(TAG, "User id: ${uid}")
-
-        var userAddress = ""
-        val db = Firebase.firestore
-        db.collection("users").document("$uid")
-            .get()
-            .addOnSuccessListener { document ->
-                userAddress = document.getString("Adress") ?: "default"
-                Log.i(TAG, "userAddress: $userAddress")
-                Log.i(TAG, "Middle of getUserAddress, in SuccessListener")
-
-            }
-            .addOnFailureListener {
-                Log.i(TAG, "Error: FailureListener")
-            }
-
-        Log.i(TAG, "End of getUserAddress")
-        return userAddress
     }
 
 }
+
