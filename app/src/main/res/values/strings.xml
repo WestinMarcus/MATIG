@@ -29,5 +29,7 @@
     <string name="firstname_lastname">Firstname Lastname</string>
     <string name="Pass">******</string>
     <string name="sign_out">Sign Out</string>
+    <string name="change_email">Change Email</string>
+    <string name="change_password">Change Password</string>
 
 </resources>

@@ -150,49 +150,51 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-        </LinearLayout>
 
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:hint="@string/emailhint">
-            <com.google.android.material.textfield.TextInputEditText
+            android:padding="16dp"
+            >
+
+
+            <TextView
+                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_baseline_email"
+                android:background="@drawable/textview_border"
                 android:drawablePadding="10dp"
-                android:text="@string/email"
-                android:id="@+id/userEmail" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:text="@string/change_email"
+                android:layout_marginBottom="3dp"
+                app:drawableLeftCompat="@drawable/ic_baseline_email"
+                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios">
 
+            </TextView>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/password">
-            <com.google.android.material.textfield.TextInputEditText
+            <TextView
+                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_baseline_vpn_key"
+                android:background="@drawable/textview_border"
                 android:drawablePadding="10dp"
-                android:id="@+id/userPassword"
-                android:text="@string/Pass" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:text="@string/change_password"
+                app:drawableLeftCompat="@drawable/ic_baseline_vpn_key"
+                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios">
+            </TextView>
 
-        <Button
-            android:id="@+id/Signout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_out"
-            />
+            <Button
+                android:layout_marginTop="20dp"
+                android:id="@+id/Signout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_out"
+                />
 
         </LinearLayout>
+
+
     </LinearLayout>
 
 
