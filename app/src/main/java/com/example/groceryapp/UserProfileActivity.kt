@@ -6,16 +6,13 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
-
 class UserProfileActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +29,7 @@ class UserProfileActivity : AppCompatActivity() {
 
         // Buttonevents
         backBtn.setOnClickListener{
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
+            finish()
         }
         updateBtn.setOnClickListener{
             performUpdate()
@@ -57,12 +53,13 @@ class UserProfileActivity : AppCompatActivity() {
         val uid = user?.uid
         var userName = ""
         var userLast = ""
-        var userDate = ""
+        var userDate = "Fixas senare"
         var userPhone = ""
         var userZip = ""
         var userAdress = ""
         var userCity = ""
 
+        // Funktion för att tanka ner och fylla ut användardata
         db.collection("users").document("$uid")
             .get()
             .addOnSuccessListener { document ->
@@ -86,9 +83,54 @@ class UserProfileActivity : AppCompatActivity() {
 
     private fun performUpdate() {
     //kolla om man kan köra en "reload" av sidan vid uppdatering så att oncreate körs igen
+        val db = Firebase.firestore
+
+        val firstName : TextView = findViewById(R.id.firstNameField) as TextView
+        val lastName : TextView = findViewById(R.id.userlastNamefield) as TextView
+        val dateOfBirth : TextView = findViewById(R.id.userDateOfBirth) as TextView
+        val phoneNmb : TextView = findViewById(R.id.userPhone) as TextView
+        val zip : TextView = findViewById(R.id.userZip) as TextView
+        val adress : TextView = findViewById(R.id.userAdress) as TextView
+        val city : TextView = findViewById(R.id.userCity) as TextView
+
+        val inputFirstName = firstName.text.toString()
+        val inputLastName = lastName.text.toString()
+        val inputDateOfBirth = "Fixa senare"
+        val inputPhone = phoneNmb.text.toString()
+        val inputZipCode = zip.text.toString()
+        val inputAdress = adress.text.toString()
+        val inputCity = city.text.toString()
+
+        val user = hashMapOf(
+            "First name" to inputFirstName,
+            "Last name" to inputLastName,
+            "Phone number" to inputPhone,
+            "Date of birth" to inputDateOfBirth,
+            "Zip Code" to inputZipCode,
+            "Adress" to inputAdress,
+            "City" to inputCity,
+        )
+
+                        val currentUser = Firebase.auth.currentUser
+                        val userid = currentUser?.uid
+
+                        db.collection("users") //Koppla userId
+                            .document("$userid")
+                            .set(user)
+                            .addOnSuccessListener {
+                                finish()
+                                val intent = Intent(this,UserProfileActivity::class.java)
+                                startActivity(intent)
+                            }
+                            .addOnFailureListener {
+                            }
+
+
+
+                }
 
     }
-}
+
 
 
 
