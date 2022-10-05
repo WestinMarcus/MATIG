@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="splash_title_size">40sp</dimen>
-
+    //buttonrow
+    <dimen name="buttonrow_height">60sp</dimen>
+    <dimen name="buttonrow_width">82sp</dimen>
 
 </resources>
