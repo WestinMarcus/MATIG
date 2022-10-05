@@ -33,62 +33,64 @@ class StoresActivity : AppCompatActivity() {
         val user = Firebase.auth.currentUser
         val uid = user?.uid
         var userAddress = ""
+        var defAddress: Deferred<String>
 
-        runBlocking {
-            db.collection("users").document("$uid")
-                .get()
-                .addOnSuccessListener { document ->
-                    val uCity = document.getString("City") ?: "Default"
-                    userAddress = document.getString("Adress") ?: "Default"
-                    userAddress += ", $uCity"
-                }
-                .addOnFailureListener {
-                    Log.i(TAG, "FailureListener in block")
-                }
+        /*-----------------Retrieves user address from Firestore----------------------*/
+        runBlocking{
+            launch(Dispatchers.IO) {
+
+                    db.collection("users").document("$uid")
+                    .get()
+                    .addOnSuccessListener { userDoc ->
+                        val uCity = userDoc.getString("City") ?: "Default"
+                        userAddress = userDoc.getString("Adress") ?: "Default"
+                        userAddress += ", $uCity"
+
+                    }
+                    .addOnFailureListener {
+                        Log.i(TAG, "FailureListener in runBlocking")
+                    }
+            }
         }
 
+        /*---------------------- Gets list of store chain names ----------------------*/
         db.collection("Store chains")
-            .get()
-            .addOnSuccessListener { chainList ->
-                for (document in chainList) {
-                    storeChainList.add(document.id)
+        .get()
+        .addOnSuccessListener { chainList ->
+            for (document in chainList) {
+                storeChainList.add(document.id)
+            }
+            val (userLat, userLong) = convertAddressToCoordinates(userAddress)
+            for(chainName in storeChainList)
+            {
+                /*---------------Gets list of all store from all chains---------------*/
+                db.collection("store list")
+                .document("Butik info")
+                .collection("$chainName")
+                .get()
+                .addOnSuccessListener { stores ->
+                    for (store in stores)
+                    {
+                        storeList.add(store.id)
+                        storeAdressList.add(store.getString("Adress") ?: "default")
+                        // MAKE NEW LIST AND SAVE DISTANCE TO ALL STORES
+
+                        /*------------converts address to coordinates for latest store in storelist--------------*/
+                        val (storeLat, storeLong) = convertAddressToCoordinates(storeAdressList.last())
+                        val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
+                        Log.i(TAG, "Distance from user to ${storeList.last()}: ${distance}m")
+                    }
+                    arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
+                    mListView.adapter = arrayAdapter
                 }
-
-                Log.w(TAG, "pre convertAddressToCoord")
-                val (userLat, userLong) = convertAddressToCoordinates(userAddress)
-                Log.w(TAG, "post convertAddressToCoord")
-
-                for(chainName in storeChainList)
-                {
-                    db.collection("store list")
-                        .document("Butik info")
-                        .collection("$chainName")
-                        .get()
-                        .addOnSuccessListener { result ->
-                            for (document in result)
-                            {
-                                storeList.add(document.id)
-                                storeAdressList.add(document.getString("Adress") ?: "default")
-
-                                // MAKE NEW LIST AND SAVE DISTANCE TO ALL STORES
-
-                                val (storeLat, storeLong) = convertAddressToCoordinates(storeAdressList.last())
-                                val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
-
-                                Log.i(TAG, "Distance from user to ${storeList.last()}: $distance")
-
-                            }
-                            arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
-                            mListView.adapter = arrayAdapter
-                        }
-                        .addOnFailureListener { exception ->
-                            Log.e(TAG, "Error getting documents.", exception)
-                        }
+                .addOnFailureListener { exception ->
+                    Log.e(TAG, "Error getting documents.", exception)
                 }
             }
-            .addOnFailureListener {
-                Log.e(TAG, "Error: FailureListener")
-            }
+        }
+        .addOnFailureListener {
+            Log.e(TAG, "Error: FailureListener")
+        }
         mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectedStore = parent.getItemAtPosition(position)
             val intent = Intent(this, ItemListActivity::class.java)
@@ -116,6 +118,7 @@ class StoresActivity : AppCompatActivity() {
     private fun convertAddressToCoordinates(address: String): Pair<String, String>
     {
         val geocode = Geocoder(this, Locale.getDefault())
+
         val addressList = geocode.getFromLocationName(address, 1)
 
         val lat = String.format("%.5f", addressList.first().latitude)
