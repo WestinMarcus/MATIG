@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -22,6 +24,28 @@ class UserProfileActivity : AppCompatActivity() {
         val backBtn: ImageView = findViewById(R.id.image_back)
         val updateBtn: Button = findViewById(R.id.btn_update)
         val signOutBtn: Button = findViewById(R.id.Signout)
+        val passReset: TextView = findViewById(R.id.pass)
+
+        // Tar in textview
+        val firstName : TextView = findViewById(R.id.firstNameField) as TextView
+        val lastName : TextView = findViewById(R.id.userlastNamefield) as TextView
+        val dateOfBirth : TextView = findViewById(R.id.userDateOfBirth) as TextView
+        val phoneNmb : TextView = findViewById(R.id.userPhone) as TextView
+        val zip : TextView = findViewById(R.id.userZip) as TextView
+        val adress : TextView = findViewById(R.id.userAdress) as TextView
+        val city : TextView = findViewById(R.id.userCity) as TextView
+
+        val user = Firebase.auth.currentUser
+        val uid = user?.uid
+        val userEmail = user?.email
+
+        var userName = ""
+        var userLast = ""
+        var userDate = "Fixas senare"
+        var userPhone = ""
+        var userZip = ""
+        var userAdress = ""
+        var userCity = ""
 
         // Buttonevents
         backBtn.setOnClickListener{
@@ -35,25 +59,31 @@ class UserProfileActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-
-        // Tar in textview
-        val firstName : TextView = findViewById(R.id.firstNameField) as TextView
-        val lastName : TextView = findViewById(R.id.userlastNamefield) as TextView
-        val dateOfBirth : TextView = findViewById(R.id.userDateOfBirth) as TextView
-        val phoneNmb : TextView = findViewById(R.id.userPhone) as TextView
-        val zip : TextView = findViewById(R.id.userZip) as TextView
-        val adress : TextView = findViewById(R.id.userAdress) as TextView
-        val city : TextView = findViewById(R.id.userCity) as TextView
-
-        val user = Firebase.auth.currentUser
-        val uid = user?.uid
-        var userName = ""
-        var userLast = ""
-        var userDate = "Fixas senare"
-        var userPhone = ""
-        var userZip = ""
-        var userAdress = ""
-        var userCity = ""
+        passReset.setOnClickListener{
+            /* Backup kod
+                val intent = Intent(this, passwordResetActivity::class.java)
+                startActivity(intent)
+             */
+            // Skicka emailformulär för att återställa lösenord
+            val email= userEmail.toString()
+            if (email.isEmpty()){
+                Toast.makeText(this, "Please enter email adress", Toast.LENGTH_SHORT).show()
+            }else {
+                FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(
+                                this,
+                                "Email sent successfully to reset your password!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            finish()
+                        }else{
+                            Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+            }
+        }
 
         // Funktion för att tanka ner och fylla ut användardata
         db.collection("users").document("$uid")

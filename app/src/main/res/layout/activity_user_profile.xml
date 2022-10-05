@@ -181,7 +181,8 @@
                 android:drawablePadding="10dp"
                 android:text="@string/change_password"
                 app:drawableLeftCompat="@drawable/ic_baseline_vpn_key"
-                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios">
+                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios"
+                android:id="@+id/pass">
             </TextView>
 
             <Button
