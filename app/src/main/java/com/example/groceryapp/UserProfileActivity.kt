@@ -12,8 +12,6 @@ import com.google.firebase.ktx.Firebase
 
 
 class UserProfileActivity : AppCompatActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_profile)
@@ -24,8 +22,6 @@ class UserProfileActivity : AppCompatActivity() {
         val backBtn: ImageView = findViewById(R.id.image_back)
         val updateBtn: Button = findViewById(R.id.btn_update)
         val signOutBtn: Button = findViewById(R.id.Signout)
-
-
 
         // Buttonevents
         backBtn.setOnClickListener{
@@ -78,7 +74,6 @@ class UserProfileActivity : AppCompatActivity() {
                 adress.setText(userAdress).toString()
                 city.setText(userCity).toString()
             }
-
     }
 
     private fun performUpdate() {
@@ -110,7 +105,6 @@ class UserProfileActivity : AppCompatActivity() {
             "Adress" to inputAdress,
             "City" to inputCity,
         )
-
                         val currentUser = Firebase.auth.currentUser
                         val userid = currentUser?.uid
 
@@ -124,12 +118,9 @@ class UserProfileActivity : AppCompatActivity() {
                             }
                             .addOnFailureListener {
                             }
+        }
 
-
-
-                }
-
-    }
+}
 
 
 
