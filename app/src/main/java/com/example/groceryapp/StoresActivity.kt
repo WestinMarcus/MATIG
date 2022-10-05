@@ -117,6 +117,8 @@ class StoresActivity : AppCompatActivity() {
 
     private fun convertAddressToCoordinates(address: String): Pair<String, String>
     {
+
+
         val geocode = Geocoder(this, Locale.getDefault())
 
         val addressList = geocode.getFromLocationName(address, 1)

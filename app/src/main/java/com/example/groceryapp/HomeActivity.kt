@@ -13,17 +13,28 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
 
-        val storesBtn = findViewById(R.id.btn_search) as ImageButton
+        val searchBtn = findViewById(R.id.btn_search) as ImageButton
         val userBtn = findViewById(R.id.btn_user) as ImageButton
+        val testBtn = findViewById(R.id.btn_test) as Button
+        val favoritesBtn = findViewById(R.id.btn_favorites) as ImageButton
 
-        storesBtn.setOnClickListener {
+        favoritesBtn.setOnClickListener {
+            val intent = Intent(this, FavoritesActivity::class.java)
+            startActivity(intent)
+        }
+
+        searchBtn.setOnClickListener {
             val intent = Intent(this, StoresActivity::class.java)
             startActivity(intent)
         }
 
-
         userBtn.setOnClickListener {
             val intent = Intent(this, UserProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        testBtn.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
 
