@@ -25,6 +25,7 @@ class UserProfileActivity : AppCompatActivity() {
         val updateBtn: Button = findViewById(R.id.btn_update)
         val signOutBtn: Button = findViewById(R.id.Signout)
         val passReset: TextView = findViewById(R.id.pass)
+        //val emailReset: TextView = findViewById(R.id.emailReset)
 
         // Tar in textview
         val firstName : TextView = findViewById(R.id.firstNameField) as TextView
@@ -59,12 +60,9 @@ class UserProfileActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+
+        //Button that sends password reset email to the current users email
         passReset.setOnClickListener{
-            /* Backup kod
-                val intent = Intent(this, passwordResetActivity::class.java)
-                startActivity(intent)
-             */
-            // Skicka emailformulär för att återställa lösenord
             val email= userEmail.toString()
             if (email.isEmpty()){
                 Toast.makeText(this, "Please enter email adress", Toast.LENGTH_SHORT).show()
@@ -84,6 +82,12 @@ class UserProfileActivity : AppCompatActivity() {
                     }
             }
         }
+
+        /*emailReset.setOnClickListener {
+
+        }*/
+
+
 
         // Funktion för att tanka ner och fylla ut användardata
         db.collection("users").document("$uid")

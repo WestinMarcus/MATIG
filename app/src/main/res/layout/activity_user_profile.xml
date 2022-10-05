@@ -159,7 +159,7 @@
             android:padding="16dp"
             >
 
-
+            <!-- Här kan man ändra email, implementera ifall det behövs
             <TextView
                 android:padding="5dp"
                 android:layout_width="match_parent"
@@ -169,10 +169,11 @@
                 android:text="@string/change_email"
                 android:layout_marginBottom="3dp"
                 app:drawableLeftCompat="@drawable/ic_baseline_email"
-                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios">
+                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios"
+                android:id="@+id/emailReset">
 
             </TextView>
-
+             -->
             <TextView
                 android:padding="5dp"
                 android:layout_width="match_parent"
