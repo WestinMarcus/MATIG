@@ -32,24 +32,23 @@ class StoresActivity : AppCompatActivity() {
 
         val user = Firebase.auth.currentUser
         val uid = user?.uid
+
         var userAddress = ""
-        var defAddress: Deferred<String>
 
         /*-----------------Retrieves user address from Firestore----------------------*/
         runBlocking{
             launch(Dispatchers.IO) {
+                db.collection("users").document("$uid")
+                .get()
+                .addOnSuccessListener { userDoc ->
+                    val uCity = userDoc.getString("City") ?: "Default"
+                    userAddress = userDoc.getString("Adress") ?: "Default"
+                    userAddress += ", $uCity"
 
-                    db.collection("users").document("$uid")
-                    .get()
-                    .addOnSuccessListener { userDoc ->
-                        val uCity = userDoc.getString("City") ?: "Default"
-                        userAddress = userDoc.getString("Adress") ?: "Default"
-                        userAddress += ", $uCity"
-
-                    }
-                    .addOnFailureListener {
-                        Log.i(TAG, "FailureListener in runBlocking")
-                    }
+                }
+                .addOnFailureListener {
+                    Log.i(TAG, "FailureListener in runBlocking")
+                }
             }
         }
 

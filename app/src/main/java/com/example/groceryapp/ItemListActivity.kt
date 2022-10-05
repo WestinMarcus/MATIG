@@ -45,5 +45,9 @@ class ItemListActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents.", exception)
             }
+
+        /*       vid "favorit"-knapptryck -> skicka till db.user.favorites(storename)        */
+
+
     }
 }
