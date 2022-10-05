@@ -27,30 +27,7 @@
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:padding="20dp"
-            >
 
-            <ImageView
-                android:id="@+id/image_profile"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_baseline_person" />
-
-            <TextView
-                android:id="@+id/userName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/image_profile"
-                android:includeFontPadding="false"
-                android:text="@string/firstname_lastname"
-                android:textSize="20sp" />
-        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,36 +38,29 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="First Name">
 
-                android:hint="@string/emailhint">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_baseline_email"
-                android:drawablePadding="10dp"
-                android:text="@string/email"
-                android:id="@+id/userEmail"
-                />
-
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/firstNameField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_baseline_person"
+                    android:drawablePadding="10dp"
+                    android:text="First Name" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/phonehiny">
+                android:hint="Last Name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userlastNamefield"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_baseline_phone"
+                    android:drawableStart="@drawable/ic_baseline_person"
                     android:drawablePadding="10dp"
-                    android:id="@+id/userPhone"
-                    android:text="@string/phone_number"
-                    android:inputType="phone"
-
-                    />
-
+                    android:text="Last Name" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -99,32 +69,44 @@
                 android:hint="@string/date_of_birthhint">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userDateOfBirth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_baseline_calendar_month"
                     android:drawablePadding="10dp"
-                    android:text="@string/date_of_birth"
                     android:inputType="phone"
-                    android:id="@+id/userDateOfBirth"
-                    />
-
+                    android:text="@string/date_of_birth" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/phonehiny">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_baseline_phone"
+                    android:drawablePadding="10dp"
+                    android:inputType="phone"
+                    android:text="@string/phone_number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="@string/zip_codehint">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userZip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_baseline_pin_drop"
                     android:drawablePadding="10dp"
-                    android:id="@+id/userZip"
-                    android:text="@string/zip_code"
                     android:inputType="phone"
-                    />
-
+                    android:text="@string/zip_code" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -133,14 +115,12 @@
                 android:hint="@string/adresshint">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userAdress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_baseline_house_24"
                     android:drawablePadding="10dp"
-                    android:id="@+id/userAdress"
-                    android:text="@string/adress"
-                    />
-
+                    android:text="@string/adress" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -149,49 +129,70 @@
                 android:hint="@string/cityprofile">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_baseline_location_city"
                     android:drawablePadding="10dp"
-                    android:id="@+id/userCity"
-                    android:text="@string/city"
-                    />
-
+                    android:text="@string/city" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/password">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_baseline_vpn_key"
-                    android:drawablePadding="10dp"
-                    android:id="@+id/userPassword"
-                    android:text="@string/Pass"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:paddingTop="20dp">
 
                 <Button
                     android:id="@+id/btn_update"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/update"
-                    />
+                    android:text="@string/update" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/Signout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_out"
-                />
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:hint="@string/emailhint">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_email"
+                android:drawablePadding="10dp"
+                android:text="@string/email"
+                android:id="@+id/userEmail" />
+        </com.google.android.material.textfield.TextInputLayout>
 
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_vpn_key"
+                android:drawablePadding="10dp"
+                android:id="@+id/userPassword"
+                android:text="@string/Pass" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/Signout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_out"
+            />
+
+        </LinearLayout>
     </LinearLayout>
 
 
