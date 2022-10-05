@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ItemListActivity">
+
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -14,20 +16,20 @@
 
         <TextView
             android:id="@+id/tvStoreItemList"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textAlignment="center"
-            android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="store name" />
+            android:layout_marginTop="4dp"
+            android:text="store name"
+            android:textAlignment="center"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <SearchView
             android:id="@+id/sv_itemList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
             android:background="@color/grey" />
-
 
 
         <ListView
