@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".SearchActivity">
-
-
 
 
     <LinearLayout
@@ -18,7 +17,7 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="60sp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginHorizontal="8dp"
             android:background="@color/grey"
@@ -45,6 +44,7 @@
         </LinearLayout>
 
         <ListView
+            android:id="@+id/lv_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="8dp"
