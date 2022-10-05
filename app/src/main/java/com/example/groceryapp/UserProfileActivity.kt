@@ -49,13 +49,6 @@ class UserProfileActivity : AppCompatActivity() {
         // Tar in textview
         var textView : TextView = findViewById(R.id.firstNameField) as TextView
 
-        //Sätter nytt värde på textview
-        textView.setText(getUserName()).toString()
-    }
-
-    private fun getUserName(): String {
-        
-        val db = Firebase.firestore
         val user = Firebase.auth.currentUser
         val uid = user?.uid
         var userName = ""
@@ -63,10 +56,12 @@ class UserProfileActivity : AppCompatActivity() {
         db.collection("users").document("$uid")
             .get()
             .addOnSuccessListener { document ->
-                userName = document.getString("Adress") ?: "default"
+                userName = document.getString("First name") ?: "default"
+                textView.setText(userName).toString()
             }
 
-        return userName
+
+        //Sätter nytt värde på textview
     }
 
     private fun performUpdate() {
