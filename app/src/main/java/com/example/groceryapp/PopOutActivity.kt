@@ -90,7 +90,6 @@ class PopOutActivity : AppCompatActivity() {
                     {
                         val intent = Intent(this, ShoppingListActivity::class.java)
                         startActivity(intent)
-                        overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
                     }
                     finish()
                 }
