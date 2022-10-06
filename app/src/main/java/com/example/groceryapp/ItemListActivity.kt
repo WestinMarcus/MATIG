@@ -58,7 +58,6 @@ class ItemListActivity : AppCompatActivity() {
             intent.putExtra("product", "$product")
             intent.putExtra("chain", "$chainName")
             intent.putExtra("store", "$store")
-
             startActivity(intent)
         }
 

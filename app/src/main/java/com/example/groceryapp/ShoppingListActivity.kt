@@ -103,6 +103,7 @@ class ShoppingListActivity : AppCompatActivity() {
                     intent.putExtra("product", "$product")
                     intent.putExtra("chain", "$chainName")
                     intent.putExtra("store", "$store")
+                    intent.putExtra("activity", "ShoppingListActivity")
                     startActivity(intent)
                 }
         }

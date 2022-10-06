@@ -2,6 +2,7 @@ package com.example.groceryapp
 
 import android.content.ContentValues
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -64,7 +65,10 @@ class PopOutActivity : AppCompatActivity() {
                             .collection("Shoppinglist")
                             .document("$product")
                             .set(productMap)
-                            .addOnSuccessListener { Log.i(ContentValues.TAG, "added product to shopping list: $product") }
+                            .addOnSuccessListener {
+                                Log.i(ContentValues.TAG, "added product to shopping list: $product")
+                                finish()
+                            }
                             .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add product to shopping list") }
                     }
                 }
@@ -80,7 +84,15 @@ class PopOutActivity : AppCompatActivity() {
                 .collection("Shoppinglist")
                 .document("$product")
                 .delete()
-                .addOnSuccessListener { Log.i(ContentValues.TAG, "removed product from shopping list: $product") }
+                .addOnSuccessListener {
+                    Log.i(ContentValues.TAG, "removed product from shopping list: $product")
+                    if (intent.getStringExtra("activity") == "ShoppingListActivity")
+                    {
+                        val intent = Intent(this, ShoppingListActivity::class.java)
+                        startActivity(intent)
+                    }
+                    finish()
+                }
                 .addOnFailureListener { Log.i(ContentValues.TAG, "failed to delete product from shopping list") }
 
         }
