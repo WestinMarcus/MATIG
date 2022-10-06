@@ -30,14 +30,12 @@ class ShoppingListActivity : AppCompatActivity() {
         homeBtn.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
             finish()
         }
 
         favoritesBtn.setOnClickListener {
             val intent = Intent(this, FavoritesActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
             finish()
 
         }
@@ -45,21 +43,18 @@ class ShoppingListActivity : AppCompatActivity() {
         searchBtn.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
             finish()
         }
 
         shoppingListBtn.setOnClickListener {
             val intent = Intent(this, ShoppingListActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
             finish()
         }
 
         settingsBtn.setOnClickListener {
             val intent = Intent(this, settingsActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
             finish()
         }
 
@@ -113,4 +108,5 @@ class ShoppingListActivity : AppCompatActivity() {
                 }
         }
     }
+
 }

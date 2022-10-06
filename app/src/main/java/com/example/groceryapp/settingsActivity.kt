@@ -26,14 +26,12 @@ class settingsActivity : AppCompatActivity() {
         homeBtn.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
             finish()
         }
 
         favoritesBtn.setOnClickListener {
             val intent = Intent(this, FavoritesActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
             finish()
 
         }
@@ -41,21 +39,18 @@ class settingsActivity : AppCompatActivity() {
         searchBtn.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
             finish()
         }
 
         shoppingListBtn.setOnClickListener {
             val intent = Intent(this, ShoppingListActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
             finish()
         }
 
         settingsBtn.setOnClickListener {
             val intent = Intent(this, settingsActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
             finish()
         }
 
@@ -70,7 +65,6 @@ class settingsActivity : AppCompatActivity() {
         userBtn.setOnClickListener {
             val intent = Intent(this, UserProfileActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
         }
         notificationBtn.setOnClickListener {
             //Länka till notification activity
