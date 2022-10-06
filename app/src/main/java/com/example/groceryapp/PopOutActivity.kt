@@ -78,22 +78,24 @@ class PopOutActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents.", exception)
             }
+        /*---------------remove product from shopping list--------------------*/
         removeFromShoppingList.setOnClickListener {
             db.collection("users")
-                .document("$userid")
-                .collection("Shoppinglist")
-                .document("$product")
-                .delete()
-                .addOnSuccessListener {
-                    Log.i(ContentValues.TAG, "removed product from shopping list: $product")
-                    if (intent.getStringExtra("activity") == "ShoppingListActivity")
-                    {
-                        val intent = Intent(this, ShoppingListActivity::class.java)
-                        startActivity(intent)
-                    }
-                    finish()
+            .document("$userid")
+            .collection("Shoppinglist")
+            .document("$product")
+            .delete()
+            .addOnSuccessListener {
+                Log.i(ContentValues.TAG, "removed product from shopping list: $product")
+                if (intent.getStringExtra("activity") == "ShoppingListActivity")
+                {
+                    val intent = Intent(this, ShoppingListActivity::class.java)
+                    startActivity(intent)
+                    overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
                 }
-                .addOnFailureListener { Log.i(ContentValues.TAG, "failed to delete product from shopping list") }
+                finish()
+            }
+            .addOnFailureListener { Log.i(ContentValues.TAG, "failed to delete product from shopping list") }
 
         }
     }

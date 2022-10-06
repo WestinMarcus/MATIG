@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
-
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 
 
 class HomeActivity : AppCompatActivity() {
@@ -59,13 +62,21 @@ class HomeActivity : AppCompatActivity() {
 
 
         testBtn.setOnClickListener {
-           // val intent = Intent(this, StoresActivity::class.java)
-        //startActivity(intent)
+           val intent = Intent(this, StoresActivity::class.java)
+            startActivity(intent)
+/*
+           var adress = ""
+           var defAddress: Deferred<String>
+           runBlocking {
+               coroutineScope {
+                   defAddress = async{ userAdressClass().test() }
+                   adress = defAddress.await()
+               }
+           }
 
-           var adress = userAdressClass().test()
 
 
-            Log.i(TAG,"adress:$adress")
+            Log.i(TAG,"adress:$adress")*/
         }
     }
 

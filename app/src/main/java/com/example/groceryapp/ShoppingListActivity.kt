@@ -63,7 +63,15 @@ class ShoppingListActivity : AppCompatActivity() {
         val userid = Firebase.auth.currentUser?.uid
 
         var arrayAdapter: ArrayAdapter<*>
-        val mListView = findViewById<ListView>(R.id.lv_Ica)
+        val icaListView = findViewById<ListView>(R.id.lv_Ica)
+        val coopListView = findViewById<ListView>(R.id.lv_Coop)
+        val willysListView = findViewById<ListView>(R.id.lv_Willys)
+        val lidlListView = findViewById<ListView>(R.id.lv_Lidl)
+
+        val icaList = mutableListOf<String>()
+        val coopList = mutableListOf<String>()
+        val willysList = mutableListOf<String>()
+        val lidlList = mutableListOf<String>()
 
         val productList = mutableListOf<String>()
         val chainList = listOf("Coop", "ICA", "Ica", "Willys", "Lidl")
@@ -73,18 +81,24 @@ class ShoppingListActivity : AppCompatActivity() {
             .addOnSuccessListener { products ->
                 for (product in products)
                 {
-                    productList.add(product.id)
+                    var productName = product.getString("Storename")
+                    if (productName != null) {
+                        if (productName.contains("ICA")) {
+                            icaList.add(product.id)
+                        }
+                    }
                 }
-                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, productList)
-                mListView.adapter = arrayAdapter
+                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, icaList)
+                icaListView.adapter = arrayAdapter
             }
             .addOnFailureListener { }
 
+            icaListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
 
-            mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
             val intent = Intent(this, PopOutActivity::class.java)
 
+            /*------------------------lägger till storename i hashmap--------(tror jag)-------------------------*/
             db.collection("users")
                 .document("$userid")
                 .collection("Shoppinglist")
@@ -98,12 +112,12 @@ class ShoppingListActivity : AppCompatActivity() {
                             chainName = chain
                         }
                     }
-                    Log.i(TAG, "Chain: $chainName, Store: $store, product: $product")
 
                     intent.putExtra("product", "$product")
                     intent.putExtra("chain", "$chainName")
                     intent.putExtra("store", "$store")
                     intent.putExtra("activity", "ShoppingListActivity")
+
                     startActivity(intent)
                 }
         }

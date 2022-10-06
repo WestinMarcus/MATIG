@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.location.Geocoder
 import android.location.Location
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -31,16 +32,21 @@ class StoresActivity : AppCompatActivity() {
 
         var userAddress = ""
 
+        Log.w(TAG, "Thread: ${Thread.currentThread().name}")
+
         /*-----------------Retrieves user address from Firestore----------------------*/
-        /*
+
         runBlocking{
             launch(Dispatchers.IO) {
+                Log.w(TAG, "Thread in runblocking: ${Thread.currentThread().name}, useraddres: $userAddress")
                 db.collection("users").document("$uid")
                 .get()
                 .addOnSuccessListener { userDoc ->
+
                     val uCity = userDoc.getString("City") ?: "Default"
                     userAddress = userDoc.getString("Adress") ?: "Default"
                     userAddress += ", $uCity"
+                    Log.w(TAG, "Thread in addonSuccess: ${Thread.currentThread().name}, useraddres: $userAddress")
 
                 }
                 .addOnFailureListener {
@@ -48,7 +54,7 @@ class StoresActivity : AppCompatActivity() {
                 }
             }
         }
-    */
+        Log.w(TAG, "Thread post runblock: ${Thread.currentThread().name}, useraddres: $userAddress")
         /*---------------------- Gets list of store chain names ----------------------*/
         db.collection("Store chains")
         .get()
@@ -56,7 +62,7 @@ class StoresActivity : AppCompatActivity() {
             for (document in chainList) {
                 storeChainList.add(document.id)
             }
-            //val (userLat, userLong) = convertAddressToCoordinates(userAddress)
+            val (userLat, userLong) = convertAddressToCoordinates(userAddress)
             for(chainName in storeChainList)
             {
                 /*---------------Gets list of all store from all chains---------------*/
@@ -73,8 +79,8 @@ class StoresActivity : AppCompatActivity() {
 
                         /*------------converts address to coordinates for latest store in storelist--------------*/
                         val (storeLat, storeLong) = convertAddressToCoordinates(storeAdressList.last())
-                        //val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
-                        //Log.i(TAG, "Distance from user to ${storeList.last()}: ${distance}m")
+                        val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
+                        Log.i(TAG, "Distance from user to ${storeList.last()}: ${distance}m")
                     }
                     arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
                     mListView.adapter = arrayAdapter
@@ -87,6 +93,8 @@ class StoresActivity : AppCompatActivity() {
         .addOnFailureListener {
             Log.e(TAG, "Error: FailureListener")
         }
+        Log.w(TAG, "Thread post final failure: ${Thread.currentThread().name}, useraddres: $userAddress")
+
         mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectedStore = parent.getItemAtPosition(position)
             val intent = Intent(this, ItemListActivity::class.java)
