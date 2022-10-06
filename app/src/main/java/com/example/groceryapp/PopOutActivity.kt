@@ -21,7 +21,9 @@ class PopOutActivity : AppCompatActivity() {
         val product = intent.getStringExtra("product")
         val chain = intent.getStringExtra("chain")
         val store = intent.getStringExtra("store")
-        Log.e(TAG, "args to popout: product: $product,  chain: $chain, store: $store ")
+
+        Log.i(TAG, "Chain: $chain, Store: $store, product: $product")
+
         val productHeader: TextView = findViewById(R.id.tv_productName)
         productHeader.text = "$product"
         val addToShoppingList = findViewById<Button>(R.id.btn_addToShoppingList)
@@ -39,6 +41,8 @@ class PopOutActivity : AppCompatActivity() {
                 val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
                 val productPriceVol = document.getString("Jämfört pris(lit)")?:"default"
 
+                val productMap = document.data
+                productMap?.put("Storename", "$store")
 
                 price.text = productPrice
                 info.text = productInfo
@@ -52,22 +56,20 @@ class PopOutActivity : AppCompatActivity() {
                 }
                 addToShoppingList.setOnClickListener {
                     val userid = Firebase.auth.currentUser?.uid
-                    val productData = hashMapOf(
-                        "name" to "produktid"
-                    )
-                    db.collection("users")
-                        .document("$userid")
-                        .collection("Shoppinglist")
-                        .document("$store")
-                        .set(productData)
-                        .addOnSuccessListener { Log.i(ContentValues.TAG, "added product to shopping list: $store") }
-                        .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add fav store as document") }
+
+                    if (productMap != null) {
+                        db.collection("users")
+                            .document("$userid")
+                            .collection("Shoppinglist")
+                            .document("$product")
+                            .set(productMap)
+                            .addOnSuccessListener { Log.i(ContentValues.TAG, "added product to shopping list: $product") }
+                            .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add fav store as document") }
+                    }
                 }
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents.", exception)
             }
-
-
     }
 }

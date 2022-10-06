@@ -1,8 +1,10 @@
 package com.example.groceryapp
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -36,7 +38,8 @@ class ShoppingListActivity : AppCompatActivity() {
             }
             .addOnFailureListener { }
 
-        mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+
+            mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
             val intent = Intent(this, PopOutActivity::class.java)
 
@@ -46,20 +49,20 @@ class ShoppingListActivity : AppCompatActivity() {
                 .document("$product")
                 .get()
                 .addOnSuccessListener { document ->
-                    val store = document.getString("store") ?: "default"
+                    val store = document.getString("Storename") ?: "default"
                     var chainName = ""
                     for (chain in chainList){
                         if ("$store".contains(chain)){
                             chainName = chain
                         }
                     }
+                    Log.i(TAG, "Chain: $chainName, Store: $store, product: $product")
+
                     intent.putExtra("product", "$product")
                     intent.putExtra("chain", "$chainName")
                     intent.putExtra("store", "$store")
                     startActivity(intent)
                 }
-
-
         }
     }
 }
