@@ -81,38 +81,94 @@ class ShoppingListActivity : AppCompatActivity() {
             .addOnSuccessListener { products ->
                 for (product in products)
                 {
-                    var productName = product.getString("Storename")
+                    val productName = product.getString("Storename")
                     if (productName != null) {
                         if (productName.contains("ICA")) {
                             icaList.add(product.id)
                         }
+                        if (productName.contains("Coop")) {
+                            coopList.add(product.id)
+                        }
+                        if (productName.contains("Willys")) {
+                            willysList.add(product.id)
+                        }
+                        if (productName.contains("Lidl")) {
+                            lidlList.add(product.id)
+                        }
                     }
                 }
-                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, icaList)
-                icaListView.adapter = arrayAdapter
+
+                icaListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, icaList)
+                coopListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, coopList)
+                willysListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, willysList)
+                lidlListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, lidlList)
             }
             .addOnFailureListener { }
 
             icaListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+                val product = parent.getItemAtPosition(position)
+                val intent = Intent(this, PopOutActivity::class.java)
 
+                db.collection("users").document("$userid")
+                    .collection("Shoppinglist").document("$product").get()
+                    .addOnSuccessListener { document ->
+                        val store = document.getString("Storename") ?: "default"
+                        var chainName = ""
+                        for (chain in chainList){ if ("$store".contains(chain)){ chainName = chain } }
+                        intent.putExtra("product", "$product")
+                        intent.putExtra("chain", "$chainName")
+                        intent.putExtra("store", "$store")
+                        intent.putExtra("activity", "ShoppingListActivity")
+
+                        startActivity(intent)
+                    }
+            }
+        coopListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
             val intent = Intent(this, PopOutActivity::class.java)
 
-            /*------------------------lägger till storename i hashmap--------(tror jag)-------------------------*/
-            db.collection("users")
-                .document("$userid")
-                .collection("Shoppinglist")
-                .document("$product")
-                .get()
+            db.collection("users").document("$userid")
+                .collection("Shoppinglist").document("$product").get()
                 .addOnSuccessListener { document ->
                     val store = document.getString("Storename") ?: "default"
                     var chainName = ""
-                    for (chain in chainList){
-                        if ("$store".contains(chain)){
-                            chainName = chain
-                        }
-                    }
+                    for (chain in chainList){ if ("$store".contains(chain)){ chainName = chain } }
+                    intent.putExtra("product", "$product")
+                    intent.putExtra("chain", "$chainName")
+                    intent.putExtra("store", "$store")
+                    intent.putExtra("activity", "ShoppingListActivity")
 
+                    startActivity(intent)
+                }
+        }
+        willysListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            val product = parent.getItemAtPosition(position)
+            val intent = Intent(this, PopOutActivity::class.java)
+
+            db.collection("users").document("$userid")
+                .collection("Shoppinglist").document("$product").get()
+                .addOnSuccessListener { document ->
+                    val store = document.getString("Storename") ?: "default"
+                    var chainName = ""
+                    for (chain in chainList){ if ("$store".contains(chain)){ chainName = chain } }
+                    intent.putExtra("product", "$product")
+                    intent.putExtra("chain", "$chainName")
+                    intent.putExtra("store", "$store")
+                    intent.putExtra("activity", "ShoppingListActivity")
+
+                    startActivity(intent)
+                }
+        }
+        lidlListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            val product = parent.getItemAtPosition(position)
+            val intent = Intent(this, PopOutActivity::class.java)
+
+            db.collection("users").document("$userid")
+                .collection("Shoppinglist").document("$product").get()
+                .addOnSuccessListener { document ->
+                    val store = document.getString("Storename") ?: "default"
+                    var chainName = ""
+                    for (chain in chainList){ if ("$store".contains(chain)){ chainName = chain } }
                     intent.putExtra("product", "$product")
                     intent.putExtra("chain", "$chainName")
                     intent.putExtra("store", "$store")
