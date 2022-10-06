@@ -32,7 +32,6 @@ class PopOutActivity : AppCompatActivity() {
                 val productPrice = document.getString("Pris") ?: "default"
                 val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
                 val productPriceVol = document.getString("Jämfört pris(lit)")?:"default"
-                val productPriceEach = document["Jämfört pris(st)"].toString() //kommer ändras till getString() soon
 
                 price.text = productPrice
                 info.text = productInfo
@@ -42,9 +41,6 @@ class PopOutActivity : AppCompatActivity() {
                     priceRelative.text = inputText
                 }else if (productPriceVol != "Data saknas") {
                     inputText = productPriceVol + "l/kg"
-                    priceRelative.text = inputText
-                }else{
-                    inputText = productPriceEach + "kr/st."
                     priceRelative.text = inputText
                 }
             }
