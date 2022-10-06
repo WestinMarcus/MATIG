@@ -20,13 +20,7 @@ class PopOutActivity : AppCompatActivity() {
         val productHeader: TextView = findViewById(R.id.tv_productName)
         productHeader.text = "$product"
         val db = Firebase.firestore
-        // tv_productName, tv_productInfo, tv_productPriceEach, tv_productPriceRelative
-        // btn_addToShoppingList, btn_closePopOut
-        //var productInfo = ""
-        //var productPrice = ""
-        //var productPriceWeight = ""
-        //var productPriceVol = ""
-        //var productPriceEach = ""
+
         val price: TextView = findViewById(R.id.tv_productPrice)
         val info: TextView = findViewById(R.id.tv_productInfo)
         val priceRelative: TextView = findViewById(R.id.tv_productPriceRelative)
@@ -37,9 +31,8 @@ class PopOutActivity : AppCompatActivity() {
                 val productInfo = document.getString("Övrig information") ?: "default"
                 val productPrice = document.getString("Pris") ?: "default"
                 val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
-                val productPriceVol = document.getString("Jämfört Pris(lit)")?:"default"
-                val productPriceEach = document.getString("Jämfört Pris(st)") ?: "default"
-                //price.setText(productPrice).toString()
+                val productPriceVol = document.getString("Jämfört pris(lit)")?:"default"
+                val productPriceEach = document["Jämfört pris(st)"].toString() //kommer ändras till getString() soon
 
                 price.text = productPrice
                 info.text = productInfo
@@ -51,7 +44,7 @@ class PopOutActivity : AppCompatActivity() {
                     inputText = productPriceVol + "l/kg"
                     priceRelative.text = inputText
                 }else{
-                    inputText = productPriceEach + "st."
+                    inputText = productPriceEach + "kr/st."
                     priceRelative.text = inputText
                 }
             }
