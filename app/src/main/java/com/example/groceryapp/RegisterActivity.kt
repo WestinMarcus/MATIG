@@ -1,14 +1,13 @@
 package com.example.groceryapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.ktx.firestore
-import java.util.*
+import com.google.firebase.ktx.Firebase
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -32,6 +31,7 @@ class RegisterActivity : AppCompatActivity() {
 
         registerButton.setOnClickListener{
             performSignUp()
+           // verify()
         }
     }
 
@@ -67,6 +67,7 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
+
         val user = hashMapOf(
             "First name" to inputFirstName,
             "Last name" to inputLastName,
@@ -77,14 +78,15 @@ class RegisterActivity : AppCompatActivity() {
             "City" to inputCity,
         )
 
+
         auth.createUserWithEmailAndPassword(inputEmail, inputPassword)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
 
+                    verify()
+
                     val currentUser = Firebase.auth.currentUser
                     val userid = currentUser?.uid
-
-
 
                     db.collection("users") //Koppla userId
                         .document("$userid")
@@ -94,6 +96,7 @@ class RegisterActivity : AppCompatActivity() {
                         .addOnFailureListener {
                         }
 
+
                     // Sign in success, update UI with the signed-in user's information
                     val intent = Intent(this,HomeActivity::class.java)
                     startActivity(intent)
@@ -101,6 +104,7 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.makeText(baseContext, "Success",
                         Toast.LENGTH_SHORT)
                         .show()
+                    finish()
 
                 } else {
                     // If sign in fails, display a message to the user.
@@ -109,11 +113,21 @@ class RegisterActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT)
                         .show()
                 }
+
             }
+
 
             .addOnFailureListener(){
                 Toast.makeText(this, "Error occured ${it.localizedMessage}", Toast.LENGTH_SHORT)
                     .show()
             }
     }
+
+    private fun verify() {
+        val user = FirebaseAuth.getInstance().currentUser
+        user?.sendEmailVerification()?.addOnCompleteListener {
+            Toast.makeText(this, "Verificationmail sent", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }
