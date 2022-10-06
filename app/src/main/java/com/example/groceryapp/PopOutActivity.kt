@@ -22,28 +22,28 @@ class PopOutActivity : AppCompatActivity() {
         val db = Firebase.firestore
         // tv_productName, tv_productInfo, tv_productPriceEach, tv_productPriceRelative
         // btn_addToShoppingList, btn_closePopOut
-        var productInfo = ""
-        var productPrice = ""
-        var productPriceWeight = ""
-        var productPriceVol = ""
-        var productPriceEach = ""
+        //var productInfo = ""
+        //var productPrice = ""
+        //var productPriceWeight = ""
+        //var productPriceVol = ""
+        //var productPriceEach = ""
         val price: TextView = findViewById(R.id.tv_productPrice)
         val info: TextView = findViewById(R.id.tv_productInfo)
+        val priceRelative: TextView = findViewById(R.id.tv_productPriceRelative)
 
         db.collection("Aktiva erbj.").document("$chain").collection("$store").document("$product")
             .get()
             .addOnSuccessListener { document ->
-                productInfo = document.getString("Övrig Info")?:"default"
-                productPrice = document.getString("Pris")?:"default"
-                //productPriceWeight = document.getString("Jämfört Pris(/kg)")?:"default"
-                //productPriceVol = document.getString("Jämfört Pris(/lit)")?:"default"
-                productPriceEach = document.getString("Jämfört Pris(st)")?:"default"
-
+                val productInfo = document.getString("Övrig information") ?: "default"
+                val productPrice = document.getString("Pris") ?: "default"
+                val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
+                val productPriceVol = document.getString("Jämfört Pris(lit)")?:"default"
+                val productPriceEach = document.getString("Jämfört Pris(st)") ?: "default"
                 //price.setText(productPrice).toString()
 
                 price.text = productPrice
-
                 info.text = productInfo
+                priceRelative.text = productPriceWeight
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents.", exception)
