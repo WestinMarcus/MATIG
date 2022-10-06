@@ -47,6 +47,19 @@
                 android:drawablePadding="10dp"
                 android:text="@string/user_profile"
                 app:drawableLeftCompat="@drawable/ic_baseline_person"
+                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios"
+                android:id="@+id/user_profile_TV">
+            </TextView>
+            <TextView
+                android:id="@+id/notification_tab_TV"
+                android:layout_marginBottom="5dp"
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_border"
+                android:drawablePadding="10dp"
+                android:text="@string/notifications"
+                app:drawableLeftCompat="@drawable/ic_baseline_notifications"
                 app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios">
             </TextView>
             <TextView
@@ -56,45 +69,10 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/textview_border"
                 android:drawablePadding="10dp"
-                android:text="@string/something_useful"
-                app:drawableLeftCompat="@drawable/ic_baseline_vpn_key"
-                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios">
-            </TextView>
-            <TextView
-                android:layout_marginBottom="5dp"
-                android:padding="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/textview_border"
-                android:drawablePadding="10dp"
-                android:text="@string/something_useful"
-                app:drawableLeftCompat="@drawable/ic_baseline_vpn_key"
-                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios">
-            </TextView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/textview_border"
-                android:drawablePadding="10dp"
-                android:padding="5dp"
-                android:text="@string/something_useful"
-                app:drawableLeftCompat="@drawable/ic_baseline_vpn_key"
-                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios">
-                
-            </TextView>
-
-            <TextView
-                android:layout_marginBottom="5dp"
-                android:padding="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/textview_border"
-                android:drawablePadding="10dp"
-                android:text="@string/something_useful"
-                app:drawableLeftCompat="@drawable/ic_baseline_vpn_key"
-                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios">
+                android:text="@string/faq"
+                app:drawableLeftCompat="@drawable/ic_baseline_question_mark"
+                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios"
+                android:id="@+id/faq_tab_TV">
             </TextView>
 
             <Button

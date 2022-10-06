@@ -35,5 +35,7 @@
     <string name="user_profile">User Profile</string>
     <string name="somethin_useful">Somethin useful</string>
     <string name="something_useful">something useful</string>
+    <string name="notifications">Notifications</string>
+    <string name="faq">FAQ</string>
 
 </resources>
