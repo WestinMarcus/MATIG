@@ -32,5 +32,8 @@
     <string name="change_email">Change Email</string>
     <string name="change_password">Change Password</string>
     <string name="tv_text">text</string>
+    <string name="user_profile">User Profile</string>
+    <string name="somethin_useful">Somethin useful</string>
+    <string name="something_useful">something useful</string>
 
 </resources>
