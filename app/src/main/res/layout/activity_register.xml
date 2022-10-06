@@ -72,15 +72,16 @@
             android:id="@+id/editTextTextPostalAddress"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="Zip Code"
+
+            android:layout_marginTop="16dp"
             android:inputType="textPostalAddress"
             android:textColorHint="#808080"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/datePicker" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
             android:id="@+id/adress"
@@ -156,25 +157,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button" />
 
-        <DatePicker
-            android:id="@+id/datePicker"
-            android:layout_width="255dp"
-            android:layout_height="140dp"
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <TextView
+        <EditText
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_marginTop="16dp"
-            android:text="Date Of Birth"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/editTextPhone"
+            android:hint="Date Of Birth"
+            android:inputType="phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
 

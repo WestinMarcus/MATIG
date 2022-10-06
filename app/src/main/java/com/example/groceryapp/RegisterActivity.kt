@@ -19,7 +19,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        // Initialize Firebase Auth
+        //Initialize Firebase Auth
         auth = Firebase.auth
 
         val loginText: TextView = findViewById(R.id.LogInHere_now)
@@ -38,34 +38,26 @@ class RegisterActivity : AppCompatActivity() {
     private fun performSignUp(){
         val db = Firebase.firestore
 
-        var email = findViewById<EditText>(R.id.editTextTextEmailAddress3)
-        var password = findViewById<EditText>(R.id.editTextTextPassword2)
-        var firstName = findViewById<EditText>(R.id.editTextTextEmailAddress4)
-        var lastName = findViewById<EditText>(R.id.editTextTextEmailAddress5)
-        var phoneNum = findViewById<EditText>(R.id.editTextPhone)
-        var dateOfBirth = findViewById<DatePicker>(R.id.datePicker)
-        var zipCode = findViewById<EditText>(R.id.editTextTextPostalAddress)
-        var adressField = findViewById<EditText>(R.id.adress)
-        var city = findViewById<EditText>(R.id.city)
+        val email = findViewById<EditText>(R.id.editTextTextEmailAddress3)
+        val password = findViewById<EditText>(R.id.editTextTextPassword2)
+        val firstName = findViewById<EditText>(R.id.editTextTextEmailAddress4)
+        val lastName = findViewById<EditText>(R.id.editTextTextEmailAddress5)
+        val phoneNum = findViewById<EditText>(R.id.editTextPhone)
+        val dateOfBirth = findViewById<EditText>(R.id.textView)
+        val zipCode = findViewById<EditText>(R.id.editTextTextPostalAddress)
+        val adressField = findViewById<EditText>(R.id.adress)
+        val city = findViewById<EditText>(R.id.city)
 
 
-        var inputEmail = email.text.toString()
-        var inputPassword = password.text.toString()
-        var inputFirstName = firstName.text.toString()
-        var inputLastName = lastName.text.toString()
-        var inputPhone = phoneNum.text.toString()
-        var inputDateOfBirth: String? = ""
-
-        val today = Calendar.getInstance()
-        dateOfBirth.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH))
-        { view, year, month, day ->
-            val month = month + 1
-            inputDateOfBirth = ": $day/$month/$year"
-        }
-
-        var inputZipCode = zipCode.text.toString()
-        var inputAdress = adressField.text.toString()
-        var inputCity = city.text.toString()
+        val inputEmail = email.text.toString()
+        val inputPassword = password.text.toString()
+        val inputFirstName = firstName.text.toString()
+        val inputLastName = lastName.text.toString()
+        val inputPhone = phoneNum.text.toString()
+        val inputDateOfBirth = dateOfBirth.text.toString()
+        val inputZipCode = zipCode.text.toString()
+        val inputAdress = adressField.text.toString()
+        val inputCity = city.text.toString()
         
 
         if(email.text.isEmpty() || password.text.isEmpty()){
@@ -91,6 +83,8 @@ class RegisterActivity : AppCompatActivity() {
 
                     val currentUser = Firebase.auth.currentUser
                     val userid = currentUser?.uid
+
+
 
                     db.collection("users") //Koppla userId
                         .document("$userid")
