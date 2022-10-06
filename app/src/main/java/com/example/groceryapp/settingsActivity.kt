@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -18,6 +20,7 @@ class settingsActivity : AppCompatActivity() {
         val notificationBtn  : TextView = findViewById(R.id.notification_tab_TV)
         val faqBtn : TextView = findViewById(R.id.faq_tab_TV)
         val signOutBtn: Button = findViewById(R.id.Signout_button_settings)
+        val backBtn = findViewById(R.id.image_back_settings) as ImageView
 
         userBtn.setOnClickListener {
             val intent = Intent(this, UserProfileActivity::class.java)
@@ -33,6 +36,9 @@ class settingsActivity : AppCompatActivity() {
             Firebase.auth.signOut()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+        }
+        backBtn.setOnClickListener {
+            finish()
         }
 
 

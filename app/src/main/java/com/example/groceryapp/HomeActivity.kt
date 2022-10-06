@@ -17,6 +17,7 @@ class HomeActivity : AppCompatActivity() {
         val testBtn = findViewById(R.id.btn_test) as Button
         val favoritesBtn = findViewById(R.id.btn_favorites) as ImageButton
         val homeBtn = findViewById(R.id.btn_home) as ImageButton
+        val settingBtn = findViewById(R.id.btn_settings) as ImageButton
 
         homeBtn.setOnClickListener {
             val intent = Intent(this, ShoppingListActivity::class.java)
@@ -41,6 +42,11 @@ class HomeActivity : AppCompatActivity() {
 
         testBtn.setOnClickListener {
             val intent = Intent(this, StoresActivity::class.java)
+            startActivity(intent)
+        }
+
+        settingBtn.setOnClickListener {
+            val intent = Intent(this, settingsActivity::class.java)
             startActivity(intent)
         }
     }
