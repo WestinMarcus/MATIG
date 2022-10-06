@@ -68,7 +68,7 @@ class ShoppingListActivity : AppCompatActivity() {
         val userid = Firebase.auth.currentUser?.uid
 
         var arrayAdapter: ArrayAdapter<*>
-        val mListView = findViewById<ListView>(R.id.lv_shoppingList)
+        val mListView = findViewById<ListView>(R.id.lv_Ica)
 
         val productList = mutableListOf<String>()
         val chainList = listOf("Coop", "ICA", "Ica", "Willys", "Lidl")

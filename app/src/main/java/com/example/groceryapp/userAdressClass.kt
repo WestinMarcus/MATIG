@@ -19,7 +19,6 @@ class userAdressClass {
                 val uid = user?.uid
                 var userAdressen = ""
 
-
                 db.collection("users").document("$uid")
                     .get()
                     .addOnSuccessListener { userDoc ->
@@ -28,7 +27,11 @@ class userAdressClass {
                         userAdressen += ", $uCity"
 
                     }
-                return userAdressen
+
+                do {
+                }while (userAdressen == "")
+
+                return  userAdressen
             }
 
 }
