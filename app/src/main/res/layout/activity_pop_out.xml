@@ -20,24 +20,24 @@
             android:id="@+id/tv_productName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="@string/tv_text" />
 
         <TextView
             android:id="@+id/tv_productInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="@string/tv_text" />
 
         <TextView
             android:id="@+id/tv_productPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="@string/tv_text" />
         <TextView
             android:id="@+id/tv_productPriceRelative"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="@string/tv_text" />
 
         <LinearLayout
             android:layout_width="match_parent"

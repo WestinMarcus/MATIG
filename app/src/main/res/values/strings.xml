@@ -31,5 +31,6 @@
     <string name="sign_out">Sign Out</string>
     <string name="change_email">Change Email</string>
     <string name="change_password">Change Password</string>
+    <string name="tv_text">text</string>
 
 </resources>
