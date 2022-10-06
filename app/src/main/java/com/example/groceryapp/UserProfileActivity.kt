@@ -123,7 +123,7 @@ class UserProfileActivity : AppCompatActivity() {
 
         val inputFirstName = firstName.text.toString()
         val inputLastName = lastName.text.toString()
-        val inputDateOfBirth = "Fixa senare"
+        val inputDateOfBirth = dateOfBirth.text.toString()
         val inputPhone = phoneNmb.text.toString()
         val inputZipCode = zip.text.toString()
         val inputAdress = adress.text.toString()
