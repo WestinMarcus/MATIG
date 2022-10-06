@@ -9,14 +9,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.ktx.firestore
 import java.util.*
 import kotlinx.coroutines.*
-import kotlin.collections.List
-import kotlin.system.*
-
 class StoresActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

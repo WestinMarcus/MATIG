@@ -59,7 +59,7 @@
             android:layout_height="match_parent"
             android:background="@color/grey"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_baseline_question_mark" />
+            app:srcCompat="@drawable/ic_baseline_shopping_cart_24" />
 
         <ImageButton
             android:id="@+id/btn_settings"
