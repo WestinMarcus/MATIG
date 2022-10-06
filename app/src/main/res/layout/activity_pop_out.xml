@@ -26,18 +26,18 @@
             android:id="@+id/tv_productInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="MORE INFORMATION HERE" />
+            android:text="" />
 
         <TextView
-            android:id="@+id/tv_productPriceEach"
+            android:id="@+id/tv_productPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PRICE" />
+            android:text="" />
         <TextView
             android:id="@+id/tv_productPriceRelative"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RELATIVE PRICE (/weight /volume)" />
+            android:text="" />
 
         <LinearLayout
             android:layout_width="match_parent"
