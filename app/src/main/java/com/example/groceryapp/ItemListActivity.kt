@@ -1,15 +1,17 @@
 package com.example.groceryapp
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.tabs.TabLayout.TabGravity
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -34,6 +36,7 @@ class ItemListActivity : AppCompatActivity() {
         val foodItemList = mutableListOf<String>()
         var arrayAdapter: ArrayAdapter<*>
         val foodListView = findViewById<ListView>(R.id.lvFoodItems)
+        val addFavBtn = findViewById(R.id.btn_addFavorite) as Button
 
         db.collection("Aktiva erbj.").document("$chainName").collection("$store")
             .get()
@@ -53,13 +56,22 @@ class ItemListActivity : AppCompatActivity() {
             val product = parent.getItemAtPosition(position)
             val intent = Intent(this, PopOutActivity::class.java)
             intent.putExtra("product", "$product")
-
             startActivity(intent)
-
         }
 
-        /*       vid "favorit"-knapptryck -> skicka till db.user.favorites(storename)        */
+        addFavBtn.setOnClickListener {
+            val userid = Firebase.auth.currentUser?.uid
+            val data = hashMapOf(
+                "name" to "placeholder"
+            )
 
-
+            db.collection("users")
+                .document("$userid")
+                .collection("Favorites")
+                .document("$store")
+                .set(data)
+                .addOnSuccessListener { Log.i(TAG, "added fav store as document: $store") }
+                .addOnFailureListener { Log.i(TAG, "failed to add fav store as document") }
+        }
     }
 }

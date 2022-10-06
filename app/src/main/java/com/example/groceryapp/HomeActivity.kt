@@ -12,7 +12,6 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-
         val searchBtn = findViewById(R.id.btn_search) as ImageButton
         val userBtn = findViewById(R.id.btn_user) as ImageButton
         val testBtn = findViewById(R.id.btn_test) as Button

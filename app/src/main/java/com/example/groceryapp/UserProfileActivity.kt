@@ -88,7 +88,6 @@ class UserProfileActivity : AppCompatActivity() {
         }*/
 
 
-
         // Funktion för att tanka ner och fylla ut användardata
         db.collection("users").document("$uid")
             .get()
