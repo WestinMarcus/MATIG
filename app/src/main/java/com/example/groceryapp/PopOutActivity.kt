@@ -22,12 +22,14 @@ class PopOutActivity : AppCompatActivity() {
         val chain = intent.getStringExtra("chain")
         val store = intent.getStringExtra("store")
 
-        Log.i(TAG, "Chain: $chain, Store: $store, product: $product")
+        Log.i(TAG, "PopOut: Chain: $chain, Store: $store, Product: $product")
 
         val productHeader: TextView = findViewById(R.id.tv_productName)
         productHeader.text = "$product"
         val addToShoppingList = findViewById<Button>(R.id.btn_addToShoppingList)
+        val removeFromShoppingList = findViewById<Button>(R.id.btn_removeFromShoppingList)
         val db = Firebase.firestore
+        val userid = Firebase.auth.currentUser?.uid
 
         val price: TextView = findViewById(R.id.tv_productPrice)
         val info: TextView = findViewById(R.id.tv_productInfo)
@@ -54,9 +56,8 @@ class PopOutActivity : AppCompatActivity() {
                     inputText = productPriceVol + "l/kg"
                     priceRelative.text = inputText
                 }
+                /*---------------add product to shopping list--------------------*/
                 addToShoppingList.setOnClickListener {
-                    val userid = Firebase.auth.currentUser?.uid
-
                     if (productMap != null) {
                         db.collection("users")
                             .document("$userid")
@@ -64,12 +65,24 @@ class PopOutActivity : AppCompatActivity() {
                             .document("$product")
                             .set(productMap)
                             .addOnSuccessListener { Log.i(ContentValues.TAG, "added product to shopping list: $product") }
-                            .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add fav store as document") }
+                            .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add product to shopping list") }
                     }
                 }
+                /*---------------remove product from shopping list--------------------*/
+
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents.", exception)
             }
+        removeFromShoppingList.setOnClickListener {
+            db.collection("users")
+                .document("$userid")
+                .collection("Shoppinglist")
+                .document("$product")
+                .delete()
+                .addOnSuccessListener { Log.i(ContentValues.TAG, "removed product from shopping list: $product") }
+                .addOnFailureListener { Log.i(ContentValues.TAG, "failed to delete product from shopping list") }
+
+        }
     }
 }
