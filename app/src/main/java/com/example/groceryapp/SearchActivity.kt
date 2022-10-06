@@ -14,6 +14,46 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
+        val searchBtn = findViewById(R.id.btn_search) as ImageButton
+        val shoppingListBtn = findViewById(R.id.btn_shoppingList) as ImageButton
+        val favoritesBtn = findViewById(R.id.btn_favorites) as ImageButton
+        val homeBtn = findViewById(R.id.btn_home) as ImageButton
+        val settingsBtn = findViewById(R.id.btn_settings) as ImageButton
+
+        searchBtn.setBackgroundColor(getResources().getColor(R.color.white))
+
+        homeBtn.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        favoritesBtn.setOnClickListener {
+            val intent = Intent(this, FavoritesActivity::class.java)
+            startActivity(intent)
+            finish()
+
+        }
+
+        searchBtn.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        shoppingListBtn.setOnClickListener {
+            val intent = Intent(this, ShoppingListActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        settingsBtn.setOnClickListener {
+            val intent = Intent(this, settingsActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+
         val button_toggle = findViewById(R.id.btn_toggle) as ToggleButton
         var searchToggle = ""
         button_toggle.setOnCheckedChangeListener { compoundButton, isChecked ->

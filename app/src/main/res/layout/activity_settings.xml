@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,85 +8,126 @@
     android:orientation="vertical"
     tools:context=".UserProfileActivity">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/cardview_shadow_end_color">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/image_back_settings"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/cardview_shadow_end_color">
+            android:padding="15dp"
+            android:src="@drawable/ic_baseline_arrow_back_"/>
 
-            <ImageView
-                android:id="@+id/image_back_settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:src="@drawable/ic_baseline_arrow_back_"/>
+    </LinearLayout>
 
-        </LinearLayout>
+    <TextView
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="5dp"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/textview_border"
+        android:drawablePadding="10dp"
+        android:text="@string/user_profile"
+        app:drawableLeftCompat="@drawable/ic_baseline_person"
+        app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios"
+        android:id="@+id/user_profile_TV">
+    </TextView>
+    <TextView
+        android:id="@+id/notification_tab_TV"
+        android:layout_marginBottom="5dp"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/textview_border"
+        android:drawablePadding="10dp"
+        android:text="@string/notifications"
+        app:drawableLeftCompat="@drawable/ic_baseline_notifications"
+        app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios">
+    </TextView>
+    <TextView
+        android:layout_marginBottom="5dp"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/textview_border"
+        android:drawablePadding="10dp"
+        android:text="@string/faq"
+        app:drawableLeftCompat="@drawable/ic_baseline_question_mark"
+        app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios"
+        android:id="@+id/faq_tab_TV">
+    </TextView>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/Signout_button_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_out"
+        />
+
+    <LinearLayout
+        android:id="@+id/filler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_buttonRow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/buttonrow_height"
+        android:orientation="horizontal"
+        android:background="@color/grey"
+        android:weightSum="5"
+        app:layout_constraintBottom_toBottomOf="parent">
 
 
-
-
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/btn_home"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            >
+            android:layout_height="match_parent"
+            android:background="@color/grey"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_baseline_house_24" />
 
-            <TextView
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="5dp"
-                android:padding="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/textview_border"
-                android:drawablePadding="10dp"
-                android:text="@string/user_profile"
-                app:drawableLeftCompat="@drawable/ic_baseline_person"
-                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios"
-                android:id="@+id/user_profile_TV">
-            </TextView>
-            <TextView
-                android:id="@+id/notification_tab_TV"
-                android:layout_marginBottom="5dp"
-                android:padding="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/textview_border"
-                android:drawablePadding="10dp"
-                android:text="@string/notifications"
-                app:drawableLeftCompat="@drawable/ic_baseline_notifications"
-                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios">
-            </TextView>
-            <TextView
-                android:layout_marginBottom="5dp"
-                android:padding="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/textview_border"
-                android:drawablePadding="10dp"
-                android:text="@string/faq"
-                app:drawableLeftCompat="@drawable/ic_baseline_question_mark"
-                app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios"
-                android:id="@+id/faq_tab_TV">
-            </TextView>
+        <ImageButton
+            android:id="@+id/btn_favorites"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/btn_star_big_off" />
 
-            <Button
-                android:layout_marginTop="20dp"
-                android:id="@+id/Signout_button_settings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_out"
-                />
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_menu_search" />
 
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/btn_shoppingList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_baseline_question_mark" />
+
+        <ImageButton
+            android:id="@+id/btn_settings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_menu_manage" />
 
 
     </LinearLayout>
 
-
-</ScrollView>
+</LinearLayout>

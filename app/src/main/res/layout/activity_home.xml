@@ -19,7 +19,7 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/ll_buttonRow"
         android:layout_width="match_parent"
         android:layout_height="@dimen/buttonrow_height"
         android:orientation="horizontal"
@@ -54,12 +54,12 @@
             app:srcCompat="@android:drawable/ic_menu_search" />
 
         <ImageButton
-            android:id="@+id/btn_user"
+            android:id="@+id/btn_shoppingList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/grey"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_baseline_person" />
+            app:srcCompat="@drawable/ic_baseline_question_mark" />
 
         <ImageButton
             android:id="@+id/btn_settings"

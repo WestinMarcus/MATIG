@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageButton
 import android.widget.ListView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -16,6 +17,47 @@ class ShoppingListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shopping_list)
+
+
+        val searchBtn = findViewById(R.id.btn_search) as ImageButton
+        val shoppingListBtn = findViewById(R.id.btn_shoppingList) as ImageButton
+        val favoritesBtn = findViewById(R.id.btn_favorites) as ImageButton
+        val homeBtn = findViewById(R.id.btn_home) as ImageButton
+        val settingsBtn = findViewById(R.id.btn_settings) as ImageButton
+
+        shoppingListBtn.setBackgroundColor(getResources().getColor(R.color.white))
+
+        homeBtn.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        favoritesBtn.setOnClickListener {
+            val intent = Intent(this, FavoritesActivity::class.java)
+            startActivity(intent)
+            finish()
+
+        }
+
+        searchBtn.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        shoppingListBtn.setOnClickListener {
+            val intent = Intent(this, ShoppingListActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        settingsBtn.setOnClickListener {
+            val intent = Intent(this, settingsActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
 
         val db = Firebase.firestore
         val userid = Firebase.auth.currentUser?.uid
