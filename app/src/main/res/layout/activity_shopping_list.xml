@@ -27,11 +27,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ica:"
+
             />
         <ListView
+            android:background="@drawable/textview_border"
             android:id="@+id/lv_Ica"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="2dp"
@@ -43,36 +45,42 @@
             android:text="Willys:"
             />
         <ListView
+            android:background="@drawable/textview_border"
             android:id="@+id/lv_Willys"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="2dp" />
         <TextView
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lidl:"
             />
         <ListView
+            android:background="@drawable/textview_border"
             android:id="@+id/lv_Lidl"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="2dp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Coop:"
-            />
-        <ListView
-            android:id="@+id/lv_Coop"
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="2dp"/>
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Coop:"
+                />
+            <ListView
+                android:background="@drawable/textview_border"
+                android:id="@+id/lv_Coop"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="2dp"/>
 
 
         <LinearLayout
