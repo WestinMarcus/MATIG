@@ -32,6 +32,7 @@ class StoresActivity : AppCompatActivity() {
         var userAddress = ""
 
         /*-----------------Retrieves user address from Firestore----------------------*/
+        /*
         runBlocking{
             launch(Dispatchers.IO) {
                 db.collection("users").document("$uid")
@@ -47,7 +48,7 @@ class StoresActivity : AppCompatActivity() {
                 }
             }
         }
-
+    */
         /*---------------------- Gets list of store chain names ----------------------*/
         db.collection("Store chains")
         .get()
@@ -55,7 +56,7 @@ class StoresActivity : AppCompatActivity() {
             for (document in chainList) {
                 storeChainList.add(document.id)
             }
-            val (userLat, userLong) = convertAddressToCoordinates(userAddress)
+            //val (userLat, userLong) = convertAddressToCoordinates(userAddress)
             for(chainName in storeChainList)
             {
                 /*---------------Gets list of all store from all chains---------------*/
@@ -72,8 +73,8 @@ class StoresActivity : AppCompatActivity() {
 
                         /*------------converts address to coordinates for latest store in storelist--------------*/
                         val (storeLat, storeLong) = convertAddressToCoordinates(storeAdressList.last())
-                        val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
-                        Log.i(TAG, "Distance from user to ${storeList.last()}: ${distance}m")
+                        //val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
+                        //Log.i(TAG, "Distance from user to ${storeList.last()}: ${distance}m")
                     }
                     arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
                     mListView.adapter = arrayAdapter

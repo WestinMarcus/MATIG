@@ -1,12 +1,13 @@
 package com.example.groceryapp
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
-import androidx.core.content.ContextCompat
-import com.google.android.material.internal.ContextUtils.getActivity
+
 
 
 class HomeActivity : AppCompatActivity() {
@@ -63,10 +64,14 @@ class HomeActivity : AppCompatActivity() {
 
 
         testBtn.setOnClickListener {
-            val intent = Intent(this, StoresActivity::class.java)
-            startActivity(intent)
+           // val intent = Intent(this, StoresActivity::class.java)
+        //startActivity(intent)
+
+           var adress = userAdressClass().test()
             
 
+            Log.i(TAG,"adress:$adress")
         }
     }
+
 }
