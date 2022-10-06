@@ -43,6 +43,5 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, StoresActivity::class.java)
             startActivity(intent)
         }
-
     }
 }

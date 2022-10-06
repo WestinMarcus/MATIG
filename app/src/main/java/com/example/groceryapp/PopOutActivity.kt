@@ -1,11 +1,15 @@
 package com.example.groceryapp
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.TextView
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -17,8 +21,10 @@ class PopOutActivity : AppCompatActivity() {
         val product = intent.getStringExtra("product")
         val chain = intent.getStringExtra("chain")
         val store = intent.getStringExtra("store")
+        Log.e(TAG, "args to popout: product: $product,  chain: $chain, store: $store ")
         val productHeader: TextView = findViewById(R.id.tv_productName)
         productHeader.text = "$product"
+        val addToShoppingList = findViewById<Button>(R.id.btn_addToShoppingList)
         val db = Firebase.firestore
 
         val price: TextView = findViewById(R.id.tv_productPrice)
@@ -33,6 +39,7 @@ class PopOutActivity : AppCompatActivity() {
                 val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
                 val productPriceVol = document.getString("Jämfört pris(lit)")?:"default"
 
+
                 price.text = productPrice
                 info.text = productInfo
                 val inputText: String
@@ -43,11 +50,23 @@ class PopOutActivity : AppCompatActivity() {
                     inputText = productPriceVol + "l/kg"
                     priceRelative.text = inputText
                 }
+                addToShoppingList.setOnClickListener {
+                    val userid = Firebase.auth.currentUser?.uid
+                    val productData = hashMapOf(
+                        "name" to "produktid"
+                    )
+                    db.collection("users")
+                        .document("$userid")
+                        .collection("Shoppinglist")
+                        .document("$store")
+                        .set(productData)
+                        .addOnSuccessListener { Log.i(ContentValues.TAG, "added product to shopping list: $store") }
+                        .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add fav store as document") }
+                }
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents.", exception)
             }
-
 
 
     }

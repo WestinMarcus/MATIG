@@ -1,15 +1,17 @@
 package com.example.groceryapp
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.tabs.TabLayout.TabGravity
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -34,6 +36,7 @@ class ItemListActivity : AppCompatActivity() {
         val foodItemList = mutableListOf<String>()
         var arrayAdapter: ArrayAdapter<*>
         val foodListView = findViewById<ListView>(R.id.lvFoodItems)
+        val addFavBtn = findViewById<Button>(R.id.btn_addFavorite)
 
         db.collection("Aktiva erbj.").document("$chainName").collection("$store")
             .get()
@@ -46,7 +49,7 @@ class ItemListActivity : AppCompatActivity() {
                 foodListView.adapter = arrayAdapter
             }
             .addOnFailureListener { exception ->
-                Log.w(ContentValues.TAG, "Error getting documents.", exception)
+                Log.w(TAG, "Error getting documents.", exception)
             }
         //pop out dialog för vald produkt
         foodListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -57,11 +60,20 @@ class ItemListActivity : AppCompatActivity() {
             intent.putExtra("store", "$store")
 
             startActivity(intent)
-
         }
 
-        /*       vid "favorit"-knapptryck -> skicka till db.user.favorites(storename)        */
-
-
+        addFavBtn.setOnClickListener {
+            val userid = Firebase.auth.currentUser?.uid
+            val data = hashMapOf(
+                "name" to "placeholder"
+            )
+            db.collection("users")
+                .document("$userid")
+                .collection("Favorites")
+                .document("$store")
+                .set(data)
+                .addOnSuccessListener { Log.i(TAG, "added fav store as document: $store") }
+                .addOnFailureListener { Log.i(TAG, "failed to add fav store as document") }
+        }
     }
 }
