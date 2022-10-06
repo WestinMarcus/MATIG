@@ -43,7 +43,17 @@ class PopOutActivity : AppCompatActivity() {
 
                 price.text = productPrice
                 info.text = productInfo
-                priceRelative.text = productPriceWeight
+                val inputText: String
+                if (productPriceWeight != "Data saknas") {
+                    inputText = productPriceWeight + "kr/kg"
+                    priceRelative.text = inputText
+                }else if (productPriceVol != "Data saknas") {
+                    inputText = productPriceVol + "l/kg"
+                    priceRelative.text = inputText
+                }else{
+                    inputText = productPriceEach + "st."
+                    priceRelative.text = inputText
+                }
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents.", exception)

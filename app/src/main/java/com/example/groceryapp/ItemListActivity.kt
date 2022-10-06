@@ -53,6 +53,8 @@ class ItemListActivity : AppCompatActivity() {
             val product = parent.getItemAtPosition(position)
             val intent = Intent(this, PopOutActivity::class.java)
             intent.putExtra("product", "$product")
+            intent.putExtra("chain", "$chainName")
+            intent.putExtra("store", "$store")
 
             startActivity(intent)
 
