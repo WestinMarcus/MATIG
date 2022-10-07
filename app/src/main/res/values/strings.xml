@@ -37,5 +37,7 @@
     <string name="something_useful">something useful</string>
     <string name="notifications">Notifications</string>
     <string name="faq">FAQ</string>
+    <string name="search">Search</string>
+    <string name="search_nearby">Search Nearby</string>
 
 </resources>

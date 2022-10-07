@@ -17,13 +17,10 @@ class StoresActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stores)
-        val db = Firebase.firestore
-        val user = Firebase.auth.currentUser
-        val uid = user?.uid
-
-
 
         val sBtn : Button = findViewById(R.id.button2)
+
+        fillFields()
 
         sBtn.setOnClickListener(){
             mainFun()
@@ -33,18 +30,39 @@ class StoresActivity : AppCompatActivity() {
 
     }
 
+    private fun fillFields(){
+
+        val db = Firebase.firestore
+
+        val adresss : TextView = findViewById(R.id.editText)
+        val city : TextView = findViewById(R.id.editText2)
+
+        val user = Firebase.auth.currentUser
+        val uid = user?.uid
+
+        var userAdress = ""
+        var userCity = ""
+
+
+        db.collection("users").document("$uid")
+            .get()
+            .addOnSuccessListener { document ->
+
+                userAdress = document.getString("Adress") ?: "default"
+                userCity = document.getString("City") ?: "default"
+
+                adresss.setText(userAdress).toString()
+                city.setText(userCity).toString()
+            }
+    }
+
     private fun mainFun(){
         val db = Firebase.firestore
         val storeChainList = mutableListOf<String>()
         val storeList = mutableListOf<String>()
         val storeAdressList = mutableListOf<String>()
-
         var arrayAdapter: ArrayAdapter<*>
         val mListView = findViewById<ListView>(R.id.lvStores)
-
-        val user = Firebase.auth.currentUser
-        val uid = user?.uid
-
         var userAddress = ""
 
         val adresss : TextView = findViewById(R.id.editText)
@@ -56,9 +74,6 @@ class StoresActivity : AppCompatActivity() {
 
         userAddress = "$adresss1, $city1"
         Log.w(TAG, "Thread: ${Thread.currentThread().name}")
-
-
-
 
 
         Log.w(TAG, "Thread post runblock: ${Thread.currentThread().name}, useraddres: $userAddress")
