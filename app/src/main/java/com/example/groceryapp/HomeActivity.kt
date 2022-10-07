@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -17,7 +18,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        val testBtn = findViewById(R.id.btn_test) as Button
+        val testBtn = findViewById(R.id.distance_pin_IV) as ImageView
 
 
         val searchBtn = findViewById(R.id.btn_search) as ImageButton
