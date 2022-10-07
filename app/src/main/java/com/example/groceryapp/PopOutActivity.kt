@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldPath
@@ -32,6 +33,10 @@ class PopOutActivity : AppCompatActivity() {
         val db = Firebase.firestore
         val userid = Firebase.auth.currentUser?.uid
 
+        val closeBtn: ImageButton = findViewById(R.id.btn_close)
+        closeBtn.setOnClickListener {
+            finish()
+        }
         val price: TextView = findViewById(R.id.tv_productPrice)
         val info: TextView = findViewById(R.id.tv_productInfo)
         val priceRelative: TextView = findViewById(R.id.tv_productPriceRelative)
