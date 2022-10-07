@@ -55,12 +55,14 @@ class PopOutActivity : AppCompatActivity() {
                 price.text = productPrice
                 info.text = productInfo
                 val inputText: String
-                if (productPriceWeight != "Data saknas") {
+                if (productPriceWeight != "information saknas") {
                     inputText = productPriceWeight + "kr/kg"
                     priceRelative.text = inputText
-                }else if (productPriceVol != "Data saknas") {
+                }else if (productPriceVol != "information saknas") {
                     inputText = productPriceVol + "l/kg"
                     priceRelative.text = inputText
+                }else{
+                    priceRelative.text = ""
                 }
                 /*---------------add product to shopping list--------------------*/
                 addToShoppingList.setOnClickListener {
@@ -77,8 +79,6 @@ class PopOutActivity : AppCompatActivity() {
                             .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add product to shopping list") }
                     }
                 }
-                /*---------------remove product from shopping list--------------------*/
-
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents.", exception)
@@ -96,7 +96,6 @@ class PopOutActivity : AppCompatActivity() {
                 {
                     val intent = Intent(this, ShoppingListActivity::class.java)
                     startActivity(intent)
-                    overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
                 }
                 finish()
             }
