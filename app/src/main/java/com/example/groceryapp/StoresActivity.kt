@@ -4,22 +4,36 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.location.Geocoder
 import android.location.Location
-import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.widget.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.ktx.firestore
 import java.util.*
-import kotlinx.coroutines.*
+
 class StoresActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stores)
+        val db = Firebase.firestore
+        val user = Firebase.auth.currentUser
+        val uid = user?.uid
 
+
+
+        val sBtn : Button = findViewById(R.id.button2)
+
+        sBtn.setOnClickListener(){
+            mainFun()
+        }
+
+
+
+    }
+
+    private fun mainFun(){
         val db = Firebase.firestore
         val storeChainList = mutableListOf<String>()
         val storeList = mutableListOf<String>()
@@ -33,67 +47,59 @@ class StoresActivity : AppCompatActivity() {
 
         var userAddress = ""
 
+        val adresss : TextView = findViewById(R.id.editText)
+        val city : TextView = findViewById(R.id.editText2)
+
+
+        val adresss1 = adresss.text.toString()
+        val city1 = city.text.toString()
+
+        userAddress = "$adresss1, $city1"
         Log.w(TAG, "Thread: ${Thread.currentThread().name}")
 
-        /*-----------------Retrieves user address from Firestore----------------------*/
 
-        runBlocking{
-            launch(Dispatchers.IO) {
-                Log.w(TAG, "Thread in runblocking: ${Thread.currentThread().name}, useraddres: $userAddress")
-                db.collection("users").document("$uid")
-                .get()
-                .addOnSuccessListener { userDoc ->
 
-                    val uCity = userDoc.getString("City") ?: "Default"
-                    userAddress = userDoc.getString("Adress") ?: "Default"
-                    userAddress += ", $uCity"
-                    Log.w(TAG, "Thread in addonSuccess: ${Thread.currentThread().name}, useraddres: $userAddress")
 
-                }
-                .addOnFailureListener {
-                    Log.i(TAG, "FailureListener in runBlocking")
-                }
-            }
-        }
+
         Log.w(TAG, "Thread post runblock: ${Thread.currentThread().name}, useraddres: $userAddress")
         /*---------------------- Gets list of store chain names ----------------------*/
         db.collection("Store chains")
-        .get()
-        .addOnSuccessListener { chainList ->
-            for (document in chainList) {
-                storeChainList.add(document.id)
-            }
-            val (userLat, userLong) = convertAddressToCoordinates(userAddress)
-            for(chainName in storeChainList)
-            {
-                /*---------------Gets list of all store from all chains---------------*/
-                db.collection("store list")
-                .document("Butik info")
-                .collection("$chainName")
-                .get()
-                .addOnSuccessListener { stores ->
-                    for (store in stores)
-                    {
-                        storeList.add(store.id)
-                        storeAdressList.add(store.getString("Adress") ?: "default")
-                        // MAKE NEW LIST AND SAVE DISTANCE TO ALL STORES
+            .get()
+            .addOnSuccessListener { chainList ->
+                for (document in chainList) {
+                    storeChainList.add(document.id)
+                }
+                val (userLat, userLong) = convertAddressToCoordinates(userAddress)
+                for(chainName in storeChainList)
+                {
+                    /*---------------Gets list of all store from all chains---------------*/
+                    db.collection("store list")
+                        .document("Butik info")
+                        .collection("$chainName")
+                        .get()
+                        .addOnSuccessListener { stores ->
+                            for (store in stores)
+                            {
+                                storeList.add(store.id)
+                                storeAdressList.add(store.getString("Adress") ?: "default")
+                                // MAKE NEW LIST AND SAVE DISTANCE TO ALL STORES
 
-                        /*------------converts address to coordinates for latest store in storelist--------------*/
-                        val (storeLat, storeLong) = convertAddressToCoordinates(storeAdressList.last())
-                        val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
-                        Log.i(TAG, "Distance from user to ${storeList.last()}: ${distance}m")
-                    }
-                    arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
-                    mListView.adapter = arrayAdapter
-                }
-                .addOnFailureListener { exception ->
-                    Log.e(TAG, "Error getting documents.", exception)
+                                /*------------converts address to coordinates for latest store in storelist--------------*/
+                                val (storeLat, storeLong) = convertAddressToCoordinates(storeAdressList.last())
+                                val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
+                                Log.i(TAG, "Distance from user to ${storeList.last()}: ${distance}m")
+                            }
+                            arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
+                            mListView.adapter = arrayAdapter
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.e(TAG, "Error getting documents.", exception)
+                        }
                 }
             }
-        }
-        .addOnFailureListener {
-            Log.e(TAG, "Error: FailureListener")
-        }
+            .addOnFailureListener {
+                Log.e(TAG, "Error: FailureListener")
+            }
         Log.w(TAG, "Thread post final failure: ${Thread.currentThread().name}, useraddres: $userAddress")
 
         mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
