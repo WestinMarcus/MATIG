@@ -55,10 +55,10 @@ class PopOutActivity : AppCompatActivity() {
                 price.text = productPrice
                 info.text = productInfo
                 val inputText: String
-                if (productPriceWeight != "Information saknas") {
+                if (productPriceWeight != "Data saknas") {
                     inputText = productPriceWeight + "kr/kg"
                     priceRelative.text = inputText
-                }else if (productPriceVol != "Information saknas") {
+                }else if (productPriceVol != "Data saknas") {
                     inputText = productPriceVol + "l/kg"
                     priceRelative.text = inputText
                 }

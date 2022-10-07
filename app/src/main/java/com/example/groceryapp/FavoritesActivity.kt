@@ -82,8 +82,9 @@ class FavoritesActivity : AppCompatActivity() {
             val selectedStore = parent.getItemAtPosition(position)
             val intent = Intent(this, ItemListActivity::class.java)
             intent.putExtra("store", "$selectedStore")
+            intent.putExtra("activity", "FavoritesActivity")
             startActivity(intent)
-            overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
+
         }
     }
 }

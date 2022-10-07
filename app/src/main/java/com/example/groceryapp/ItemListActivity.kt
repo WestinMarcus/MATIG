@@ -37,6 +37,7 @@ class ItemListActivity : AppCompatActivity() {
         var arrayAdapter: ArrayAdapter<*>
         val foodListView = findViewById<ListView>(R.id.lvFoodItems)
         val addFavBtn = findViewById<Button>(R.id.btn_addFavorite)
+        val removeFavBtn = findViewById<Button>(R.id.btn_removeFavorite)
 
         db.collection("Aktiva erbj.").document("$chainName").collection("$store")
             .get()
@@ -73,6 +74,26 @@ class ItemListActivity : AppCompatActivity() {
                 .set(data)
                 .addOnSuccessListener { Log.i(TAG, "added fav store as document: $store") }
                 .addOnFailureListener { Log.i(TAG, "failed to add fav store as document") }
+        }
+
+        removeFavBtn.setOnClickListener {
+            val userid = Firebase.auth.currentUser?.uid
+
+            db.collection("users")
+                .document("$userid")
+                .collection("Favorites")
+                .document("$store")
+                .delete()
+                .addOnSuccessListener {
+                    Log.i(TAG, "removed fav store: $store")
+                    if (intent.getStringExtra("activity") == "FavoritesActivity")
+                    {
+                        val intent = Intent(this, FavoritesActivity::class.java)
+                        startActivity(intent)
+                    }
+                    finish()
+                }
+                .addOnFailureListener { Log.i(TAG, "failed to remove fav store as document") }
         }
     }
 }
