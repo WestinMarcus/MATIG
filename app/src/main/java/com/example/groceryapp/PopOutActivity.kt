@@ -52,7 +52,7 @@ class PopOutActivity : AppCompatActivity() {
                 val productMap = document.data
                 productMap?.put("Storename", "$store")
 
-                price.text = productPrice
+                price.text = "Pris: $productPrice"
                 info.text = productInfo
                 val inputText: String
                 if (productPriceWeight != "Data saknas") {

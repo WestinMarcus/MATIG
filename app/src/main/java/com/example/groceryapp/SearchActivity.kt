@@ -53,7 +53,6 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
 
-
         val button_toggle = findViewById(R.id.btn_toggle) as ToggleButton
         var searchToggle = ""
         button_toggle.setOnCheckedChangeListener { compoundButton, isChecked ->

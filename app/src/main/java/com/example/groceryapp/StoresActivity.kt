@@ -25,9 +25,6 @@ class StoresActivity : AppCompatActivity() {
         sBtn.setOnClickListener(){
             mainFun()
         }
-
-
-
     }
 
     private fun fillFields(){
@@ -64,6 +61,7 @@ class StoresActivity : AppCompatActivity() {
         var arrayAdapter: ArrayAdapter<*>
         val mListView = findViewById<ListView>(R.id.lvStores)
         var userAddress = ""
+        val storeDistances = mutableListOf<Pair<String, String>>()
 
         val adresss : TextView = findViewById(R.id.editText)
         val city : TextView = findViewById(R.id.editText2)
@@ -73,10 +71,7 @@ class StoresActivity : AppCompatActivity() {
         val city1 = city.text.toString()
 
         userAddress = "$adresss1, $city1"
-        Log.w(TAG, "Thread: ${Thread.currentThread().name}")
 
-
-        Log.w(TAG, "Thread post runblock: ${Thread.currentThread().name}, useraddres: $userAddress")
         /*---------------------- Gets list of store chain names ----------------------*/
         db.collection("Store chains")
             .get()
@@ -95,17 +90,16 @@ class StoresActivity : AppCompatActivity() {
                         .addOnSuccessListener { stores ->
                             for (store in stores)
                             {
-                                storeList.add(store.id)
                                 storeAdressList.add(store.getString("Adress") ?: "default")
-                                // MAKE NEW LIST AND SAVE DISTANCE TO ALL STORES
 
-                                /*------------converts address to coordinates for latest store in storelist--------------*/
                                 val (storeLat, storeLong) = convertAddressToCoordinates(storeAdressList.last())
                                 val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
-                                Log.i(TAG, "Distance from user to ${storeList.last()}: ${distance}m")
+
+                                storeList.add(store.id+" ("+distance+"m)")
+                                //Log.i(TAG, "Distance from user to ${storeList.last()}: ${distance}m")
                             }
-                            arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
-                            mListView.adapter = arrayAdapter
+
+                            mListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
                         }
                         .addOnFailureListener { exception ->
                             Log.e(TAG, "Error getting documents.", exception)
@@ -115,7 +109,6 @@ class StoresActivity : AppCompatActivity() {
             .addOnFailureListener {
                 Log.e(TAG, "Error: FailureListener")
             }
-        Log.w(TAG, "Thread post final failure: ${Thread.currentThread().name}, useraddres: $userAddress")
 
         mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectedStore = parent.getItemAtPosition(position)
@@ -143,7 +136,6 @@ class StoresActivity : AppCompatActivity() {
 
     private fun convertAddressToCoordinates(address: String): Pair<String, String>
     {
-
         val geocode = Geocoder(this, Locale.getDefault())
         val addressList = geocode.getFromLocationName(address, 1)
 
@@ -152,6 +144,5 @@ class StoresActivity : AppCompatActivity() {
 
         return Pair(lat, long)
     }
-
 }
 
