@@ -105,8 +105,6 @@ class ItemListActivity : AppCompatActivity() {
                 search.clearFocus()
                 if(foodItemList.contains(p0)){
                     arrayAdapter.filter.filter(p0)
-                }else{
-                    Toast.makeText(applicationContext, "Fuck u", Toast.LENGTH_SHORT).show()
                 }
                 return false
             }
