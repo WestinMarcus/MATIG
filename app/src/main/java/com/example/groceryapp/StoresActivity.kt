@@ -95,10 +95,10 @@ class StoresActivity : AppCompatActivity() {
                                 val (storeLat, storeLong) = convertAddressToCoordinates(storeAdressList.last())
                                 val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
 
-                                storeList.add(store.id+" ("+distance+"m)")
+                                storeList.add(""+distance+"m - \t\t"+ store.id)
                                 //Log.i(TAG, "Distance from user to ${storeList.last()}: ${distance}m")
                             }
-
+                            storeList.sort()
                             mListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
                         }
                         .addOnFailureListener { exception ->
