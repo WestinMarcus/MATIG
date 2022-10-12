@@ -22,6 +22,9 @@ class SearchActivity : AppCompatActivity() {
 
         searchBtn.setBackgroundColor(getResources().getColor(R.color.white))
 
+        //För att fylla onCreate med stores
+        setStores()
+
         homeBtn.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
@@ -56,14 +59,30 @@ class SearchActivity : AppCompatActivity() {
         val button_toggle = findViewById(R.id.btn_toggle) as ToggleButton
         var searchToggle = ""
         button_toggle.setOnCheckedChangeListener { compoundButton, isChecked ->
-            if (isChecked)
+            if (isChecked){
                 searchToggle = "Products"
-            else
+                var arrayAdapter: ArrayAdapter<*>
+                val storeChainList = mutableListOf<String>()
+                val storeList = mutableListOf<String>()
+                var mListView = findViewById<ListView>(R.id.lv_search)
+                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
+                mListView.adapter = arrayAdapter
+            }
+            else{
                 searchToggle = "Stores"
-            Toast.makeText(this, searchToggle, Toast.LENGTH_SHORT).show()
+                setStores()
+
+            }
+
+            //Toast.makeText(this, searchToggle, Toast.LENGTH_SHORT).show()
         }
-        //-------------------------------------------------
-        //adds new users collection with new document containing a user
+
+
+
+    }
+
+    fun setStores(){
+        // Variabler för stores search
         val db = Firebase.firestore
         val storeChainList = mutableListOf<String>()
         val storeList = mutableListOf<String>()
