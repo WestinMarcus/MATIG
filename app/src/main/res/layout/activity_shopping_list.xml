@@ -27,14 +27,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ica:"
-
             />
+
         <ListView
             android:background="@drawable/textview_border"
             android:id="@+id/lv_Ica"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:numColumns="auto_fit"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="2dp"
             />

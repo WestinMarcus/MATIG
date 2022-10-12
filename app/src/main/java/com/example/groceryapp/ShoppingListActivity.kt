@@ -81,27 +81,27 @@ class ShoppingListActivity : AppCompatActivity() {
             .addOnSuccessListener { products ->
                 for (product in products)
                 {
-                    val productName = product.getString("Storename")
-                    if (productName != null) {
-                        if (productName.contains("ICA")) {
+                    val storeName = product.getString("Storename")
+                    if (storeName != null) {
+                        if (storeName.contains("ICA")) {
                             icaList.add(product.id)
                         }
-                        if (productName.contains("Coop")) {
+                        if (storeName.contains("Coop")) {
                             coopList.add(product.id)
                         }
-                        if (productName.contains("Willys")) {
+                        if (storeName.contains("Willys")) {
                             willysList.add(product.id)
                         }
-                        if (productName.contains("Lidl")) {
+                        if (storeName.contains("Lidl")) {
                             lidlList.add(product.id)
                         }
                     }
                 }
 
                 icaListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, icaList)
-                coopListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, coopList)
                 willysListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, willysList)
                 lidlListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, lidlList)
+                coopListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, coopList)
             }
             .addOnFailureListener { }
 

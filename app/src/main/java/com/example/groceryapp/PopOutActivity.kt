@@ -77,12 +77,11 @@ class PopOutActivity : AppCompatActivity() {
                             .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add product to shopping list") }
                     }
                 }
-                /*---------------remove product from shopping list--------------------*/
-
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents.", exception)
             }
+
         /*---------------remove product from shopping list--------------------*/
         removeFromShoppingList.setOnClickListener {
             db.collection("users")
