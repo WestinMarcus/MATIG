@@ -102,8 +102,10 @@ class ItemListActivity : AppCompatActivity() {
 
         search.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
+                //search = sökbaren
                 search.clearFocus()
                 if(foodItemList.contains(p0)){
+                    //arrayAdapter
                     arrayAdapter.filter.filter(p0)
                 }
                 return false

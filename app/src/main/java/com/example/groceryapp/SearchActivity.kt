@@ -61,12 +61,7 @@ class SearchActivity : AppCompatActivity() {
         button_toggle.setOnCheckedChangeListener { compoundButton, isChecked ->
             if (isChecked){
                 searchToggle = "Products"
-                var arrayAdapter: ArrayAdapter<*>
-                val storeChainList = mutableListOf<String>()
-                val storeList = mutableListOf<String>()
-                var mListView = findViewById<ListView>(R.id.lv_search)
-                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
-                mListView.adapter = arrayAdapter
+                setProducts()
             }
             else{
                 searchToggle = "Stores"
@@ -90,6 +85,8 @@ class SearchActivity : AppCompatActivity() {
 
         var arrayAdapter: ArrayAdapter<*>
         val mListView = findViewById<ListView>(R.id.lv_search)
+
+        val search = findViewById<SearchView>(R.id.searchview)
 
         db.collection("Store chains")
             .get()
@@ -116,15 +113,69 @@ class SearchActivity : AppCompatActivity() {
                         .addOnFailureListener { exception ->
                             Log.w(TAG, "Error getting documents.", exception)
                         }
+
                 }
             }
             .addOnFailureListener { }
-
+        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
         mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectedStore = parent.getItemAtPosition(position)
             val intent = Intent(this, ItemListActivity::class.java)
             intent.putExtra("store", "$selectedStore")
             startActivity(intent)
         }
+        search.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                search.clearFocus()
+                if(storeList.contains(p0)){
+                    arrayAdapter.filter.filter(p0)
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                arrayAdapter.filter.filter(p0)
+                return false
+            }
+
+        })
+    }
+
+    fun setProducts(){
+        var arrayAdapter: ArrayAdapter<*>
+        val storeChainList = mutableListOf<String>()
+        val storeList = mutableListOf<String>()
+        var mListView = findViewById<ListView>(R.id.lv_search)
+        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
+        mListView.adapter = arrayAdapter
+
+        val db = Firebase.firestore
+        val search = findViewById<SearchView>(R.id.searchview)
+
+        db.collection("Erbjudanden_sok")
+            .get()
+            .addOnSuccessListener { chainList ->
+                for (document in chainList) {
+                    storeChainList.add(document.id)
+                    arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeChainList)
+                    mListView.adapter = arrayAdapter
+                }
+            }
+
+        search.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                search.clearFocus()
+                if(storeList.contains(p0)){
+                    arrayAdapter.filter.filter(p0)
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                arrayAdapter.filter.filter(p0)
+                return false
+            }
+
+        })
     }
 }
