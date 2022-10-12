@@ -38,6 +38,7 @@ class ItemListActivity : AppCompatActivity() {
         val foodListView = findViewById<ListView>(R.id.lvFoodItems)
         val addFavBtn = findViewById<Button>(R.id.btn_addFavorite)
         val removeFavBtn = findViewById<Button>(R.id.btn_removeFavorite)
+        val search = findViewById<SearchView>(R.id.sv_itemList)
 
         db.collection("Aktiva erbj.").document("$chainName").collection("$store")
             .get()
@@ -49,9 +50,9 @@ class ItemListActivity : AppCompatActivity() {
                 arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, foodItemList)
                 foodListView.adapter = arrayAdapter
             }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
-            }
+                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, foodItemList)
+                foodListView.adapter = arrayAdapter
+
         //pop out dialog för vald produkt
         foodListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
@@ -95,5 +96,28 @@ class ItemListActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener { Log.i(TAG, "failed to remove fav store as document") }
         }
+
+        // Searchfunc starts here
+        // använda foodListview
+
+        search.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                search.clearFocus()
+                if(foodItemList.contains(p0)){
+                    arrayAdapter.filter.filter(p0)
+                }else{
+                    Toast.makeText(applicationContext, "Fuck u", Toast.LENGTH_SHORT).show()
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                arrayAdapter.filter.filter(p0)
+                return false
+            }
+
+        })
+
+
     }
 }
