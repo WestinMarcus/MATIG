@@ -41,46 +41,52 @@ class PopOutActivity : AppCompatActivity() {
         val info: TextView = findViewById(R.id.tv_productInfo)
         val priceRelative: TextView = findViewById(R.id.tv_productPriceRelative)
 
-        db.collection("Aktiva erbj.").document("$chain").collection("$store").document("$product")
-            .get()
-            .addOnSuccessListener { document ->
-                val productInfo = document.getString("Övrig information") ?: "default"
-                val productPrice = document.getString("Pris") ?: "default"
-                val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
-                val productPriceVol = document.getString("Jämfört pris(lit)")?:"default"
+        //db.collection("Aktiva erbj.").document("$chain").collection("$store").document("$product")
+        db.collection("Erbjudanden_sok").document("$product")
+        .get()
+        .addOnSuccessListener { document ->
+            Log.w(TAG, "pre document.getstrings: store: $store, product: $product")
+            val productInfo = document.getString("Övrig information") ?: "default"
+            Log.w(TAG, "post övrig info document.getstrings: store: $store, product: $product")
+            val productPrice = document.getString("Pris") ?: "default"
+            Log.w(TAG, "post pris document.getstrings: store: $store, product: $product")
+            val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
+            Log.w(TAG, "post kg document.getstrings: store: $store, product: $product")
+            val productPriceVol = document.getString("Jämfört pris(lit)") ?: "default"
+            Log.w(TAG, "post lit document.getstrings: store: $store, product: $product")
 
-                val productMap = document.data
-                productMap?.put("Storename", "$store")
+            val productMap = document.data
+            productMap?.put("Storename", "$store")
 
-                price.text = "Pris: $productPrice"
-                info.text = productInfo
-                val inputText: String
-                if (productPriceWeight != "Data saknas") {
-                    inputText = productPriceWeight + "kr/kg"
-                    priceRelative.text = inputText
-                }else if (productPriceVol != "Data saknas") {
-                    inputText = productPriceVol + "l/kg"
-                    priceRelative.text = inputText
-                }
-                /*---------------add product to shopping list--------------------*/
-                addToShoppingList.setOnClickListener {
-                    if (productMap != null) {
-                        db.collection("users")
-                            .document("$userid")
-                            .collection("Shoppinglist")
-                            .document("$product")
-                            .set(productMap)
-                            .addOnSuccessListener {
-                                Log.i(ContentValues.TAG, "added product to shopping list: $product")
-                                finish()
-                            }
-                            .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add product to shopping list") }
-                    }
+            price.text = "Pris: $productPrice"
+            info.text = productInfo
+            val inputText: String
+            if (productPriceWeight != "Data saknas") {
+                inputText = productPriceWeight + "kr/kg"
+                priceRelative.text = inputText
+            }else if (productPriceVol != "Data saknas") {
+                inputText = productPriceVol + "l/kg"
+                priceRelative.text = inputText
+            }
+            /*---------------add product to shopping list--------------------*/
+            addToShoppingList.setOnClickListener {
+                if (productMap != null) {
+                    db.collection("users")
+                        .document("$userid")
+                        .collection("Shoppinglist")
+                        .document("$product")
+                        .set(productMap)
+                        .addOnSuccessListener {
+                            Log.i(ContentValues.TAG, "added product to shopping list: $product")
+                            finish()
+                        }
+                        .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add product to shopping list") }
                 }
             }
-            .addOnFailureListener { exception ->
-                Log.w(ContentValues.TAG, "Error getting documents.", exception)
-            }
+        }
+        .addOnFailureListener { exception ->
+            Log.w(ContentValues.TAG, "Error getting documents.", exception)
+        }
 
         /*---------------remove product from shopping list--------------------*/
         removeFromShoppingList.setOnClickListener {

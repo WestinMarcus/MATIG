@@ -2,6 +2,7 @@ package com.example.groceryapp
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,9 +11,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class SearchActivity : AppCompatActivity() {
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,11 +122,12 @@ class SearchActivity : AppCompatActivity() {
         })
     }
 
-    fun setProducts(){
+    private fun setProducts(){
         var arrayAdapter: ArrayAdapter<*>
-        val storeChainList = mutableListOf<String>()
+        val searchProductList = mutableListOf<String>()
         val storeList = mutableListOf<String>()
-        var mListView = findViewById<ListView>(R.id.lv_search)
+        val mListView = findViewById<ListView>(R.id.lv_search)
+
         arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
         mListView.adapter = arrayAdapter
 
@@ -137,14 +136,20 @@ class SearchActivity : AppCompatActivity() {
 
         db.collection("Erbjudanden_sok")
             .get()
-            .addOnSuccessListener { chainList ->
-                for (document in chainList) {
-                    storeChainList.add(document.id)
-                    arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeChainList)
+            .addOnSuccessListener { products ->
+                for (product in products) {
+                    searchProductList.add(product.id)
+                    arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, searchProductList)
                     mListView.adapter = arrayAdapter
                 }
             }
 
+        mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            val product = parent.getItemAtPosition(position)
+            val intent = Intent(this, PopOutActivity::class.java)
+            intent.putExtra("product", "$product")
+            startActivity(intent)
+        }
         search.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 search.clearFocus()
@@ -159,5 +164,7 @@ class SearchActivity : AppCompatActivity() {
                 return false
             }
         })
+
     }
+
 }

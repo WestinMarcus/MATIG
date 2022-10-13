@@ -18,8 +18,8 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        val testBtn = findViewById(R.id.distance_pin_IV) as ImageView
 
+        val testBtn = findViewById(R.id.distance_pin_IV) as ImageView
 
         val searchBtn = findViewById(R.id.btn_search) as ImageButton
         val shoppingListBtn = findViewById(R.id.btn_shoppingList) as ImageButton
@@ -61,23 +61,9 @@ class HomeActivity : AppCompatActivity() {
         }
 
 
-
         testBtn.setOnClickListener {
            val intent = Intent(this, StoresActivity::class.java)
             startActivity(intent)
-/*
-           var adress = ""
-           var defAddress: Deferred<String>
-           runBlocking {
-               coroutineScope {
-                   defAddress = async{ userAdressClass().test() }
-                   adress = defAddress.await()
-               }
-           }
-
-
-
-            Log.i(TAG,"adress:$adress")*/
         }
     }
 

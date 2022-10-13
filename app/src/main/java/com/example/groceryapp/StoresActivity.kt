@@ -36,7 +36,6 @@ class StoresActivity : AppCompatActivity() {
             val intent = Intent(this, FavoritesActivity::class.java)
             startActivity(intent)
             finish()
-
         }
 
         searchBtn.setOnClickListener {

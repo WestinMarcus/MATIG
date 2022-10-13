@@ -28,7 +28,7 @@ class ItemListActivity : AppCompatActivity() {
         var chainName = ""
         for (chain in chainList){
             if ("$store".contains(chain)){
-                chainName = chain
+                 chainName = chain
             }
         }
 
@@ -41,25 +41,36 @@ class ItemListActivity : AppCompatActivity() {
         val search = findViewById<SearchView>(R.id.sv_itemList)
 
         db.collection("Aktiva erbj.").document("$chainName").collection("$store")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result)
-                {
-                    foodItemList.add(document.id)
-                }
-                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, foodItemList)
-                foodListView.adapter = arrayAdapter
+        .get()
+        .addOnSuccessListener { result ->
+            for (document in result)
+            {
+                foodItemList.add(document.id)
             }
-                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, foodItemList)
-                foodListView.adapter = arrayAdapter
+            arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, foodItemList)
+            foodListView.adapter = arrayAdapter
+        }
+        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, foodItemList)
+        foodListView.adapter = arrayAdapter
 
         //pop out dialog för vald produkt
         foodListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
+            var chain = ""
+            if (chainName == "ICA")
+            {
+                chain = "Ica"       //Behövs pga structuren i collection Erbjudanden_sok: "Ica: produktnamn"
+            }
+            else {
+                chain = chainName
+            }
+
+            val storeProduct = chain+": "+product
             val intent = Intent(this, PopOutActivity::class.java)
-            intent.putExtra("product", "$product")
-            intent.putExtra("chain", "$chainName")
+            intent.putExtra("product", "$storeProduct") //skickar med ex: "Coop: productname" vs "productname"
             intent.putExtra("store", "$store")
+            intent.putExtra("chain", "$chain")
+
             startActivity(intent)
         }
 
