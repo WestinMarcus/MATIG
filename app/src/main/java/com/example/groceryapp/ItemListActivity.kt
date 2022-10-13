@@ -57,7 +57,7 @@ class ItemListActivity : AppCompatActivity() {
         foodListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
             var chain = ""
-            if (chainName == "ICA")
+            if(chainName == "ICA")
             {
                 chain = "Ica"       //Behövs pga structuren i collection Erbjudanden_sok: "Ica: produktnamn"
             }

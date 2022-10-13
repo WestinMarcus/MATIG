@@ -61,6 +61,18 @@
         app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios"
         android:id="@+id/faq_tab_TV">
     </TextView>
+    <TextView
+        android:layout_marginBottom="5dp"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/textview_border"
+        android:drawablePadding="10dp"
+        android:text="Purchase history"
+        app:drawableLeftCompat="@drawable/ic_baseline_question_mark"
+        app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios"
+        android:id="@+id/tv_purchase_history">
+    </TextView>
 
     <Button
         android:layout_marginTop="20dp"

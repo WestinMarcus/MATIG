@@ -33,7 +33,6 @@ class settingsActivity : AppCompatActivity() {
             val intent = Intent(this, FavoritesActivity::class.java)
             startActivity(intent)
             finish()
-
         }
 
         searchBtn.setOnClickListener {
@@ -62,6 +61,8 @@ class settingsActivity : AppCompatActivity() {
         val signOutBtn: Button = findViewById(R.id.Signout_button_settings)
         val backBtn = findViewById(R.id.image_back_settings) as ImageView
 
+        val purchaseHistoryBtn : TextView = findViewById(R.id.tv_purchase_history)
+
         userBtn.setOnClickListener {
             val intent = Intent(this, UserProfileActivity::class.java)
             startActivity(intent)
@@ -71,6 +72,10 @@ class settingsActivity : AppCompatActivity() {
         }
         faqBtn.setOnClickListener {
             //Länka till faq activity
+        }
+        purchaseHistoryBtn.setOnClickListener {
+            val intent = Intent(this, PurchaseHistoryActivity::class.java)
+            startActivity(intent)
         }
         signOutBtn.setOnClickListener {
             Firebase.auth.signOut()

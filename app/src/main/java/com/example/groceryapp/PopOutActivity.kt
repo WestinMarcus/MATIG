@@ -45,15 +45,10 @@ class PopOutActivity : AppCompatActivity() {
         db.collection("Erbjudanden_sok").document("$product")
         .get()
         .addOnSuccessListener { document ->
-            Log.w(TAG, "pre document.getstrings: store: $store, product: $product")
             val productInfo = document.getString("Övrig information") ?: "default"
-            Log.w(TAG, "post övrig info document.getstrings: store: $store, product: $product")
             val productPrice = document.getString("Pris") ?: "default"
-            Log.w(TAG, "post pris document.getstrings: store: $store, product: $product")
             val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
-            Log.w(TAG, "post kg document.getstrings: store: $store, product: $product")
             val productPriceVol = document.getString("Jämfört pris(lit)") ?: "default"
-            Log.w(TAG, "post lit document.getstrings: store: $store, product: $product")
 
             val productMap = document.data
             productMap?.put("Storename", "$store")
@@ -71,25 +66,30 @@ class PopOutActivity : AppCompatActivity() {
             /*---------------add product to shopping list--------------------*/
             addToShoppingList.setOnClickListener {
                 if (productMap != null) {
-                    db.collection("users")
-                        .document("$userid")
-                        .collection("Shoppinglist")
-                        .document("$product")
-                        .set(productMap)
-                        .addOnSuccessListener {
-                            Log.i(ContentValues.TAG, "added product to shopping list: $product")
-                            finish()
-                        }
-                        .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add product to shopping list") }
+                    db.collection("users").document("$userid")
+                    .collection("Shoppinglist").document("$product")
+                    .set(productMap)
+                    .addOnSuccessListener {
+                        Log.i(ContentValues.TAG, "added product to shopping list: $product")
+                        finish()
+                    }
+                    .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add product to shopping list") }
                 }
             }
         }
-        .addOnFailureListener { exception ->
-            Log.w(ContentValues.TAG, "Error getting documents.", exception)
-        }
+        .addOnFailureListener { Log.w(ContentValues.TAG, "Error getting documents.") }
 
         /*---------------remove product from shopping list--------------------*/
         removeFromShoppingList.setOnClickListener {
+            val data = hashMapOf(
+                "product" to "$product",
+                "Store" to "$store",
+                "Storechain" to "$chain"
+            )
+            db.collection("users").document("$userid")
+            .collection("History").document("$product")
+            .set(data)
+
             db.collection("users")
             .document("$userid")
             .collection("Shoppinglist")
@@ -106,7 +106,6 @@ class PopOutActivity : AppCompatActivity() {
                 finish()
             }
             .addOnFailureListener { Log.i(ContentValues.TAG, "failed to delete product from shopping list") }
-
         }
     }
 }

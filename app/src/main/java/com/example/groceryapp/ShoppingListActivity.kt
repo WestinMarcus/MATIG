@@ -114,10 +114,10 @@ class ShoppingListActivity : AppCompatActivity() {
                     .addOnSuccessListener { document ->
                         val store = document.getString("Storename") ?: "default"
                         var chainName = ""
-                        for (chain in chainList){ if ("$store".contains(chain)){ chainName = chain } }
+                        for (chain in chainList){ if (store.contains(chain)){ chainName = chain } }
                         intent.putExtra("product", "$product")
-                        intent.putExtra("chain", "$chainName")
-                        intent.putExtra("store", "$store")
+                        intent.putExtra("chain", chainName)
+                        intent.putExtra("store", store)
                         intent.putExtra("activity", "ShoppingListActivity")
 
                         startActivity(intent)
