@@ -13,75 +13,34 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 
-        <TextView
-            android:id="@+id/tv_shoppingList"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textAlignment="center"
-            android:layout_marginTop="4dp"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Shoppinglist" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ica:"
-            />
-
-        <ListView
-            android:background="@drawable/textview_border"
-            android:id="@+id/lv_Ica"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
             android:layout_weight="1"
-            android:numColumns="auto_fit"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="2dp"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Willys:"
-            />
-        <ListView
-            android:background="@drawable/textview_border"
-            android:id="@+id/lv_Willys"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="2dp" />
-        <TextView
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Lidl:"
-            />
-        <ListView
-            android:background="@drawable/textview_border"
-            android:id="@+id/lv_Lidl"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="2dp" />
+            android:orientation="vertical">
 
             <TextView
-
+                android:id="@+id/tv_shoppingList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Coop:"
-                />
+                android:layout_marginTop="4dp"
+                android:text="Shoppinglist"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
             <ListView
-                android:background="@drawable/textview_border"
-                android:id="@+id/lv_Coop"
+                android:id="@+id/lv_Ica"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="2dp"/>
+                android:layout_marginTop="2dp"
+                android:background="@drawable/textview_border"
+                tools:listitem="@layout/shopping_list_item"
+
+                android:visibility="visible" />
+
+        </LinearLayout>
 
 
         <LinearLayout

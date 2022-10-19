@@ -8,6 +8,7 @@
     <style name="AppTheme" parent="Theme.AppCompat">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:background">@color/grey</item>
         <item name="android:windowAnimationStyle">@null</item>
     </style>
 </resources>

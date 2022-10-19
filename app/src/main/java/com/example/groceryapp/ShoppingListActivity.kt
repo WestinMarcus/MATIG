@@ -59,7 +59,10 @@ class ShoppingListActivity : AppCompatActivity() {
         val db = Firebase.firestore
         val userid = Firebase.auth.currentUser?.uid
 
+
+        /*gamla listor*/
         val icaListView = findViewById<ListView>(R.id.lv_Ica)
+        /*
         val coopListView = findViewById<ListView>(R.id.lv_Coop)
         val willysListView = findViewById<ListView>(R.id.lv_Willys)
         val lidlListView = findViewById<ListView>(R.id.lv_Lidl)
@@ -67,7 +70,11 @@ class ShoppingListActivity : AppCompatActivity() {
         val icaList = mutableListOf<String>()
         val coopList = mutableListOf<String>()
         val willysList = mutableListOf<String>()
-        val lidlList = mutableListOf<String>()
+        val lidlList = mutableListOf<String>() */
+
+
+        val itemList = mutableListOf<String>()
+        val priceList = mutableListOf<String>()
 
         val chainList = listOf("Coop", "ICA", "Ica", "Willys", "Lidl")
 
@@ -79,28 +86,40 @@ class ShoppingListActivity : AppCompatActivity() {
                 val storeName = product.getString("Storename")
                 if(storeName != null) {
                     if (storeName.contains("ICA")) {
-                        icaList.add(product.id)
+                        itemList.add(product.id)
+                        val price = product.getString("Pris") ?: "default"
+                        priceList.add(price)
                     }
                     else if (storeName.contains("Coop")) {
-                        coopList.add(product.id)
+                        itemList.add(product.id)
+                        val price = product.getString("Pris") ?: "default"
+                        priceList.add(price)
                     }
                     else if (storeName.contains("Willys")) {
-                        willysList.add(product.id)
+                        itemList.add(product.id)
+                        val price = product.getString("Pris") ?: "default"
+                        priceList.add(price)
                     }
                     else if (storeName.contains("Lidl")) {
-                        lidlList.add(product.id)
+                        itemList.add(product.id)
+                        val price = product.getString("Pris") ?: "default"
+                        priceList.add(price)
                     }
                 }
             }
 
+            val shoppingListAdapter = ShoppingListAdapter(this, itemList, priceList)
+            icaListView.adapter = shoppingListAdapter
+
+            /*
             icaListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, icaList)
             willysListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, willysList)
             lidlListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, lidlList)
-            coopListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, coopList)
+            coopListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, coopList)*/
         }
         .addOnFailureListener { }
 
-        icaListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        /*icaListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
             val intent = Intent(this, ShoppingPopOutActivity::class.java)
 
@@ -171,6 +190,6 @@ class ShoppingListActivity : AppCompatActivity() {
 
                 startActivity(intent)
             }
-        }
+        }*/
     }
 }
