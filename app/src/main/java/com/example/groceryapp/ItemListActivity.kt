@@ -56,20 +56,11 @@ class ItemListActivity : AppCompatActivity() {
         //pop out dialog för vald produkt
         foodListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
-            var chain = ""
-            if(chainName == "ICA")
-            {
-                chain = "Ica"       //Behövs pga structuren i collection Erbjudanden_sok: "Ica: produktnamn"
-            }
-            else {
-                chain = chainName
-            }
-
-            val storeProduct = chain+": "+product
             val intent = Intent(this, PopOutActivity::class.java)
-            intent.putExtra("product", "$storeProduct") //skickar med ex: "Coop: productname" vs "productname"
+
+            intent.putExtra("product", "$product")
             intent.putExtra("store", "$store")
-            intent.putExtra("chain", "$chain")
+            intent.putExtra("chain", "$chainName")
 
             startActivity(intent)
         }

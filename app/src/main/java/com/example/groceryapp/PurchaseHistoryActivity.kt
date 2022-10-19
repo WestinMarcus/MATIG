@@ -30,47 +30,36 @@ class PurchaseHistoryActivity : AppCompatActivity() {
         val productList = mutableListOf<String>()
 
         db.collection("users").document("$uid").collection("History")
-            .get()
-            .addOnSuccessListener { products ->
-                for (product in products)
-                {
-                    productList.add(product.id)
-                }
-                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, productList)
-                mListView.adapter = arrayAdapter
+        .get()
+        .addOnSuccessListener { products ->
+            for (product in products)
+            {
+                productList.add(product.id)
             }
-            .addOnFailureListener { }
+            arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, productList)
+            mListView.adapter = arrayAdapter
+        }
+        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, productList)
+        mListView.adapter = arrayAdapter
 
         mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
             val intent = Intent(this, PopOutActivity::class.java)
-            var chain = ""
 
             db.collection("users").document("$uid")
-            .collection("History").get()
-            .addOnSuccessListener { documents ->
-                for(document in documents)
-                {
-                    val store = document.getString("Store") ?: "Default"
-                    val storeChain = document.getString("Storechain") ?: "Default"
+            .collection("History").document("$product")
+            .get()
+            .addOnSuccessListener { document ->
 
-                    if(storeChain == "ICA")
-                    {
-                        chain = "Ica"       //Behövs pga structuren i collection Erbjudanden_sok: "Ica: produktnamn"
-                    }
-                    else {
-                        chain = storeChain
-                    }
+                val store = document.getString("Store") ?: "Default"
+                val chain = document.getString("Storechain") ?: "Default"
 
-                    val storeProduct = chain+": "+product
+                intent.putExtra("product", "${document.id}") //skickar med ex: "Coop: productname" vs "productname"
+                intent.putExtra("store", store)
+                intent.putExtra("chain", chain)
 
-                    intent.putExtra("product", storeProduct) //skickar med ex: "Coop: productname" vs "productname"
-                    intent.putExtra("store", store)
-                    intent.putExtra("chain", chain)
+                startActivity(intent)
 
-                    startActivity(intent)
-
-                }
             }
         }
     }

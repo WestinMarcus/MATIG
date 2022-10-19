@@ -148,6 +148,7 @@ class SearchActivity : AppCompatActivity() {
             val product = parent.getItemAtPosition(position)
             val intent = Intent(this, PopOutActivity::class.java)
             intent.putExtra("product", "$product")
+            Log.w(TAG, "clicked in search: product: $product ")
             startActivity(intent)
         }
         search.setOnQueryTextListener(object :SearchView.OnQueryTextListener{

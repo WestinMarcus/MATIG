@@ -22,7 +22,7 @@ class PopOutActivity : AppCompatActivity() {
         setContentView(R.layout.activity_pop_out)
         val product = intent.getStringExtra("product")
         val chain = intent.getStringExtra("chain")
-        val store = intent.getStringExtra("store")
+        var store = intent.getStringExtra("store")
 
         Log.i(TAG, "PopOut: Chain: $chain, Store: $store, Product: $product")
 
@@ -41,46 +41,100 @@ class PopOutActivity : AppCompatActivity() {
         val info: TextView = findViewById(R.id.tv_productInfo)
         val priceRelative: TextView = findViewById(R.id.tv_productPriceRelative)
 
-        //db.collection("Aktiva erbj.").document("$chain").collection("$store").document("$product")
-        db.collection("Erbjudanden_sok").document("$product")
-        .get()
-        .addOnSuccessListener { document ->
-            val productInfo = document.getString("Övrig information") ?: "default"
-            val productPrice = document.getString("Pris") ?: "default"
-            val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
-            val productPriceVol = document.getString("Jämfört pris(lit)") ?: "default"
+        if(chain == null && store == null)
+        {
+            db.collection("Erbjudanden_sok")
+            .document("$product")
+            .get()
+            .addOnSuccessListener { document ->
+                var productInfo = ""
+                val productMap = document.data
 
-            val productMap = document.data
-            productMap?.put("Storename", "$store")
+                store = getStoreFromProductName(product)
+                val productName = removeStoreFromProductName(product)
 
-            price.text = "Pris: $productPrice"
-            info.text = productInfo
-            val inputText: String
-            if (productPriceWeight != "Data saknas") {
-                inputText = productPriceWeight + "kr/kg"
-                priceRelative.text = inputText
-            }else if (productPriceVol != "Data saknas") {
-                inputText = productPriceVol + "l/kg"
-                priceRelative.text = inputText
-            }
-            /*---------------add product to shopping list--------------------*/
-            addToShoppingList.setOnClickListener {
-                if (productMap != null) {
-                    db.collection("users").document("$userid")
-                    .collection("Shoppinglist").document("$product")
-                    .set(productMap)
-                    .addOnSuccessListener {
-                        Log.i(ContentValues.TAG, "added product to shopping list: $product")
-                        finish()
+                productMap?.put("Storename", store)
+                Log.i(TAG, "produktNamn = ${productName}")
+                if(chain != "Lidl")
+                {
+                    productInfo = document.getString("Övrig information") ?: "default"
+                }
+                val productPrice = document.getString("Pris") ?: "default"
+                val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
+                val productPriceVol = document.getString("Jämfört pris(lit)") ?: "default"
+
+                price.text = "Pris: $productPrice"
+                info.text = productInfo
+                val inputText: String
+                if (productPriceWeight != "Data saknas") {
+                    inputText = productPriceWeight + "kr/kg"
+                    priceRelative.text = inputText
+                }else if (productPriceVol != "Data saknas") {
+                    inputText = productPriceVol + "l/kg"
+                    priceRelative.text = inputText
+                }
+                /*---------------add product to shopping list--------------------*/
+                addToShoppingList.setOnClickListener {
+                    if (productMap != null) {
+                        db.collection("users").document("$userid")
+                        .collection("Shoppinglist").document(productName)
+                        .set(productMap)
+                        .addOnSuccessListener {
+                            Log.i(ContentValues.TAG, "added product to shopping list: $productName")
+                            finish()
+                        }
                     }
-                    .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add product to shopping list") }
                 }
             }
         }
-        .addOnFailureListener { Log.w(ContentValues.TAG, "Error getting documents.") }
+        else
+        {
+            db.collection("Aktiva erbj.").document("$chain")
+            .collection("$store").document("$product")
+            .get()
+            .addOnSuccessListener { document ->
+                var productInfo = ""
+                val productMap = document.data
+                productMap?.put("Storename", "$store")
+
+                if(chain != "Lidl")
+                {
+                    productInfo = document.getString("Övrig information") ?: "default"
+                }
+                val productPrice = document.getString("Pris") ?: "default"
+                val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
+                val productPriceVol = document.getString("Jämfört pris(lit)") ?: "default"
+
+                price.text = "Pris: $productPrice"
+                info.text = productInfo
+                val inputText: String
+                if (productPriceWeight != "Data saknas") {
+                    inputText = productPriceWeight + "kr/kg"
+                    priceRelative.text = inputText
+                }else if (productPriceVol != "Data saknas") {
+                    inputText = productPriceVol + "l/kg"
+                    priceRelative.text = inputText
+                }
+                /*---------------add product to shopping list--------------------*/
+                addToShoppingList.setOnClickListener {
+                    if (productMap != null) {
+                        db.collection("users").document("$userid")
+                            .collection("Shoppinglist").document("$product")
+                            .set(productMap)
+                            .addOnSuccessListener {
+                                Log.i(ContentValues.TAG, "added product to shopping list: $product")
+                                finish()
+                            }
+                            .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add product to shopping list") }
+                    }
+                }
+            }
+        }
+
 
         /*---------------remove product from shopping list--------------------*/
         removeFromShoppingList.setOnClickListener {
+            Log.i(ContentValues.TAG, "removed product from shopping list: $product")
             val data = hashMapOf(
                 "product" to "$product",
                 "Store" to "$store",
@@ -90,13 +144,14 @@ class PopOutActivity : AppCompatActivity() {
             .collection("History").document("$product")
             .set(data)
 
+
             db.collection("users")
             .document("$userid")
             .collection("Shoppinglist")
             .document("$product")
             .delete()
             .addOnSuccessListener {
-                Log.i(ContentValues.TAG, "removed product from shopping list: $product")
+
                 if (intent.getStringExtra("activity") == "ShoppingListActivity")
                 {
                     val intent = Intent(this, ShoppingListActivity::class.java)
@@ -107,5 +162,45 @@ class PopOutActivity : AppCompatActivity() {
             }
             .addOnFailureListener { Log.i(ContentValues.TAG, "failed to delete product from shopping list") }
         }
+    }
+    private fun removeStoreFromProductName(product: String?): String
+    {
+        var productName = ""
+
+        if (product != null) {
+            if (product.contains("Ica")) {
+                productName = product.drop(5)
+            }
+            else if (product.contains("Coop")) {
+                productName = product.drop(6)
+            }
+            else if ( product.contains("Willys")) {
+                productName = product.drop(8)
+            }
+            else if (product.contains("Lidl")) {
+                productName = product.drop(6)
+            }
+        }
+        return productName
+    }
+    private fun getStoreFromProductName(product: String?): String
+    {
+        var storeName = ""
+
+        if (product != null) {
+            if (product.contains("Ica")) {
+                storeName = "ICA"
+            }
+            else if (product.contains("Coop")) {
+                storeName = "Coop"
+            }
+            else if ( product.contains("Willys")) {
+                storeName = "Willys"
+            }
+            else if (product.contains("Lidl")) {
+                storeName = "Lidl"
+            }
+        }
+        return storeName
     }
 }
