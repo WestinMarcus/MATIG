@@ -102,7 +102,7 @@ class ShoppingListActivity : AppCompatActivity() {
 
         icaListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
-            val intent = Intent(this, PopOutActivity::class.java)
+            val intent = Intent(this, ShoppingPopOutActivity::class.java)
 
             db.collection("users").document("$userid")
                 .collection("Shoppinglist").document("$product").get()
@@ -120,7 +120,7 @@ class ShoppingListActivity : AppCompatActivity() {
         }
         coopListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
-            val intent = Intent(this, PopOutActivity::class.java)
+            val intent = Intent(this, ShoppingPopOutActivity::class.java)
 
             db.collection("users").document("$userid")
             .collection("Shoppinglist").document("$product").get()
@@ -138,7 +138,7 @@ class ShoppingListActivity : AppCompatActivity() {
         }
         willysListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
-            val intent = Intent(this, PopOutActivity::class.java)
+            val intent = Intent(this, ShoppingPopOutActivity::class.java)
 
             db.collection("users").document("$userid")
             .collection("Shoppinglist").document("$product").get()
@@ -156,7 +156,7 @@ class ShoppingListActivity : AppCompatActivity() {
         }
         lidlListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
-            val intent = Intent(this, PopOutActivity::class.java)
+            val intent = Intent(this, ShoppingPopOutActivity::class.java)
 
             db.collection("users").document("$userid")
             .collection("Shoppinglist").document("$product").get()

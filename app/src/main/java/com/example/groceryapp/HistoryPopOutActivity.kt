@@ -24,7 +24,7 @@ class HistoryPopOutActivity : AppCompatActivity() {
         val chain = intent.getStringExtra("chain")
         var store = intent.getStringExtra("store")
 
-        Log.i(TAG, "PopOut: Chain: $chain, Store: $store, Product: $product")
+        Log.i(TAG, "HistoryPopOut: Chain: $chain, Store: $store, Product: $product")
 
         val productHeader: TextView = findViewById(R.id.tv_productName)
         productHeader.text = "$product"
