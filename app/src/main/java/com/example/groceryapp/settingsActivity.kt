@@ -1,16 +1,20 @@
 package com.example.groceryapp
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class settingsActivity : AppCompatActivity() {
+
+    lateinit var langPreference: LangPreference
+    lateinit var context: Context
+
+    val languageList = arrayOf("en","sv")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -20,6 +24,8 @@ class settingsActivity : AppCompatActivity() {
         val favoritesBtn = findViewById(R.id.btn_favorites) as ImageButton
         val homeBtn = findViewById(R.id.btn_home) as ImageButton
         val settingsBtn = findViewById(R.id.btn_settings) as ImageButton
+        val langSpinner = findViewById(R.id.spinner) as Spinner
+        val langBtn = findViewById(R.id.btn_language) as Button
 
         settingsBtn.setBackgroundColor(getResources().getColor(R.color.white))
 
@@ -86,6 +92,30 @@ class settingsActivity : AppCompatActivity() {
             finish()
         }
 
+        //Code for language change
+        context = this
+        langPreference = LangPreference(this)
 
+        langSpinner.adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,languageList)
+
+        val lang = langPreference.getLoginCount()
+        val index = languageList.indexOf(lang)
+        if(index >= 0){
+            langSpinner.setSelection(index)
+        }
+
+        langBtn.setOnClickListener {
+            langPreference.setLoginCount(languageList[langSpinner.selectedItemPosition])
+            startActivity(Intent(this,settingsActivity::class.java))
+            finish()
+        }
+
+
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        langPreference = LangPreference(newBase!!)
+        val lang = langPreference.getLoginCount()
+        super.attachBaseContext(lang?.let { GroceryContextWrapper.wrap(newBase, it) })
     }
 }

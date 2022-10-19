@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GroceryApp</string>
+    <string name="btn_create_account">Skapa konto</string>
+    <string name="lbl_already_have_acc">Har du redan ett konto?</string>
+    <string name="btn_login">Logga in</string>
+    <string name="lbl_first_name">Förnamn</string>
+    <string name="lbl_last_name">Efternamn</string>
+    <string name="lbl_email">Email</string>
+    <string name="lbl_phone_nr">Telefonnummer</string>
+    <string name="lbl_password">Lösenord</string>
+    <string name="lbl_password_again">Skriv lösenordet igen</string>
+    <string name="btn_stores">Affärer</string>
+    <string name="userprofile">Profil</string>
+    <string name="welcome">Välkommen</string>
+    <string name="update">Uppdatera</string>
+    <string name="password">Lösenord</string>
+    <string name="city">Stad</string>
+    <string name="cityprofile">Stad</string>
+    <string name="adress">Adress</string>
+    <string name="adresshint">Adress</string>
+    <string name="zip_code">Postkod</string>
+    <string name="zip_codehint">Postkod</string>
+    <string name="date_of_birth">Födelsedatum</string>
+    <string name="date_of_birthhint">Födelsedatum</string>
+    <string name="phone_number">Telefonnummer</string>
+    <string name="phonehiny">Telefon</string>
+    <string name="email">Email</string>
+    <string name="emailhint">Email</string>
+    <string name="firstname_lastname">Förnamn Efternamn</string>
+    <string name="Pass">******</string>
+    <string name="sign_out">Logga ut</string>
+    <string name="change_email">Ändra email</string>
+    <string name="change_password">Ändra lösenord</string>
+    <string name="tv_text">text</string>
+    <string name="user_profile">Profil</string>
+    <string name="somethin_useful">Nått användbart</string>
+    <string name="something_useful">Något användbart</string>
+    <string name="notifications">Notifikationer</string>
+    <string name="faq">FAQ</string>
+    <string name="search">Sök</string>
+    <string name="search_nearby">Sök närområdet</string>
+    <string name="tv_languages">Språk</string>
+    <string name="btn_changelang">Tillämpa</string>
+
+</resources>
