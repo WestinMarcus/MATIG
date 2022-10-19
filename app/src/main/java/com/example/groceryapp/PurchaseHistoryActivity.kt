@@ -44,7 +44,7 @@ class PurchaseHistoryActivity : AppCompatActivity() {
 
         mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
-            val intent = Intent(this, PopOutActivity::class.java)
+            val intent = Intent(this, HistoryPopOutActivity::class.java)
 
             db.collection("users").document("$uid")
             .collection("History").document("$product")
@@ -59,7 +59,6 @@ class PurchaseHistoryActivity : AppCompatActivity() {
                 intent.putExtra("chain", chain)
 
                 startActivity(intent)
-
             }
         }
     }
