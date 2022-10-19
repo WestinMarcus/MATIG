@@ -122,13 +122,17 @@ class SearchActivity : AppCompatActivity() {
         })
     }
 
+    private fun calcPrice(int: Int){
+
+    }
+
     private fun setProducts(){
         var arrayAdapter: ArrayAdapter<*>
         val searchProductList = mutableListOf<String>()
         val storeList = mutableListOf<String>()
         val mListView = findViewById<ListView>(R.id.lv_search)
 
-        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
+        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, searchProductList)
         mListView.adapter = arrayAdapter
 
         val db = Firebase.firestore
@@ -140,10 +144,11 @@ class SearchActivity : AppCompatActivity() {
                 for (product in products) {
                     searchProductList.add(product.id)
                     arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, searchProductList)
+
                     mListView.adapter = arrayAdapter
                 }
-            }
 
+            }
         mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
             val intent = Intent(this, PopOutActivity::class.java)
