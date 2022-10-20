@@ -34,16 +34,19 @@
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_addFavorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
                 android:text="@string/btn_del"
+                android:src="@drawable/ic_baseline_star_border"
                 app:layout_constraintBottom_toTopOf="@+id/textView10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            <Button
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@color/background_color"
+                />
+         <!--  <Button
                 android:id="@+id/btn_removeFavorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,6 +56,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+                -->
         </LinearLayout>
 
         <SearchView
@@ -61,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/grey" />
+            android:background="@color/background_color" />
 
         <ListView
             android:id="@+id/lvFoodItems"

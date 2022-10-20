@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.internal.ContextUtils.getActivity
 import com.google.android.material.tabs.TabLayout.TabGravity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.SetOptions
@@ -31,13 +32,13 @@ class ItemListActivity : AppCompatActivity() {
                  chainName = chain
             }
         }
-
+        val userid = Firebase.auth.currentUser?.uid
         val db = Firebase.firestore
         val foodItemList = mutableListOf<String>()
         var arrayAdapter: ArrayAdapter<*>
         val foodListView = findViewById<ListView>(R.id.lvFoodItems)
-        val addFavBtn = findViewById<Button>(R.id.btn_addFavorite)
-        val removeFavBtn = findViewById<Button>(R.id.btn_removeFavorite)
+        val addFavBtn = findViewById<ImageButton>(R.id.btn_addFavorite)
+        //val removeFavBtn = findViewById<Button>(R.id.btn_removeFavorite)
         val search = findViewById<SearchView>(R.id.sv_itemList)
 
         db.collection("Aktiva erbj.").document("$chainName").collection("$store")
@@ -74,8 +75,39 @@ class ItemListActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+
+        db.collection("users").document("$userid").collection("Favorites")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents)
+                {
+                    if (document.id == store){
+                        addFavBtn.setImageResource(R.drawable.ic_baseline_star)
+                        addFavBtn.setOnClickListener {
+                            db.collection("users")
+                                .document("$userid")
+                                .collection("Favorites")
+                                .document("$store")
+                                .delete()
+                                .addOnSuccessListener {
+                                    addFavBtn.setImageResource(R.drawable.ic_baseline_star_border)
+                                    Log.i(TAG, "removed fav store: $store")
+                                    if (intent.getStringExtra("activity") == "FavoritesActivity")
+                                    {
+                                        val intent = Intent(this, FavoritesActivity::class.java)
+                                        startActivity(intent)
+                                    }
+                                    finish()
+                                }
+                        }
+                    }
+                }
+            }
+
+
         addFavBtn.setOnClickListener {
-            val userid = Firebase.auth.currentUser?.uid
+            addFavBtn.setImageResource(R.drawable.ic_baseline_star)
             val data = hashMapOf(
                 "name" to "placeholder"
             )
@@ -87,7 +119,7 @@ class ItemListActivity : AppCompatActivity() {
             .addOnSuccessListener { Log.i(TAG, "added fav store as document: $store") }
             .addOnFailureListener { Log.i(TAG, "failed to add fav store as document") }
         }
-
+/*
         removeFavBtn.setOnClickListener {
             val userid = Firebase.auth.currentUser?.uid
 
@@ -106,7 +138,7 @@ class ItemListActivity : AppCompatActivity() {
                 finish()
             }
             .addOnFailureListener { Log.i(TAG, "failed to remove fav store as document") }
-        }
+        }*/
 
         // Searchfunc starts here
         // använda foodListview
