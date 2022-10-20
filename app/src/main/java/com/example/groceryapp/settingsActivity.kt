@@ -66,7 +66,6 @@ class settingsActivity : AppCompatActivity() {
         val notificationBtn  : TextView = findViewById(R.id.notification_tab_TV)
         val faqBtn : TextView = findViewById(R.id.faq_tab_TV)
         val signOutBtn: Button = findViewById(R.id.Signout_button_settings)
-        val backBtn = findViewById<ImageView>(R.id.image_back_settings)
 
         val purchaseHistoryBtn : TextView = findViewById(R.id.tv_purchase_history)
 
@@ -91,9 +90,7 @@ class settingsActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-        backBtn.setOnClickListener {
-            finish()
-        }
+
 
         //Code for language change
         context = this

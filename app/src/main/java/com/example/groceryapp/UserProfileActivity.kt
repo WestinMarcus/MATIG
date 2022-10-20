@@ -23,7 +23,6 @@ class UserProfileActivity : AppCompatActivity() {
         //Button vals
         val backBtn: ImageView = findViewById(R.id.image_back_settings)
         val updateBtn: Button = findViewById(R.id.btn_update)
-        val signOutBtn: Button = findViewById(R.id.Signout)
         val passReset: TextView = findViewById(R.id.pass)
         //val emailReset: TextView = findViewById(R.id.emailReset)
 
@@ -54,11 +53,6 @@ class UserProfileActivity : AppCompatActivity() {
         }
         updateBtn.setOnClickListener{
             performUpdate()
-        }
-        signOutBtn.setOnClickListener{
-            Firebase.auth.signOut()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
         }
 
         //Button that sends password reset email to the current users email
@@ -139,19 +133,19 @@ class UserProfileActivity : AppCompatActivity() {
             "City" to inputCity,
             "Notiser" to true
         )
-                        val currentUser = Firebase.auth.currentUser
-                        val userid = currentUser?.uid
+        val currentUser = Firebase.auth.currentUser
+        val userid = currentUser?.uid
 
-                        db.collection("users") //Koppla userId
-                            .document("$userid")
-                            .set(user)
-                            .addOnSuccessListener {
-                                finish()
-                                val intent = Intent(this,UserProfileActivity::class.java)
-                                startActivity(intent)
-                            }
-                            .addOnFailureListener {
-                            }
+        db.collection("users") //Koppla userId
+            .document("$userid")
+            .set(user)
+            .addOnSuccessListener {
+                finish()
+                val intent = Intent(this,UserProfileActivity::class.java)
+                startActivity(intent)
+            }
+            .addOnFailureListener {
+            }
         }
 
 }

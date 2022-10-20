@@ -25,6 +25,10 @@ class ItemListActivity : AppCompatActivity() {
         storeHeader.text = "$store"
         val chainList = listOf("Coop", "ICA", "Ica", "Willys", "Lidl")
 
+        val backBtn = findViewById<ImageView>(R.id.image_back_settings)
+        backBtn.setOnClickListener {
+            finish()
+        }
         //Getting chain name for fetching products
         var chainName = ""
         for (chain in chainList){

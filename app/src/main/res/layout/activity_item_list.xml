@@ -19,20 +19,32 @@
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:weightSum="5"
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/image_back_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/red_salmon"
+                android:layout_weight="0"
+                android:padding="16dp"
+                android:src="@drawable/ic_baseline_arrow_back_"/>
 
             <TextView
                 android:id="@+id/tvStoreItemList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_weight="1"
+                android:layout_height="56dp"
+                android:layout_weight="5"
+                android:background="@color/red_salmon"
                 android:text="store name"
+                android:gravity="center_vertical"
                 android:textAlignment="center"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                tools:ignore="RtlCompat" />
 
             <ImageButton
                 android:id="@+id/btn_addFavorite"
@@ -44,19 +56,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@color/background_color"
+                android:background="@color/red_salmon"
                 />
-         <!--  <Button
-                android:id="@+id/btn_removeFavorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_add"
-                app:layout_constraintBottom_toTopOf="@+id/textView10"
-                android:layout_marginBottom="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-                -->
+
         </LinearLayout>
 
         <SearchView

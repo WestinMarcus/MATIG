@@ -47,5 +47,7 @@
     <string name="tv_favorites">Favorites</string>
     <string name="btn_del">Add</string>
     <string name="btn_add">Del</string>
+    <string name="settings">Settings</string>
+    <string name="shopping_list">Shopping list</string>
 
 </resources>
