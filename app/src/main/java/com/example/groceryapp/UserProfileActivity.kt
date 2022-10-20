@@ -137,6 +137,7 @@ class UserProfileActivity : AppCompatActivity() {
             "Zip Code" to inputZipCode,
             "Adress" to inputAdress,
             "City" to inputCity,
+            "Notiser" to true
         )
                         val currentUser = Firebase.auth.currentUser
                         val userid = currentUser?.uid

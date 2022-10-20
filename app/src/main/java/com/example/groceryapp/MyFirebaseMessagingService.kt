@@ -19,10 +19,15 @@ const val channelName = "GroceryApp"
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    var isChecked = false
 
 
-    fun checkIfChecked(){
+
+
+
+
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+
+        /*var isChecked = false
         val db = Firebase.firestore
         val user = Firebase.auth.currentUser
         val uid = user?.uid
@@ -34,16 +39,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 isChecked = (document.getBoolean("Notiser") ?: "default") as Boolean
 
             }
-    }
-
-
-    override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        checkIfChecked()
-        if(isChecked){
+        if(isChecked){*/
         if(remoteMessage.getNotification() != null){
             generateNotification(remoteMessage.notification!!.title!!,remoteMessage.notification!!.body!!)
         }
-        }
+
     }
 
     fun getRemoteView(title: String, message: String): RemoteViews? {

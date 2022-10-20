@@ -177,6 +177,7 @@
             android:scrollbarSize="100dp"
             android:text="Notiser"
             android:textSize="15dp"
+            android:checked="true"
             app:layout_constraintEnd_toEndOf="@+id/button"
             app:layout_constraintHorizontal_bias="0.062"
             app:layout_constraintStart_toStartOf="@+id/editTextTextPassword2"
