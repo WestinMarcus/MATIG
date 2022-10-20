@@ -57,6 +57,7 @@ class PurchaseHistoryActivity : AppCompatActivity() {
                 intent.putExtra("product", "${document.id}") //skickar med ex: "Coop: productname" vs "productname"
                 intent.putExtra("store", store)
                 intent.putExtra("chain", chain)
+                intent.putExtra("activity", "PurchaseHistoryActivity")
 
                 startActivity(intent)
             }

@@ -80,15 +80,15 @@ class StoresActivity : AppCompatActivity() {
 
 
         db.collection("users").document("$uid")
-            .get()
-            .addOnSuccessListener { document ->
+        .get()
+        .addOnSuccessListener { document ->
 
-                userAdress = document.getString("Adress") ?: "default"
-                userCity = document.getString("City") ?: "default"
+            userAdress = document.getString("Adress") ?: "default"
+            userCity = document.getString("City") ?: "default"
 
-                adresss.setText(userAdress).toString()
-                city.setText(userCity).toString()
-            }
+            adresss.setText(userAdress).toString()
+            city.setText(userCity).toString()
+        }
     }
 
     private fun mainFun(){

@@ -36,6 +36,14 @@
             android:resource="@color/purple_700" />
 
         <activity
+            android:name=".addProductPopOutActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ShoppingPopOutActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar">

@@ -5,10 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ImageButton
-import android.widget.ListView
+import android.widget.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -58,80 +55,56 @@ class ShoppingListActivity : AppCompatActivity() {
 
         val db = Firebase.firestore
         val userid = Firebase.auth.currentUser?.uid
+        val addProductBtn = findViewById<Button>(R.id.btn_addProduct)
 
-
-        /*gamla listor*/
-        val icaListView = findViewById<ListView>(R.id.lv_Ica)
-        /*
-        val coopListView = findViewById<ListView>(R.id.lv_Coop)
-        val willysListView = findViewById<ListView>(R.id.lv_Willys)
-        val lidlListView = findViewById<ListView>(R.id.lv_Lidl)
-
-        val icaList = mutableListOf<String>()
-        val coopList = mutableListOf<String>()
-        val willysList = mutableListOf<String>()
-        val lidlList = mutableListOf<String>() */
-
+        val productListView = findViewById<ListView>(R.id.lv_Ica)
 
         val itemList = mutableListOf<String>()
         val priceList = mutableListOf<String>()
 
-        val chainList = listOf("Coop", "ICA", "Ica", "Willys", "Lidl")
+        val chainList = listOf("Coop", "ICA", "Ica", "Willys", "Lidl", "Note")
 
-        db.collection("users").document("$userid").collection("Shoppinglist")
+        addProductBtn.setOnClickListener{
+            val intent = Intent(this, addProductPopOutActivity::class.java)
+            startActivity(intent)
+        }
+
+        db.collection("users").document("$userid")
+        .collection("Shoppinglist")
         .get()
         .addOnSuccessListener { products ->
             for (product in products)
             {
-                val storeName = product.getString("Storename")
-                if(storeName != null) {
-                    if (storeName.contains("ICA")) {
-                        itemList.add(product.id)
-                        val price = product.getString("Pris") ?: "default"
-                        priceList.add(price)
-                    }
-                    else if (storeName.contains("Coop")) {
-                        itemList.add(product.id)
-                        val price = product.getString("Pris") ?: "default"
-                        priceList.add(price)
-                    }
-                    else if (storeName.contains("Willys")) {
-                        itemList.add(product.id)
-                        val price = product.getString("Pris") ?: "default"
-                        priceList.add(price)
-                    }
-                    else if (storeName.contains("Lidl")) {
-                        itemList.add(product.id)
-                        val price = product.getString("Pris") ?: "default"
-                        priceList.add(price)
-                    }
-                }
+                itemList.add(product.id)
+                val price = product.getString("Pris") ?: ""
+                priceList.add(price)
             }
 
             val shoppingListAdapter = ShoppingListAdapter(this, itemList, priceList)
-            icaListView.adapter = shoppingListAdapter
-
+            productListView.adapter = shoppingListAdapter
         }
-        .addOnFailureListener { }
 
-        icaListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        productListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
             val intent = Intent(this, ShoppingPopOutActivity::class.java)
 
             db.collection("users").document("$userid")
-                .collection("Shoppinglist").document("$product").get()
-                .addOnSuccessListener { document ->
-                    val store = document.getString("Storename") ?: "default"
-                    var chainName = ""
-                    for (chain in chainList){ if (store.contains(chain)){ chainName = chain } }
-                    intent.putExtra("product", "$product")
-                    intent.putExtra("chain", chainName)
-                    intent.putExtra("store", store)
-                    intent.putExtra("activity", "ShoppingListActivity")
+            .collection("Shoppinglist").document("$product")
+            .get()
+            .addOnSuccessListener { document ->
+                val store = document.getString("Storename") ?: "default"
+                var chainName = ""
+                for (chain in chainList){ if (store.contains(chain)){ chainName = chain } }
+                intent.putExtra("product", "$product")
+                intent.putExtra("chain", chainName)
+                intent.putExtra("store", store)
+                intent.putExtra("activity", "ShoppingListActivity")
 
-                    startActivity(intent)
-                }
+                startActivity(intent)
+            }
         }
+
+
 
     }
 }

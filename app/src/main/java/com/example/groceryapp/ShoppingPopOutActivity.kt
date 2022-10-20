@@ -41,148 +41,84 @@ class ShoppingPopOutActivity : AppCompatActivity() {
         val info: TextView = findViewById(R.id.tv_productInfo)
         val priceRelative: TextView = findViewById(R.id.tv_productPriceRelative)
 
-        if(chain == null && store == null)
-        {
-            db.collection("Erbjudanden_sok")
-                .document("$product")
-                .get()
-                .addOnSuccessListener { document ->
-                    var productInfo = ""
-                    val productMap = document.data
+        //db.collection("Erbjudanden_sok")
+        //.document("$product")
+        db.collection("users").document("$userid")
+        .collection("Shoppinglist").document("$product")
+        .get()
+        .addOnSuccessListener { document ->
+            var productInfo = ""
+            val productMap = document.data
 
-                    store = getStoreFromProductName(product)
-                    val productName = removeStoreFromProductName(product)
+            store = getStoreFromProductName(product)
 
-                    productMap?.put("Storename", store)
-                    Log.i(TAG, "produktNamn = ${productName}")
-                    if(chain != "Lidl")
-                    {
-                        productInfo = document.getString("Övrig information") ?: "default"
-                    }
-                    val productPrice = document.getString("Pris") ?: "default"
-                    val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
-                    val productPriceVol = document.getString("Jämfört pris(lit)") ?: "default"
+            productMap?.put("Storename", store)
+            Log.i(TAG, "produktNamn = $product")
+            if(chain != "Lidl")
+            {
+                productInfo = document.getString("Övrig information") ?: "default"
+            }
+            val productPrice = document.getString("Pris") ?: "default"
+            val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
+            val productPriceVol = document.getString("Jämfört pris(lit)") ?: "default"
 
-                    price.text = "Pris: $productPrice"
-                    info.text = productInfo
-                    val inputText: String
-                    if (productPriceWeight != "Data saknas") {
-                        inputText = productPriceWeight + "kr/kg"
-                        priceRelative.text = inputText
-                    }else if (productPriceVol != "Data saknas") {
-                        inputText = productPriceVol + "l/kg"
-                        priceRelative.text = inputText
-                    }
-                    /*---------------add product to shopping list--------------------*/
-                    addToShoppingList.setOnClickListener {
-                        if (productMap != null) {
-                            db.collection("users").document("$userid")
-                                .collection("Shoppinglist").document(productName)
-                                .set(productMap)
-                                .addOnSuccessListener {
-                                    Log.i(ContentValues.TAG, "added product to shopping list: $productName")
-                                    finish()
-                                }
-                        }
-                    }
-                }
-        }
-        else
-        {
-            db.collection("Aktiva erbj.").document("$chain")
-                .collection("$store").document("$product")
-                .get()
-                .addOnSuccessListener { document ->
-                    var productInfo = ""
-                    val productMap = document.data
-                    productMap?.put("Storename", "$store")
-
-                    if(chain != "Lidl")
-                    {
-                        productInfo = document.getString("Övrig information") ?: "default"
-                    }
-                    val productPrice = document.getString("Pris") ?: "default"
-                    val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
-                    val productPriceVol = document.getString("Jämfört pris(lit)") ?: "default"
-
-                    price.text = "Pris: $productPrice"
-                    info.text = productInfo
-                    val inputText: String
-                    if (productPriceWeight != "Data saknas") {
-                        inputText = productPriceWeight + "kr/kg"
-                        priceRelative.text = inputText
-                    }else if (productPriceVol != "Data saknas") {
-                        inputText = productPriceVol + "l/kg"
-                        priceRelative.text = inputText
-                    }
-                    /*---------------add product to shopping list--------------------*/
-                    addToShoppingList.setOnClickListener {
-                        if (productMap != null) {
-                            db.collection("users").document("$userid")
-                                .collection("Shoppinglist").document("$product")
-                                .set(productMap)
-                                .addOnSuccessListener {
-                                    Log.i(ContentValues.TAG, "added product to shopping list: $product")
-                                    finish()
-                                }
-                                .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add product to shopping list") }
-                        }
+            price.text = "Pris: $productPrice"
+            info.text = productInfo
+            val inputText: String
+            if (productPriceWeight == "") {
+                priceRelative.text = productPriceWeight
+            }else if (productPriceWeight != "information saknas") {
+                inputText = productPriceWeight + "kr/kg"
+                priceRelative.text = inputText
+            }else if (productPriceVol != "information saknas") {
+                inputText = productPriceVol + "l/kg"
+                priceRelative.text = inputText
+            }
+            /*---------------add product to shopping list--------------------*/
+            addToShoppingList.setOnClickListener {
+                if (productMap != null) {
+                    db.collection("users").document("$userid")
+                    .collection("Shoppinglist").document("$product")
+                    .set(productMap)
+                    .addOnSuccessListener {
+                        Log.i(ContentValues.TAG, "added product to shopping list: $product")
+                        finish()
                     }
                 }
+            }
         }
-
 
         /*---------------remove product from shopping list--------------------*/
         removeFromShoppingList.setOnClickListener {
-            Log.i(ContentValues.TAG, "removed product from shopping list: $product")
+
             val data = hashMapOf(
                 "product" to "$product",
                 "Store" to "$store",
                 "Storechain" to "$chain"
             )
             db.collection("users").document("$userid")
-                .collection("History").document("$product")
-                .set(data)
+            .collection("History").document("$product")
+            .set(data)
 
-
+            Log.i(ContentValues.TAG, "removed product from shopping list: $product")
             db.collection("users")
-                .document("$userid")
-                .collection("Shoppinglist")
-                .document("$product")
-                .delete()
-                .addOnSuccessListener {
-
-                    if (intent.getStringExtra("activity") == "ShoppingListActivity")
-                    {
-                        val intent = Intent(this, ShoppingListActivity::class.java)
-                        startActivity(intent)
-                        overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
-                    }
-                    finish()
+            .document("$userid")
+            .collection("Shoppinglist")
+            .document("$product")
+            .delete()
+            .addOnSuccessListener {
+                Log.i(ContentValues.TAG, "deleting product: $product, $store, $chain")
+                if (intent.getStringExtra("activity") == "ShoppingListActivity")
+                {
+                    val intent = Intent(this, ShoppingListActivity::class.java)
+                    startActivity(intent)
                 }
-                .addOnFailureListener { Log.i(ContentValues.TAG, "failed to delete product from shopping list") }
+                finish()
+            }
+            .addOnFailureListener { Log.i(ContentValues.TAG, "failed to delete product from shopping list") }
         }
     }
-    private fun removeStoreFromProductName(product: String?): String
-    {
-        var productName = ""
 
-        if (product != null) {
-            if (product.contains("Ica")) {
-                productName = product.drop(5)
-            }
-            else if (product.contains("Coop")) {
-                productName = product.drop(6)
-            }
-            else if ( product.contains("Willys")) {
-                productName = product.drop(8)
-            }
-            else if (product.contains("Lidl")) {
-                productName = product.drop(6)
-            }
-        }
-        return productName
-    }
     private fun getStoreFromProductName(product: String?): String
     {
         var storeName = ""

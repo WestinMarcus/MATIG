@@ -122,10 +122,6 @@ class SearchActivity : AppCompatActivity() {
         })
     }
 
-    private fun calcPrice(int: Int){
-
-    }
-
     private fun setProducts(){
         var shoppingListAdapter: ShoppingListAdapter
         val searchProductList = mutableListOf<String>()

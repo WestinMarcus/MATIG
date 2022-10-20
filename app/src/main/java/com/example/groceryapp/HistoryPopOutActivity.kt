@@ -36,12 +36,13 @@ class HistoryPopOutActivity : AppCompatActivity() {
         closeBtn.setOnClickListener {
             finish()
         }
+
         val price: TextView = findViewById(R.id.tv_productPrice)
         val info: TextView = findViewById(R.id.tv_productInfo)
         val priceRelative: TextView = findViewById(R.id.tv_productPriceRelative)
 
-        db.collection("Aktiva erbj.").document("$chain")
-        .collection("$store").document("$product")
+        db.collection("Erbjudanden_sok")
+        .document("$product")
         .get()
         .addOnSuccessListener { document ->
             var productInfo = ""
@@ -75,7 +76,11 @@ class HistoryPopOutActivity : AppCompatActivity() {
             db.collection("users").document("$userid")
             .collection("History").document("$product")
             .delete()
-
+            if (intent.getStringExtra("activity") == "PurchaseHistoryActivity")
+            {
+                val intent = Intent(this, PurchaseHistoryActivity::class.java)
+                startActivity(intent)
+            }
             finish()
         }
     }
