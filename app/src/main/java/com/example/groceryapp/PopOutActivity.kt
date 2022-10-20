@@ -29,7 +29,6 @@ class PopOutActivity : AppCompatActivity() {
         val productHeader: TextView = findViewById(R.id.tv_productName)
         productHeader.text = "$product"
         val addToShoppingList = findViewById<Button>(R.id.btn_addToShoppingList)
-        val removeFromShoppingList = findViewById<Button>(R.id.btn_removeFromShoppingList)
         val db = Firebase.firestore
         val userid = Firebase.auth.currentUser?.uid
 
@@ -87,36 +86,6 @@ class PopOutActivity : AppCompatActivity() {
                     .addOnFailureListener{ Log.i(ContentValues.TAG, "failure to add product to shopping list: $product")}
                 }
             }
-        }
-
-        /*---------------remove product from shopping list--------------------*/
-        removeFromShoppingList.setOnClickListener {
-            Log.i(ContentValues.TAG, "removed product from shopping list: $product")
-            val data = hashMapOf(
-                "product" to "$product",
-                "Store" to "$store",
-                "Storechain" to "$chain"
-            )
-            db.collection("users").document("$userid")
-            .collection("History").document("$product")
-            .set(data)
-
-
-            db.collection("users")
-            .document("$userid")
-            .collection("Shoppinglist")
-            .document("$product")
-            .delete()
-            .addOnSuccessListener {
-
-                if (intent.getStringExtra("activity") == "ShoppingListActivity")
-                {
-                    val intent = Intent(this, ShoppingListActivity::class.java)
-                    startActivity(intent)
-                }
-                finish()
-            }
-            .addOnFailureListener { Log.i(ContentValues.TAG, "failed to delete product from shopping list") }
         }
     }
 
