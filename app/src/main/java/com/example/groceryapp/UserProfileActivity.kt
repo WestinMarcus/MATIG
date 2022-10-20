@@ -21,7 +21,7 @@ class UserProfileActivity : AppCompatActivity() {
         val db = Firebase.firestore
 
         //Button vals
-        val backBtn: ImageView = findViewById(R.id.image_back)
+        val backBtn: ImageView = findViewById(R.id.image_back_settings)
         val updateBtn: Button = findViewById(R.id.btn_update)
         val signOutBtn: Button = findViewById(R.id.Signout)
         val passReset: TextView = findViewById(R.id.pass)

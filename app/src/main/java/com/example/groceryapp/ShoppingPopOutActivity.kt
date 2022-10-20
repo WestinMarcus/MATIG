@@ -28,7 +28,7 @@ class ShoppingPopOutActivity : AppCompatActivity() {
 
         val productHeader: TextView = findViewById(R.id.tv_productName)
         productHeader.text = "$product"
-        val addToShoppingList = findViewById<Button>(R.id.btn_addToShoppingList)
+        val purchaseBtn = findViewById<Button>(R.id.btn_purchaseProduct)
         val removeFromShoppingList = findViewById<Button>(R.id.btn_removeFromShoppingList)
         val db = Firebase.firestore
         val userid = Firebase.auth.currentUser?.uid
@@ -41,8 +41,6 @@ class ShoppingPopOutActivity : AppCompatActivity() {
         val info: TextView = findViewById(R.id.tv_productInfo)
         val priceRelative: TextView = findViewById(R.id.tv_productPriceRelative)
 
-        //db.collection("Erbjudanden_sok")
-        //.document("$product")
         db.collection("users").document("$userid")
         .collection("Shoppinglist").document("$product")
         .get()
@@ -74,32 +72,46 @@ class ShoppingPopOutActivity : AppCompatActivity() {
                 inputText = productPriceVol + "l/kg"
                 priceRelative.text = inputText
             }
-            /*---------------add product to shopping list--------------------*/
-            addToShoppingList.setOnClickListener {
-                finish()
-            }
+
         }
-
-        /*---------------remove product from shopping list--------------------*/
-        removeFromShoppingList.setOnClickListener {
-
+        /*------------purchase product and remove from shopping list------------------*/
+        purchaseBtn.setOnClickListener {
+            Log.i(ContentValues.TAG, "purchase product: $product, removed from shopping list and added to history")
             val data = hashMapOf(
                 "product" to "$product",
                 "Store" to "$store",
                 "Storechain" to "$chain"
             )
             db.collection("users").document("$userid")
-            .collection("History").document("$product")
-            .set(data)
+                .collection("History").document("$product")
+                .set(data)
 
+            db.collection("users")
+                .document("$userid")
+                .collection("Shoppinglist")
+                .document("$product")
+                .delete()
+                .addOnSuccessListener {
+                    if (intent.getStringExtra("activity") == "ShoppingListActivity")
+                    {
+                        val intent = Intent(this, ShoppingListActivity::class.java)
+                        startActivity(intent)
+                    }
+                    finish()
+                }
+                .addOnFailureListener { Log.i(ContentValues.TAG, "failed to purchase product in shopping list") }
+        }
+
+        /*------------------remove product from shopping list----------------------*/
+        removeFromShoppingList.setOnClickListener {
             Log.i(ContentValues.TAG, "removed product from shopping list: $product")
+
             db.collection("users")
             .document("$userid")
             .collection("Shoppinglist")
             .document("$product")
             .delete()
             .addOnSuccessListener {
-                Log.i(ContentValues.TAG, "deleting product: $product, $store, $chain")
                 if (intent.getStringExtra("activity") == "ShoppingListActivity")
                 {
                     val intent = Intent(this, ShoppingListActivity::class.java)

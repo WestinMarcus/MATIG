@@ -86,18 +86,18 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_addToShoppingList"
+                android:id="@+id/btn_purchaseProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="ADD TO SHOPPING LIST" />
+                android:text="Purchase" />
 
             <Button
                 android:id="@+id/btn_removeFromShoppingList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Remove" />
+                android:text="Remove from list" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

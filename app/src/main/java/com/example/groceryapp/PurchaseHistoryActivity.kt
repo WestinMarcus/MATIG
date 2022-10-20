@@ -6,10 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ImageButton
-import android.widget.ListView
+import android.widget.*
 import com.google.android.material.tabs.TabLayout.TabGravity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -20,6 +17,11 @@ class PurchaseHistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_purchase_history)
 
+        val backBtn = findViewById<ImageView>(R.id.image_back_settings)
+
+        backBtn.setOnClickListener {
+            finish()
+        }
         val db = Firebase.firestore
         val user = Firebase.auth.currentUser
         val uid = user?.uid

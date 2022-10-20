@@ -79,7 +79,8 @@ class settingsActivity : AppCompatActivity() {
             startActivity(intent)
         }
         faqBtn.setOnClickListener {
-            //Länka till faq activity
+            val intent = Intent(this, FAQActivity::class.java)
+            startActivity(intent)
         }
         purchaseHistoryBtn.setOnClickListener {
             val intent = Intent(this, PurchaseHistoryActivity::class.java)
