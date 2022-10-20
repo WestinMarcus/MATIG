@@ -18,11 +18,11 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:textAlignment="center"
-            android:background="@color/grey"
-            android:textColor="@color/black"
+            android:background="@color/red_salmon"
+            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Favorites" />
+            android:text="@string/tv_favorites" />
 
 
         <ListView

@@ -44,5 +44,8 @@
     <string name="btn_changelang">Tillämpa</string>
     <string name="Search_stores">Sök på affärer</string>
     <string name="btn_products">Produkter</string>
+    <string name="tv_favorites">Favoriter</string>
+    <string name="btn_del">Del</string>
+    <string name="btn_add">Add</string>
 
 </resources>
