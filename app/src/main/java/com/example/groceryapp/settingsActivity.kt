@@ -27,6 +27,7 @@ class settingsActivity : AppCompatActivity() {
         val langSpinner = findViewById(R.id.spinner) as Spinner
         val langBtn = findViewById(R.id.btn_language) as Button
 
+
         settingsBtn.setBackgroundColor(getResources().getColor(R.color.white))
 
         homeBtn.setOnClickListener {
@@ -65,7 +66,7 @@ class settingsActivity : AppCompatActivity() {
         val notificationBtn  : TextView = findViewById(R.id.notification_tab_TV)
         val faqBtn : TextView = findViewById(R.id.faq_tab_TV)
         val signOutBtn: Button = findViewById(R.id.Signout_button_settings)
-        val backBtn = findViewById(R.id.image_back_settings) as ImageView
+        val backBtn = findViewById<ImageView>(R.id.image_back_settings)
 
         val purchaseHistoryBtn : TextView = findViewById(R.id.tv_purchase_history)
 
@@ -74,7 +75,8 @@ class settingsActivity : AppCompatActivity() {
             startActivity(intent)
         }
         notificationBtn.setOnClickListener {
-            //Länka till notification activity
+            val intent = Intent(this, notificationsSwitchActivity::class.java)
+            startActivity(intent)
         }
         faqBtn.setOnClickListener {
             //Länka till faq activity

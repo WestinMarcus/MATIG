@@ -8,6 +8,9 @@ import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -16,11 +19,30 @@ const val channelName = "GroceryApp"
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
+    var isChecked = false
+
+
+    fun checkIfChecked(){
+        val db = Firebase.firestore
+        val user = Firebase.auth.currentUser
+        val uid = user?.uid
+
+        // Funktion för att tanka ner och fylla ut användardata
+        db.collection("users").document("$uid")
+            .get()
+            .addOnSuccessListener { document ->
+                isChecked = (document.getBoolean("Notiser") ?: "default") as Boolean
+
+            }
+    }
 
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        checkIfChecked()
+        if(isChecked){
         if(remoteMessage.getNotification() != null){
             generateNotification(remoteMessage.notification!!.title!!,remoteMessage.notification!!.body!!)
+        }
         }
     }
 

@@ -47,6 +47,7 @@ class RegisterActivity : AppCompatActivity() {
         val zipCode = findViewById<EditText>(R.id.editTextTextPostalAddress)
         val adressField = findViewById<EditText>(R.id.adress)
         val city = findViewById<EditText>(R.id.city)
+        val acceptNotis = findViewById<Switch>(R.id.switch1)
 
 
         val inputEmail = email.text.toString()
@@ -58,6 +59,7 @@ class RegisterActivity : AppCompatActivity() {
         val inputZipCode = zipCode.text.toString()
         val inputAdress = adressField.text.toString()
         val inputCity = city.text.toString()
+
         
 
         if(email.text.isEmpty() || password.text.isEmpty()){
@@ -68,6 +70,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
 
+
         val user = hashMapOf(
             "First name" to inputFirstName,
             "Last name" to inputLastName,
@@ -76,13 +79,17 @@ class RegisterActivity : AppCompatActivity() {
             "Zip Code" to inputZipCode,
             "Adress" to inputAdress,
             "City" to inputCity,
+            "Notiser" to false
         )
 
 
         auth.createUserWithEmailAndPassword(inputEmail, inputPassword)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-
+                    if(acceptNotis.isChecked){
+                        user.replace("Notiser", true)
+                        //("Notiser" to true)
+                    }
                     verify()
 
                     val currentUser = Firebase.auth.currentUser
