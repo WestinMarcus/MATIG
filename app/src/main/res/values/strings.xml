@@ -43,6 +43,7 @@
     <string name="btn_changelang">Apply</string>
     <string name="Search_stores">Search all stores</string>
     <string name="btn_products">Products</string>
+    <string name="popul_ra_aff_rer_n_ra_dig"><![CDATA[Popular stores close to you!]]></string>
     <string name="tv_favorites">Favorites</string>
     <string name="btn_del">Del</string>
     <string name="btn_add">Add</string>
