@@ -58,7 +58,16 @@ class ItemListActivity : AppCompatActivity() {
             val product = parent.getItemAtPosition(position)
             val intent = Intent(this, PopOutActivity::class.java)
 
-            intent.putExtra("product", "$product")
+            var productName = ""
+            if(chainName == "ICA")
+            {
+                productName = "Ica: ${product}"
+            }
+            else
+            {
+                productName = "$chainName: ${product}"
+            }
+            intent.putExtra("product", "$productName")
             intent.putExtra("store", "$store")
             intent.putExtra("chain", "$chainName")
 
@@ -71,32 +80,32 @@ class ItemListActivity : AppCompatActivity() {
                 "name" to "placeholder"
             )
             db.collection("users")
-                .document("$userid")
-                .collection("Favorites")
-                .document("$store")
-                .set(data)
-                .addOnSuccessListener { Log.i(TAG, "added fav store as document: $store") }
-                .addOnFailureListener { Log.i(TAG, "failed to add fav store as document") }
+            .document("$userid")
+            .collection("Favorites")
+            .document("$store")
+            .set(data)
+            .addOnSuccessListener { Log.i(TAG, "added fav store as document: $store") }
+            .addOnFailureListener { Log.i(TAG, "failed to add fav store as document") }
         }
 
         removeFavBtn.setOnClickListener {
             val userid = Firebase.auth.currentUser?.uid
 
             db.collection("users")
-                .document("$userid")
-                .collection("Favorites")
-                .document("$store")
-                .delete()
-                .addOnSuccessListener {
-                    Log.i(TAG, "removed fav store: $store")
-                    if (intent.getStringExtra("activity") == "FavoritesActivity")
-                    {
-                        val intent = Intent(this, FavoritesActivity::class.java)
-                        startActivity(intent)
-                    }
-                    finish()
+            .document("$userid")
+            .collection("Favorites")
+            .document("$store")
+            .delete()
+            .addOnSuccessListener {
+                Log.i(TAG, "removed fav store: $store")
+                if (intent.getStringExtra("activity") == "FavoritesActivity")
+                {
+                    val intent = Intent(this, FavoritesActivity::class.java)
+                    startActivity(intent)
                 }
-                .addOnFailureListener { Log.i(TAG, "failed to remove fav store as document") }
+                finish()
+            }
+            .addOnFailureListener { Log.i(TAG, "failed to remove fav store as document") }
         }
 
         // Searchfunc starts here

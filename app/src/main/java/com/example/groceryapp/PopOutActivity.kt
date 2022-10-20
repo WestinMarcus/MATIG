@@ -24,7 +24,7 @@ class PopOutActivity : AppCompatActivity() {
         val chain = intent.getStringExtra("chain")
         var store = intent.getStringExtra("store")
 
-        Log.i(TAG, "PopOut: Chain: $chain, Store: $store, Product: $product")
+        Log.i(TAG, "Itemlist PopOut: Chain: $chain, Store: $store, Product: $product")
 
         val productHeader: TextView = findViewById(R.id.tv_productName)
         productHeader.text = "$product"
@@ -41,96 +41,53 @@ class PopOutActivity : AppCompatActivity() {
         val info: TextView = findViewById(R.id.tv_productInfo)
         val priceRelative: TextView = findViewById(R.id.tv_productPriceRelative)
 
-        if(chain == null && store == null)
-        {
-            db.collection("Erbjudanden_sok")
-            .document("$product")
-            .get()
-            .addOnSuccessListener { document ->
-                var productInfo = ""
-                val productMap = document.data
+        db.collection("Erbjudanden_sok")
+        .document("$product")
+        .get()
+        .addOnSuccessListener { document ->
 
-                store = getStoreFromProductName(product)
-                val productName = removeStoreFromProductName(product)
+            store = getStoreFromProductName(product)
 
-                productMap?.put("Storename", store)
-                Log.i(TAG, "produktNamn = ${productName}")
-                if(chain != "Lidl")
-                {
-                    productInfo = document.getString("Övrig information") ?: "default"
-                }
-                val productPrice = document.getString("Pris") ?: "default"
-                val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
-                val productPriceVol = document.getString("Jämfört pris(lit)") ?: "default"
+            var productInfo = ""
 
-                price.text = "Pris: $productPrice"
-                info.text = productInfo
-                val inputText: String
-                if (productPriceWeight != "Data saknas") {
-                    inputText = productPriceWeight + "kr/kg"
-                    priceRelative.text = inputText
-                }else if (productPriceVol != "Data saknas") {
-                    inputText = productPriceVol + "l/kg"
-                    priceRelative.text = inputText
-                }
-                /*---------------add product to shopping list--------------------*/
-                addToShoppingList.setOnClickListener {
-                    if (productMap != null) {
-                        db.collection("users").document("$userid")
-                        .collection("Shoppinglist").document(productName)
-                        .set(productMap)
-                        .addOnSuccessListener {
-                            Log.i(ContentValues.TAG, "added product to shopping list: $productName")
-                            finish()
-                        }
+            val productMap = document.data
+            productMap?.put("Storename", store)
+
+            Log.i(TAG, "produktNamn = ${product}")
+            if(chain != "Lidl")
+            {
+                productInfo = document.getString("Övrig information") ?: "default"
+            }
+            val productPrice = document.getString("Pris") ?: "default"
+            val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
+            val productPriceVol = document.getString("Jämfört pris(lit)") ?: "default"
+
+            price.text = "Pris: $productPrice"
+            info.text = productInfo
+            val inputText: String
+            if (productPriceWeight != "information saknas") {
+                inputText = productPriceWeight + "kr/kg"
+                priceRelative.text = inputText
+            }else if (productPriceVol != "information saknas") {
+                inputText = productPriceVol + "l/kg"
+                priceRelative.text = inputText
+            }
+            /*---------------add product to shopping list--------------------*/
+            addToShoppingList.setOnClickListener {
+                Log.i(ContentValues.TAG, "adding product to shopping list: $product")
+
+                if (productMap != null) {
+                    db.collection("users").document("$userid")
+                    .collection("Shoppinglist").document("$product")
+                    .set(productMap)
+                    .addOnSuccessListener {
+                        Log.i(ContentValues.TAG, "added product successfully")
+                        finish()
                     }
+                    .addOnFailureListener{ Log.i(ContentValues.TAG, "failure to add product to shopping list: $product")}
                 }
             }
         }
-        else
-        {
-            db.collection("Aktiva erbj.").document("$chain")
-            .collection("$store").document("$product")
-            .get()
-            .addOnSuccessListener { document ->
-                var productInfo = ""
-                val productMap = document.data
-                productMap?.put("Storename", "$store")
-
-                if(chain != "Lidl")
-                {
-                    productInfo = document.getString("Övrig information") ?: "default"
-                }
-                val productPrice = document.getString("Pris") ?: "default"
-                val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
-                val productPriceVol = document.getString("Jämfört pris(lit)") ?: "default"
-
-                price.text = "Pris: $productPrice"
-                info.text = productInfo
-                val inputText: String
-                if (productPriceWeight != "Data saknas") {
-                    inputText = productPriceWeight + "kr/kg"
-                    priceRelative.text = inputText
-                }else if (productPriceVol != "Data saknas") {
-                    inputText = productPriceVol + "l/kg"
-                    priceRelative.text = inputText
-                }
-                /*---------------add product to shopping list--------------------*/
-                addToShoppingList.setOnClickListener {
-                    if (productMap != null) {
-                        db.collection("users").document("$userid")
-                            .collection("Shoppinglist").document("$product")
-                            .set(productMap)
-                            .addOnSuccessListener {
-                                Log.i(ContentValues.TAG, "added product to shopping list: $product")
-                                finish()
-                            }
-                            .addOnFailureListener { Log.i(ContentValues.TAG, "failed to add product to shopping list") }
-                    }
-                }
-            }
-        }
-
 
         /*---------------remove product from shopping list--------------------*/
         removeFromShoppingList.setOnClickListener {
