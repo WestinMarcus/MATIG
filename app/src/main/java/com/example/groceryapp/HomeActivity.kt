@@ -1,6 +1,7 @@
 package com.example.groceryapp
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,10 @@ import kotlinx.coroutines.runBlocking
 
 
 class HomeActivity : AppCompatActivity() {
+
+    lateinit var langPreference: LangPreference
+    lateinit var context: Context
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -27,7 +32,7 @@ class HomeActivity : AppCompatActivity() {
         val homeBtn = findViewById(R.id.btn_home) as ImageButton
         val settingsBtn = findViewById(R.id.btn_settings) as ImageButton
 
-        homeBtn.setBackgroundColor(getResources().getColor(R.color.white))
+        homeBtn.setBackgroundColor(getResources().getColor(R.color.button_row_highlight))
 
         homeBtn.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
@@ -65,6 +70,11 @@ class HomeActivity : AppCompatActivity() {
            val intent = Intent(this, StoresActivity::class.java)
             startActivity(intent)
         }
+    }
+    override fun attachBaseContext(newBase: Context?) {
+        langPreference = LangPreference(newBase!!)
+        val lang = langPreference.getLoginCount()
+        super.attachBaseContext(lang?.let { GroceryContextWrapper.wrap(newBase, it) })
     }
 
 }

@@ -28,7 +28,7 @@ class settingsActivity : AppCompatActivity() {
         val langBtn = findViewById(R.id.btn_language) as Button
 
 
-        settingsBtn.setBackgroundColor(getResources().getColor(R.color.white))
+        settingsBtn.setBackgroundColor(getResources().getColor(R.color.button_row_highlight))
 
         homeBtn.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)

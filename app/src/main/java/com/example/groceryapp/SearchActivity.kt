@@ -22,7 +22,7 @@ class SearchActivity : AppCompatActivity() {
         val homeBtn = findViewById(R.id.btn_home) as ImageButton
         val settingsBtn = findViewById(R.id.btn_settings) as ImageButton
 
-        searchBtn.setBackgroundColor(getResources().getColor(R.color.white))
+        searchBtn.setBackgroundColor(getResources().getColor(R.color.button_row_highlight))
 
         //För att fylla onCreate med stores
         setStores()
@@ -127,13 +127,14 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setProducts(){
-        var arrayAdapter: ArrayAdapter<*>
+        var shoppingListAdapter: ShoppingListAdapter
         val searchProductList = mutableListOf<String>()
+        val searchPriceList = mutableListOf<String>()
         val storeList = mutableListOf<String>()
         val mListView = findViewById<ListView>(R.id.lv_search)
 
-        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, searchProductList)
-        mListView.adapter = arrayAdapter
+        shoppingListAdapter = ShoppingListAdapter(this, searchProductList, searchPriceList)
+        mListView.adapter = shoppingListAdapter
 
         val db = Firebase.firestore
         val search = findViewById<SearchView>(R.id.searchview)
@@ -143,9 +144,11 @@ class SearchActivity : AppCompatActivity() {
             .addOnSuccessListener { products ->
                 for (product in products) {
                     searchProductList.add(product.id)
-                    arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, searchProductList)
+                    val price = product.getString("Pris") ?: "default"
+                    searchPriceList.add(price)
 
-                    mListView.adapter = arrayAdapter
+                    shoppingListAdapter = ShoppingListAdapter(this, searchProductList, searchPriceList)
+                    mListView.adapter = shoppingListAdapter
                 }
 
             }
@@ -160,13 +163,13 @@ class SearchActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 search.clearFocus()
                 if(storeList.contains(p0)){
-                    arrayAdapter.filter.filter(p0)
+                    shoppingListAdapter.filter.filter(p0)
                 }
                 return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                arrayAdapter.filter.filter(p0)
+                shoppingListAdapter.filter.filter(p0)
                 return false
             }
         })

@@ -41,5 +41,7 @@
     <string name="search_nearby">Search Nearby</string>
     <string name="tv_languages">Languages</string>
     <string name="btn_changelang">Apply</string>
+    <string name="Search_stores">Search all stores</string>
+    <string name="btn_products">Products</string>
 
 </resources>

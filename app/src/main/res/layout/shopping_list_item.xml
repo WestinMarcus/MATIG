@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:minHeight="40dp"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 
@@ -17,16 +18,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:paddingTop="10dp"
             android:layout_weight="1"
             android:text=""
             android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/textView6"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:text="" />
+
+        <TextView
             android:id="@+id/tv_itemPrice"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:paddingTop="10dp"
             android:text=""
             android:textSize="15sp"
             android:textColor="@color/black"/>

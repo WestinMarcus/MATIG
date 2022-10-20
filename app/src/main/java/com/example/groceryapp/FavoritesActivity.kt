@@ -24,7 +24,7 @@ class FavoritesActivity : AppCompatActivity() {
         val homeBtn = findViewById(R.id.btn_home) as ImageButton
         val settingsBtn = findViewById(R.id.btn_settings) as ImageButton
 
-        favoritesBtn.setBackgroundColor(getResources().getColor(R.color.white))
+        favoritesBtn.setBackgroundColor(getResources().getColor(R.color.button_row_highlight))
 
         homeBtn.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
