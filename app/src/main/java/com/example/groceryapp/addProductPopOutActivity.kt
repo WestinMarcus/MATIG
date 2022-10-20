@@ -52,13 +52,10 @@ class addProductPopOutActivity : AppCompatActivity() {
             .set(data)
             .addOnSuccessListener {
                 Log.i(TAG, "added new product: $productName")
-                if (intent.getStringExtra("activity") == "ShoppingListActivity")
-                {
-                    val intent = Intent(this, ShoppingListActivity::class.java)
-                    startActivity(intent)
-                }
                 finish()
             }
+            val intent = Intent(this, ShoppingListActivity::class.java)
+            startActivity(intent)
 
         }
     }

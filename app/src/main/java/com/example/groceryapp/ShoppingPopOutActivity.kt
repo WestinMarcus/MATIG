@@ -76,15 +76,7 @@ class ShoppingPopOutActivity : AppCompatActivity() {
             }
             /*---------------add product to shopping list--------------------*/
             addToShoppingList.setOnClickListener {
-                if (productMap != null) {
-                    db.collection("users").document("$userid")
-                    .collection("Shoppinglist").document("$product")
-                    .set(productMap)
-                    .addOnSuccessListener {
-                        Log.i(ContentValues.TAG, "added product to shopping list: $product")
-                        finish()
-                    }
-                }
+                finish()
             }
         }
 

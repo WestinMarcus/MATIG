@@ -113,33 +113,13 @@ class PopOutActivity : AppCompatActivity() {
                 {
                     val intent = Intent(this, ShoppingListActivity::class.java)
                     startActivity(intent)
-                    overridePendingTransition(com.google.android.material.R.anim.abc_tooltip_enter, androidx.appcompat.R.anim.abc_tooltip_exit)
                 }
                 finish()
             }
             .addOnFailureListener { Log.i(ContentValues.TAG, "failed to delete product from shopping list") }
         }
     }
-    private fun removeStoreFromProductName(product: String?): String
-    {
-        var productName = ""
 
-        if (product != null) {
-            if (product.contains("Ica")) {
-                productName = product.drop(5)
-            }
-            else if (product.contains("Coop")) {
-                productName = product.drop(6)
-            }
-            else if ( product.contains("Willys")) {
-                productName = product.drop(8)
-            }
-            else if (product.contains("Lidl")) {
-                productName = product.drop(6)
-            }
-        }
-        return productName
-    }
     private fun getStoreFromProductName(product: String?): String
     {
         var storeName = ""
