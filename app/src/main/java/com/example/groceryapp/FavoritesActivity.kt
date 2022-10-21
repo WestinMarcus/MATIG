@@ -61,7 +61,7 @@ class FavoritesActivity : AppCompatActivity() {
         val user = Firebase.auth.currentUser
         val uid = user?.uid
 
-        var arrayAdapter: ArrayAdapter<*>
+        var arrayAdapter: CustomAdapter
         val mListView = findViewById<ListView>(R.id.lv_favorites)
 
         val storeList = mutableListOf<String>()
@@ -73,7 +73,7 @@ class FavoritesActivity : AppCompatActivity() {
                     {
                         storeList.add(store.id)
                     }
-                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
+                arrayAdapter = CustomAdapter(this, storeList)
                 mListView.adapter = arrayAdapter
             }
             .addOnFailureListener { }

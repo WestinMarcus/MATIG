@@ -63,7 +63,7 @@ class StoresActivity : AppCompatActivity() {
         val storeChainList = mutableListOf<String>()
         val storeList = mutableListOf<String>()
         val storeAdressList = mutableListOf<String>()
-        var arrayAdapter: ArrayAdapter<*>
+        var arrayAdapter: CustomAdapter
         val mListView = findViewById<ListView>(R.id.lvStores)
         var userAddress = ""
         val storeDistances = mutableListOf<Pair<String, String>>()
@@ -104,7 +104,7 @@ class StoresActivity : AppCompatActivity() {
                                 //Log.i(TAG, "Distance from user to ${storeList.last()}: ${distance}m")
                             }
                             storeList.sort()
-                            mListView.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
+                            mListView.adapter = CustomAdapter(this, storeList)
                         }
                         .addOnFailureListener { exception ->
                             Log.e(TAG, "Error getting documents.", exception)

@@ -26,7 +26,7 @@ class PurchaseHistoryActivity : AppCompatActivity() {
         val user = Firebase.auth.currentUser
         val uid = user?.uid
 
-        var arrayAdapter: ArrayAdapter<*>
+        var arrayAdapter: CustomAdapter
         val mListView = findViewById<ListView>(R.id.lv_purchase_history)
 
         val productList = mutableListOf<String>()
@@ -38,10 +38,10 @@ class PurchaseHistoryActivity : AppCompatActivity() {
             {
                 productList.add(product.id)
             }
-            arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, productList)
+            arrayAdapter = CustomAdapter(this, productList)
             mListView.adapter = arrayAdapter
         }
-        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, productList)
+        arrayAdapter = CustomAdapter(this, productList)
         mListView.adapter = arrayAdapter
 
         mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
