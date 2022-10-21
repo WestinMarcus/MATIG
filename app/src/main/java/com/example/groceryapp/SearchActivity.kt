@@ -75,7 +75,6 @@ class SearchActivity : AppCompatActivity() {
         val storeAdressList = mutableListOf<String>()
         val mListView = findViewById<ListView>(R.id.lv_search)
         val search = findViewById<SearchView>(R.id.searchview)
-        var arrayAdapter: ArrayAdapter<*>
 
         db.collection("Store chains")
             .get()
@@ -93,13 +92,13 @@ class SearchActivity : AppCompatActivity() {
                                 storeList.add(document.id)
                                 storeAdressList.add(document.getString("Adress") ?: "default")
                             }
-                            arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
-                            mListView.adapter = arrayAdapter
+                            val customAdapter = CustomAdapter(this, storeList)
+                            mListView.adapter = customAdapter
                         }.addOnFailureListener { exception -> Log.w(TAG, "Error getting documents.", exception) }
                 }
             }
 
-        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, storeList)
+        val customAdapter = CustomAdapter(this, storeList)
         mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectedStore = parent.getItemAtPosition(position)
             val intent = Intent(this, ItemListActivity::class.java)
@@ -110,13 +109,13 @@ class SearchActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 search.clearFocus()
                 if(storeList.contains(p0)){
-                    arrayAdapter.filter.filter(p0)
+                    customAdapter.filter.filter(p0)
                 }
                 return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                arrayAdapter.filter.filter(p0)
+                customAdapter.filter.filter(p0)
                 return false
             }
         })

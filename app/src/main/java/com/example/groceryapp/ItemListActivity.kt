@@ -39,7 +39,8 @@ class ItemListActivity : AppCompatActivity() {
         val userid = Firebase.auth.currentUser?.uid
         val db = Firebase.firestore
         val foodItemList = mutableListOf<String>()
-        var arrayAdapter: ArrayAdapter<*>
+        val priceList = mutableListOf<String>()
+        var shoppingListAdapter: ShoppingListAdapter
         val foodListView = findViewById<ListView>(R.id.lvFoodItems)
         val addFavBtn = findViewById<ImageButton>(R.id.btn_addFavorite)
         //val removeFavBtn = findViewById<Button>(R.id.btn_removeFavorite)
@@ -51,12 +52,14 @@ class ItemListActivity : AppCompatActivity() {
             for (document in result)
             {
                 foodItemList.add(document.id)
+                val price = document.getString("Pris") ?: ""
+                priceList.add(price)
             }
-            arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, foodItemList)
-            foodListView.adapter = arrayAdapter
+            shoppingListAdapter = ShoppingListAdapter(this, foodItemList, priceList)
+            foodListView.adapter = shoppingListAdapter
         }
-        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, foodItemList)
-        foodListView.adapter = arrayAdapter
+        shoppingListAdapter = ShoppingListAdapter(this, foodItemList, priceList)
+        foodListView.adapter = shoppingListAdapter
 
         //pop out dialog för vald produkt
         foodListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -153,13 +156,13 @@ class ItemListActivity : AppCompatActivity() {
                 search.clearFocus()
                 if(foodItemList.contains(p0)){
                     //arrayAdapter
-                    arrayAdapter.filter.filter(p0)
+                    shoppingListAdapter.filter.filter(p0)
                 }
                 return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                arrayAdapter.filter.filter(p0)
+                shoppingListAdapter.filter.filter(p0)
                 return false
             }
 
