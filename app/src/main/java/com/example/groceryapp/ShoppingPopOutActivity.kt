@@ -51,7 +51,7 @@ class ShoppingPopOutActivity : AppCompatActivity() {
             store = getStoreFromProductName(product)
 
             productMap?.put("Storename", store)
-            Log.i(TAG, "produktNamn = $product")
+
             if(chain != "Lidl")
             {
                 productInfo = document.getString("Övrig information") ?: "default"
@@ -60,7 +60,13 @@ class ShoppingPopOutActivity : AppCompatActivity() {
             val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
             val productPriceVol = document.getString("Jämfört pris(lit)") ?: "default"
 
-            price.text = "Pris: $productPrice"
+            if(productPrice == "")
+            {
+                price.text = ""
+            }else{
+                price.text = "Pris: $productPrice"
+            }
+
             info.text = productInfo
             val inputText: String
             if (productPriceWeight == "") {
@@ -82,6 +88,8 @@ class ShoppingPopOutActivity : AppCompatActivity() {
                 "Store" to "$store",
                 "Storechain" to "$chain"
             )
+            db.collection("users").document("$userid")
+                .collection("Shoppinglist").document("$product")
             db.collection("users").document("$userid")
                 .collection("History").document("$product")
                 .set(data)

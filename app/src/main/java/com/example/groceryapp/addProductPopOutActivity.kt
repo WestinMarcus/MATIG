@@ -41,7 +41,7 @@ class addProductPopOutActivity : AppCompatActivity() {
             val data = hashMapOf(
                 "Product" to productName,
                 "Storename" to "Note",
-                "Pris" to " ",
+                "Pris" to "",
                 "Övrig information" to "Personal note",
                 "Jämfört pris(kg)" to "",
                 "Jämfört pris(lit)" to ""

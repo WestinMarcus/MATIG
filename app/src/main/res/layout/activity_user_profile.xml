@@ -53,7 +53,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="First Name">
+                android:hint="First Name"
+                android:textColorHint="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/firstNameField"
@@ -61,13 +62,15 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_baseline_person"
                     android:drawablePadding="10dp"
-                    android:text="First Name" />
+                    android:text="First Name"
+                    android:textColor="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Last Name">
+                android:hint="Last Name"
+                android:textColorHint="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/userlastNamefield"
@@ -75,13 +78,15 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_baseline_person"
                     android:drawablePadding="10dp"
-                    android:text="Last Name" />
+                    android:text="Last Name"
+                    android:textColor="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/date_of_birthhint">
+                android:hint="@string/date_of_birthhint"
+                android:textColorHint="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/userDateOfBirth"
@@ -90,13 +95,15 @@
                     android:drawableStart="@drawable/ic_baseline_calendar_month"
                     android:drawablePadding="10dp"
                     android:inputType="phone"
-                    android:text="@string/date_of_birth" />
+                    android:text="@string/date_of_birth"
+                    android:textColor="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/phonehiny">
+                android:hint="@string/phonehiny"
+                android:textColorHint="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/userPhone"
@@ -105,29 +112,33 @@
                     android:drawableStart="@drawable/ic_baseline_phone"
                     android:drawablePadding="10dp"
                     android:inputType="phone"
-                    android:text="@string/phone_number" />
+                    android:text="@string/phone_number"
+                    android:textColor="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/zip_codehint">
+                android:hint="@string/zip_codehint"
+                android:textColorHint="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/userZip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_baseline_pin_drop"
+                    android:drawableStart="@drawable/ic_baseline_pin_drop_svart"
                     android:drawablePadding="10dp"
                     android:inputType="phone"
-                    android:text="@string/zip_code" />
+                    android:text="@string/zip_code"
+                    android:textColor="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/adresshint">
+                android:hint="@string/adresshint"
+                android:textColorHint="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/userAdress"
@@ -135,13 +146,15 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_baseline_house_24"
                     android:drawablePadding="10dp"
-                    android:text="@string/adress" />
+                    android:text="@string/adress"
+                    android:textColor="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/cityprofile">
+                android:hint="@string/cityprofile"
+                android:textColorHint="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/userCity"
@@ -149,7 +162,8 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_baseline_location_city"
                     android:drawablePadding="10dp"
-                    android:text="@string/city" />
+                    android:text="@string/city"
+                    android:textColor="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -183,7 +197,8 @@
                 android:text="@string/change_password"
                 app:drawableLeftCompat="@drawable/ic_baseline_vpn_key"
                 app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios"
-                android:id="@+id/pass">
+                android:id="@+id/pass"
+                android:textColor="@color/black">
             </TextView>
 
         </LinearLayout>
