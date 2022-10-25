@@ -7,8 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.*
 
 class SearchActivity : AppCompatActivity() {
 
@@ -75,6 +78,9 @@ class SearchActivity : AppCompatActivity() {
         val storeAdressList = mutableListOf<String>()
         val mListView = findViewById<ListView>(R.id.lv_search)
         val search = findViewById<SearchView>(R.id.searchview)
+        mListView.visibility = ListView.VISIBLE
+        val newRecyclerView : RecyclerView = findViewById(R.id.rv_food_list)
+        newRecyclerView.visibility = RecyclerView.GONE
 
         db.collection("Store chains")
             .get()
@@ -122,17 +128,27 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setProducts(){
-        var shoppingListAdapter: ShoppingListAdapter
         val searchProductList = mutableListOf<String>()
         val searchPriceList = mutableListOf<String>()
         val storeList = mutableListOf<String>()
-        val mListView = findViewById<ListView>(R.id.lv_search)
+        val foodItemList = mutableListOf<FoodItem>()
+        val tempList = mutableListOf<FoodItem>()
 
-        shoppingListAdapter = ShoppingListAdapter(this, searchProductList, searchPriceList)
-        mListView.adapter = shoppingListAdapter
+        val mListView : ListView = findViewById(R.id.lv_search)
+        mListView.visibility = ListView.GONE
+
+        val newRecyclerView : RecyclerView = findViewById(R.id.rv_food_list)
+        newRecyclerView.visibility = RecyclerView.VISIBLE
+        newRecyclerView.layoutManager = LinearLayoutManager(this)
+        newRecyclerView.setHasFixedSize(true)
+        newRecyclerView.visibility = RecyclerView.VISIBLE
+
+        var adapter = FoodItemAdapter(tempList)
 
         val db = Firebase.firestore
         val search = findViewById<SearchView>(R.id.searchview)
+
+
 
         db.collection("Erbjudanden_sok")
             .get()
@@ -140,31 +156,62 @@ class SearchActivity : AppCompatActivity() {
                 for (product in products) {
                     searchProductList.add(product.id)
                     val price = product.getString("Pris") ?: "default"
-                    searchPriceList.add(price)
-
-                    shoppingListAdapter = ShoppingListAdapter(this, searchProductList, searchPriceList)
-                    mListView.adapter = shoppingListAdapter
+                    val newItem = FoodItem(product.id, price)
+                    foodItemList.add(newItem)
                 }
+                tempList.addAll(foodItemList)
+
+                newRecyclerView.adapter = adapter
 
             }
-        mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+
+        adapter.setOnItemClickListener(object : FoodItemAdapter.onItemClickListener{
+            override fun onItemClick(position: Int) {
+
+                val intent = Intent(this@SearchActivity, PopOutActivity::class.java)
+                intent.putExtra("product", tempList[position].item)
+                startActivity(intent)
+
+
+
+            }
+
+        })
+
+        /*mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val product = parent.getItemAtPosition(position)
             val intent = Intent(this, PopOutActivity::class.java)
             intent.putExtra("product", "$product")
             Log.w(TAG, "clicked in search: product: $product ")
             startActivity(intent)
-        }
+        }*/
         search.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                search.clearFocus()
-                if(storeList.contains(p0)){
-                    shoppingListAdapter.filter.filter(p0)
-                }
                 return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                shoppingListAdapter.filter.filter(p0)
+                tempList.clear()
+                val searchText = p0!!.toLowerCase(Locale.getDefault())
+                if(searchText.isNotEmpty()){
+
+                    foodItemList.forEach{
+
+                        if (it.item.toLowerCase(Locale.getDefault()).contains(searchText)){
+                            tempList.add(it)
+                        }
+
+                    }
+
+                    newRecyclerView.adapter!!.notifyDataSetChanged()
+
+                } else {
+
+                    tempList.clear()
+                    tempList.addAll(foodItemList)
+                    newRecyclerView.adapter!!.notifyDataSetChanged()
+
+                }
                 return false
             }
         })

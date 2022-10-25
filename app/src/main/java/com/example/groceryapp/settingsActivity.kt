@@ -95,8 +95,8 @@ class settingsActivity : AppCompatActivity() {
         //Code for language change
         context = this
         langPreference = LangPreference(this)
-
-        langSpinner.adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,languageList)
+        val list: List<String> = languageList.toList()
+        langSpinner.adapter = CustomAdapter(this, list)
 
         val lang = langPreference.getLoginCount()
         val index = languageList.indexOf(lang)

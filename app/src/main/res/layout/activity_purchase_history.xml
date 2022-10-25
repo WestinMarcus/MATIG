@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:background="@color/red_salmon"
-                android:text="Purchase History"
+                android:text="@string/tv_search_history"
                 android:gravity="center_vertical"
                 android:textAlignment="center"
                 android:textColor="@color/white"

@@ -49,6 +49,8 @@
     <string name="btn_del">Add</string>
     <string name="btn_add">Del</string>
     <string name="settings">Inställningar</string>
-    <string name="shopping_list">Shoppinglista</string>
+    <string name="shopping_list">Inköpslista</string>
+    <string name="btn_remove_history">Ta bort från historiken</string>
+    <string name="tv_search_history">Sökhistorik</string>
 
 </resources>
