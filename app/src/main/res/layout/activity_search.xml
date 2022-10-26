@@ -42,15 +42,14 @@
                 android:id="@+id/searchview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:queryBackground="@android:color/transparent"
-                />
+                android:layout_weight="1" />
 
             <ToggleButton
                 android:id="@+id/btn_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
+                android:textColor="@color/white"
                 android:background="@color/red_salmon"
                 android:textOff="@string/btn_stores"
                 android:textOn="@string/btn_products" />

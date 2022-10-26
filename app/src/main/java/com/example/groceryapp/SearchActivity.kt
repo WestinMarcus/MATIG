@@ -2,6 +2,7 @@ package com.example.groceryapp
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Color
 import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -98,14 +99,13 @@ class SearchActivity : AppCompatActivity() {
                             for (document in result)
                             {
                                 storeList.add(document.id)
+                                tempList.add(document.id)
                                 storeAdressList.add(document.getString("Adress") ?: "default")
                             }
-
-                            tempList.addAll(storeList)
                             newRecyclerView.adapter = adapter
-
                         }.addOnFailureListener { exception -> Log.w(TAG, "Error getting documents.", exception) }
                 }
+
             }
 
 

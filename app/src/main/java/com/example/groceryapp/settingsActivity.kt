@@ -96,7 +96,7 @@ class settingsActivity : AppCompatActivity() {
         context = this
         langPreference = LangPreference(this)
         val list: List<String> = languageList.toList()
-        langSpinner.adapter = CustomAdapter(this, list)
+        langSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
 
         val lang = langPreference.getLoginCount()
         val index = languageList.indexOf(lang)

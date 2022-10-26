@@ -72,6 +72,8 @@
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/red_salmon"
+            android:textColor="@color/white"
             android:text="@string/search_nearby"
             android:layout_gravity="center_horizontal"
             app:layout_constraintTop_toBottomOf="@+id/editText2" />
