@@ -56,15 +56,16 @@ class ShoppingPopOutActivity : AppCompatActivity() {
             {
                 productInfo = document.getString("Övrig information") ?: ""
             }
-            val productPrice = document.getString("Pris") ?: ""
-            val productPriceWeight = document.getString("Jämfört pris(kg)") ?: ""
-            val productPriceVol = document.getString("Jämfört pris(lit)") ?: ""
+            var productPrice = document.getString("Pris") ?: ""
+            var productPriceWeight = document.getString("Jämfört pris(kg)") ?: ""
+            var productPriceVol = document.getString("Jämfört pris(lit)") ?: ""
 
             if(productPrice == "")
             {
                 price.text = ""
             }else{
-                price.text = "Pris: $productPrice"
+                productPrice = removePriceSign(productPrice)
+                price.text = "Pris: ${productPrice}kr"
             }
 
             info.text = productInfo
@@ -72,9 +73,13 @@ class ShoppingPopOutActivity : AppCompatActivity() {
             if (productPriceWeight == "") {
                 priceRelative.text = productPriceWeight
             }else if (productPriceWeight != "Information saknas" && productPriceWeight != "information saknas") {
+                productPriceWeight = removePriceSign(productPriceWeight)
+                productPriceWeight = fixDecimals(productPriceWeight)
                 inputText = productPriceWeight + "kr/kg"
                 priceRelative.text = inputText
             }else if (productPriceVol != "Information saknas" && productPriceVol != "information saknas") {
+                productPriceVol = removePriceSign(productPriceVol)
+                productPriceVol = fixDecimals(productPriceVol)
                 inputText = productPriceVol + "kr/l"
                 priceRelative.text = inputText
             }
@@ -150,5 +155,35 @@ class ShoppingPopOutActivity : AppCompatActivity() {
             }
         }
         return storeName
+    }
+    private fun fixDecimals(value: String): String
+    {
+        Log.i(TAG, "fixDecimals: value: $value")
+
+        val floatValue = value.toFloat()
+        val fixedValue = String.format("%.2f", floatValue)
+
+        Log.i(TAG, "formated value: $fixedValue")
+        return fixedValue
+    }
+    private fun removePriceSign(price: String): String
+    {
+        Log.i(TAG, "shoppinglist price: $price")
+
+        var fixedPrice = ""
+        if (price.contains(":-"))
+        {
+            fixedPrice = price.dropLast(2)
+        }
+        else if (price.contains("%"))
+        {
+            fixedPrice = price.dropLast(1)
+        }
+        else
+        {
+            fixedPrice = price
+        }
+        Log.i(TAG, "shoppinglist fixedPrice: $price")
+        return fixedPrice
     }
 }
