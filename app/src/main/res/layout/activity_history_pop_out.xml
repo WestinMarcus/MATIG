@@ -34,7 +34,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:text="@string/tv_text" />
+                android:text="" />
 
             <ImageButton
                 android:id="@+id/btn_close"
@@ -52,7 +52,7 @@
             android:textSize="15sp"
             android:textStyle="italic"
             android:layout_marginHorizontal="4dp"
-            android:text="@string/tv_text" />
+            android:text="" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,20 +65,20 @@
                 android:id="@+id/tv_productPrice"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="26dp"
+                android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textColor="@color/black"
-                android:text="@string/tv_text" />
+                android:text="" />
 
             <TextView
                 android:id="@+id/tv_productPriceRelative"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:textAlignment="textEnd"
-                android:layout_height="26dp"
+                android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textColor="@color/black"
-                android:text="@string/tv_text" />
+                android:text="" />
         </LinearLayout>
 
         <LinearLayout
