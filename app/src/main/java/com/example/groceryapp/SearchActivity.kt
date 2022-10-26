@@ -230,8 +230,6 @@ class SearchActivity : AppCompatActivity() {
     }
     private fun removePriceSign(price: String): String
     {
-        Log.i(TAG, "search price: $price")
-
         var fixedPrice = ""
         if (price.contains(":-"))
         {
@@ -245,7 +243,6 @@ class SearchActivity : AppCompatActivity() {
         {
             fixedPrice = price
         }
-        Log.i(TAG, "search fixedPrice: $price")
         return fixedPrice
     }
 

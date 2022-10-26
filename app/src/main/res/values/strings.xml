@@ -65,7 +65,9 @@
     <string name="passwordet">Password</string>
     <string name="notiser">Notiser</string>
     <string name="already_have_an_account_log_in_here">Already have an account? Log in here</string>
+    <string name="frequently_asked_questions">Frequently asked questions</string>
     <string name="tv_forgot_password">Forgot password?</string>
-    <string name="tv_register_now">No Account? Register Now</string>
+    <string name="tv_register_now">No account? register now!</string>
+    <string name="mat_ig">MAT:IG</string>
 
 </resources>
