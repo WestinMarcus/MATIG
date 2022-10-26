@@ -76,7 +76,9 @@ class ShoppingListActivity : AppCompatActivity() {
             for (product in products)
             {
                 itemList.add(product.id)
-                val price = product.getString("Pris") ?: ""
+                var price = product.getString("Pris") ?: ""
+                price = removePriceSign(price)
+                if(price != ""){ price += "kr" }
                 priceList.add(price)
             }
 
@@ -106,5 +108,25 @@ class ShoppingListActivity : AppCompatActivity() {
 
 
 
+    }
+    private fun removePriceSign(price: String): String
+    {
+        Log.i(TAG, "itemlist price: $price")
+
+        var fixedPrice = ""
+        if (price.contains(":-"))
+        {
+            fixedPrice = price.dropLast(2)
+        }
+        else if (price.contains("%"))
+        {
+            fixedPrice = price.dropLast(1)
+        }
+        else
+        {
+            fixedPrice = price
+        }
+        Log.i(TAG, "itemlist fixedPrice: $price")
+        return fixedPrice
     }
 }

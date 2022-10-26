@@ -46,7 +46,7 @@ class addProductPopOutActivity : AppCompatActivity() {
                 "Jämfört pris(kg)" to "",
                 "Jämfört pris(lit)" to ""
             )
-            productName = "Note: $productName"
+            productName = ">Note: $productName"
             db.collection("users").document("$userid")
             .collection("Shoppinglist").document(productName)
             .set(data)

@@ -126,18 +126,22 @@ class PopOutActivity : AppCompatActivity() {
     }
     private fun removePriceSign(price: String): String
     {
-        Log.i(TAG, "price: $price")
+        Log.i(TAG, "popout price: $price")
 
         var fixedPrice = ""
         if (price.contains(":-"))
         {
             fixedPrice = price.dropLast(2)
         }
+        else if (price.contains("%"))
+        {
+            fixedPrice = price.dropLast(1)
+        }
         else
         {
             fixedPrice = price
         }
-        Log.i(TAG, "fixedPrice: $price")
+        Log.i(TAG, "popout fixedPrice: $price")
         return fixedPrice
     }
 }

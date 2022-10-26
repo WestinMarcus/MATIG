@@ -172,7 +172,8 @@ class SearchActivity : AppCompatActivity() {
             .addOnSuccessListener { products ->
                 for (product in products) {
                     searchProductList.add(product.id)
-                    val price = product.getString("Pris") ?: ""
+                    var price = product.getString("Pris") ?: ""
+                    price = removePriceSign(price)+"kr"
                     val newItem = FoodItem(product.id, price)
                     foodItemList.add(newItem)
                 }
@@ -226,6 +227,26 @@ class SearchActivity : AppCompatActivity() {
             }
         })
 
+    }
+    private fun removePriceSign(price: String): String
+    {
+        Log.i(TAG, "search price: $price")
+
+        var fixedPrice = ""
+        if (price.contains(":-"))
+        {
+            fixedPrice = price.dropLast(2)
+        }
+        else if (price.contains("%"))
+        {
+            fixedPrice = price.dropLast(1)
+        }
+        else
+        {
+            fixedPrice = price
+        }
+        Log.i(TAG, "search fixedPrice: $price")
+        return fixedPrice
     }
 
 }

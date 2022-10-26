@@ -50,7 +50,6 @@ class ItemListActivity : AppCompatActivity() {
         val adapter = FoodItemAdapter(tempList)
 
         val addFavBtn = findViewById<ImageButton>(R.id.btn_addFavorite)
-        //val removeFavBtn = findViewById<Button>(R.id.btn_removeFavorite)
         val search = findViewById<SearchView>(R.id.sv_itemList)
 
         db.collection("Aktiva erbj.").document("$chainName").collection("$store")
@@ -58,7 +57,8 @@ class ItemListActivity : AppCompatActivity() {
         .addOnSuccessListener { result ->
             for (document in result)
             {
-                val price = document.getString("Pris") ?: ""
+                var price = document.getString("Pris") ?: ""
+                price = removePriceSign(price)+"kr"
                 val newItem = FoodItem(document.id, price)
                 foodItemList.add(newItem)
             }
@@ -131,29 +131,6 @@ class ItemListActivity : AppCompatActivity() {
             .addOnSuccessListener { Log.i(TAG, "added fav store as document: $store") }
             .addOnFailureListener { Log.i(TAG, "failed to add fav store as document") }
         }
-/*
-        removeFavBtn.setOnClickListener {
-            val userid = Firebase.auth.currentUser?.uid
-
-            db.collection("users")
-            .document("$userid")
-            .collection("Favorites")
-            .document("$store")
-            .delete()
-            .addOnSuccessListener {
-                Log.i(TAG, "removed fav store: $store")
-                if (intent.getStringExtra("activity") == "FavoritesActivity")
-                {
-                    val intent = Intent(this, FavoritesActivity::class.java)
-                    startActivity(intent)
-                }
-                finish()
-            }
-            .addOnFailureListener { Log.i(TAG, "failed to remove fav store as document") }
-        }*/
-
-        // Searchfunc starts here
-        // använda foodListview
 
         search.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
@@ -187,5 +164,25 @@ class ItemListActivity : AppCompatActivity() {
         })
 
 
+    }
+    private fun removePriceSign(price: String): String
+    {
+        Log.i(TAG, "itemlist price: $price")
+
+        var fixedPrice = ""
+        if (price.contains(":-"))
+        {
+            fixedPrice = price.dropLast(2)
+        }
+        else if (price.contains("%"))
+        {
+            fixedPrice = price.dropLast(1)
+        }
+        else
+        {
+            fixedPrice = price
+        }
+        Log.i(TAG, "itemlist fixedPrice: $price")
+        return fixedPrice
     }
 }

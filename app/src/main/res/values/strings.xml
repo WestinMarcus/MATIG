@@ -51,5 +51,6 @@
     <string name="shopping_list">Shopping list</string>
     <string name="btn_remove_history">Remove from history</string>
     <string name="tv_search_history">Search history</string>
+    <string name="purchase_history">Purchase History</string>
 
 </resources>

@@ -96,7 +96,7 @@
         android:textColor="@color/black"
         android:background="@drawable/textview_border"
         android:drawablePadding="10dp"
-        android:text="@string/tv_search_history"
+        android:text="@string/purchase_history"
         app:drawableLeftCompat="@drawable/ic_baseline_question_mark"
         app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios"
         android:id="@+id/tv_purchase_history">
