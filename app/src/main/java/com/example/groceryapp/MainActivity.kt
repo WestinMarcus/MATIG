@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                         // Sign in success, navigate to main_view
                         val intent = Intent(this,HomeActivity::class.java)
                         startActivity(intent)
+                        finish()
 
                         Toast.makeText(baseContext, "Success", Toast.LENGTH_SHORT)
                             .show()
