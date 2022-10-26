@@ -57,18 +57,21 @@ class PopOutActivity : AppCompatActivity() {
             {
                 productInfo = document.getString("Övrig information") ?: ""
             }
-            val productPrice = document.getString("Pris") ?: ""
+            var productPrice = document.getString("Pris") ?: ""
+            productPrice = removePriceSign(productPrice)
             var productPriceWeight = document.getString("Jämfört pris(kg)") ?: ""
             var productPriceVol = document.getString("Jämfört pris(lit)") ?: ""
 
-            price.text = "Pris: $productPrice"
+            price.text = "Pris: ${productPrice}kr"
             info.text = productInfo
             val inputText: String
             if (productPriceWeight != "Information saknas" && productPriceWeight != "information saknas") {
+                productPriceWeight = removePriceSign(productPriceWeight)
                 productPriceWeight = fixDecimals(productPriceWeight)
                 inputText = productPriceWeight + "kr/kg"
                 priceRelative.text = inputText
             }else if (productPriceVol != "Information saknas" && productPriceVol != "information saknas") {
+                productPriceVol = removePriceSign(productPriceVol)
                 productPriceVol = fixDecimals(productPriceVol)
                 inputText = productPriceVol + "kr/l"
                 priceRelative.text = inputText
@@ -116,13 +119,25 @@ class PopOutActivity : AppCompatActivity() {
         Log.i(TAG, "fixDecimals: value: $value")
 
         val floatValue = value.toFloat()
-
-        Log.i(TAG, "toFloat: value: $floatValue")
-
         val fixedValue = String.format("%.2f", floatValue)
 
         Log.i(TAG, "formated value: $fixedValue")
-
         return fixedValue
+    }
+    private fun removePriceSign(price: String): String
+    {
+        Log.i(TAG, "price: $price")
+
+        var fixedPrice = ""
+        if (price.contains(":-"))
+        {
+            fixedPrice = price.dropLast(2)
+        }
+        else
+        {
+            fixedPrice = price
+        }
+        Log.i(TAG, "fixedPrice: $price")
+        return fixedPrice
     }
 }

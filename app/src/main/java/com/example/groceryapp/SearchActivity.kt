@@ -155,7 +155,7 @@ class SearchActivity : AppCompatActivity() {
             .addOnSuccessListener { products ->
                 for (product in products) {
                     searchProductList.add(product.id)
-                    val price = product.getString("Pris") ?: "default"
+                    val price = product.getString("Pris") ?: ""
                     val newItem = FoodItem(product.id, price)
                     foodItemList.add(newItem)
                 }
