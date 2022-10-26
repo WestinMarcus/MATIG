@@ -68,7 +68,7 @@ class PopOutActivity : AppCompatActivity() {
                 inputText = productPriceWeight + "kr/kg"
                 priceRelative.text = inputText
             }else if (productPriceVol != "information saknas") {
-                inputText = productPriceVol + "l/kg"
+                inputText = productPriceVol + "kr/l"
                 priceRelative.text = inputText
             }
             /*---------------add product to shopping list--------------------*/

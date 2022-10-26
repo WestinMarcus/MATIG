@@ -64,7 +64,7 @@ class HistoryPopOutActivity : AppCompatActivity() {
                 inputText = productPriceWeight + "kr/kg"
                 priceRelative.text = inputText
             }else if (productPriceVol != "Data saknas") {
-                inputText = productPriceVol + "l/kg"
+                inputText = productPriceVol + "kr/l"
                 priceRelative.text = inputText
             }
         }
