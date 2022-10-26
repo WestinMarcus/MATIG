@@ -158,18 +158,13 @@ class ShoppingPopOutActivity : AppCompatActivity() {
     }
     private fun fixDecimals(value: String): String
     {
-        Log.i(TAG, "fixDecimals: value: $value")
-
         val floatValue = value.toFloat()
         val fixedValue = String.format("%.2f", floatValue)
 
-        Log.i(TAG, "formated value: $fixedValue")
         return fixedValue
     }
     private fun removePriceSign(price: String): String
     {
-        Log.i(TAG, "shoppinglist price: $price")
-
         var fixedPrice = ""
         if (price.contains(":-"))
         {
@@ -183,7 +178,6 @@ class ShoppingPopOutActivity : AppCompatActivity() {
         {
             fixedPrice = price
         }
-        Log.i(TAG, "shoppinglist fixedPrice: $price")
         return fixedPrice
     }
 }
