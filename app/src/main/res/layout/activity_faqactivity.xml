@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:background="@color/red_salmon"
-                android:text="Frequently asked questions"
+                android:text="@string/frequently_asked_questions"
                 android:gravity="center_vertical"
                 android:textAlignment="center"
                 android:textColor="@color/white"
@@ -63,6 +63,14 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             tools:ignore="RtlCompat" />
+
+        <TextView
+            android:id="@+id/tv_line1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"
+            tools:ignore="RtlCompat" />
+
         <TextView
             android:id="@+id/tv_question2"
             android:layout_width="match_parent"
@@ -84,6 +92,14 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             tools:ignore="RtlCompat" />
+
+        <TextView
+            android:id="@+id/tv_line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"
+            tools:ignore="RtlCompat" />
+
         <TextView
             android:id="@+id/tv_question3"
             android:layout_width="match_parent"
@@ -104,6 +120,13 @@
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:textSize="18sp"
+            tools:ignore="RtlCompat" />
+
+        <TextView
+            android:id="@+id/tv_line3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"
             tools:ignore="RtlCompat" />
 
 

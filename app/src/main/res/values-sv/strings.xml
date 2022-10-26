@@ -68,5 +68,6 @@
     <string name="already_have_an_account_log_in_here">Har du redan ett konto? Logga in här</string>
     <string name="tv_forgot_password">Glömt lösenord?</string>
     <string name="tv_register_now">Inget konto? Registrera nu</string>
+    <string name="frequently_asked_questions">Vanligt ställda frågor</string>
 
 </resources>

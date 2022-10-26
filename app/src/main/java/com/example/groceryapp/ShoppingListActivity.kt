@@ -111,8 +111,6 @@ class ShoppingListActivity : AppCompatActivity() {
     }
     private fun removePriceSign(price: String): String
     {
-        Log.i(TAG, "shoppinglist price: $price")
-
         var fixedPrice = ""
         if (price.contains(":-"))
         {
@@ -126,7 +124,6 @@ class ShoppingListActivity : AppCompatActivity() {
         {
             fixedPrice = price
         }
-        Log.i(TAG, "shoppinglist fixedPrice: $price")
         return fixedPrice
     }
 }
