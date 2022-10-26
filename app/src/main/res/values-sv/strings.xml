@@ -66,5 +66,7 @@
     <string name="passwordet">Lösenord</string>
     <string name="notiser">Notiser</string>
     <string name="already_have_an_account_log_in_here">Har du redan ett konto? Logga in här</string>
+    <string name="tv_forgot_password">Glömt lösenord?</string>
+    <string name="tv_register_now">Inget konto? Registrera nu</string>
 
 </resources>

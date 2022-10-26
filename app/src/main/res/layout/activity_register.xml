@@ -215,8 +215,9 @@ tools:context=".UserProfileActivity">
                 android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:text="@string/create_account"
-                android:background="@color/red_salmon"/>
+                android:backgroundTint="@color/red_salmon"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView

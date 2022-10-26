@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity"
-    android:background="@drawable/img_background">
+    tools:context=".SplashActivity">
 
 
     <TextView
@@ -14,8 +13,8 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textSize="@dimen/splash_title_size"
-        android:textStyle=""
-        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textColor="@color/red_salmon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
