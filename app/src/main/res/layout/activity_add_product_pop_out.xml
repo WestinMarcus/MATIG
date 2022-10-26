@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:weightSum="6"
-        android:background="@color/grey"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +32,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:text="Add product" />
+                android:text="@string/add_product" />
 
             <ImageButton
                 android:id="@+id/btn_close"
@@ -53,8 +52,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:hint="Product name here"/>
-
+            android:hint="@string/product_name_here"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/red_salmon"
-                android:text="Add Note to shoppinglist" />
+                android:text="@string/add_note_to_shoppinglist" />
         </LinearLayout>
     </LinearLayout>
 

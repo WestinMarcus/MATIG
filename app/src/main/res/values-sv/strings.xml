@@ -52,5 +52,10 @@
     <string name="shopping_list">Inköpslista</string>
     <string name="btn_remove_history">Ta bort från historiken</string>
     <string name="tv_search_history">Sökhistorik</string>
+    <string name="purchase_history">Köphistory</string>
+    <string name="product_name_here">Produkt namn här</string>
+    <string name="add_note_to_shoppinglist">Lägg till i shoppinglista</string>
+    <string name="add_product">Lägg till produkt</string>
+    <string name="add_personal_note">Lägg till egen vara</string>
 
 </resources>

@@ -52,5 +52,9 @@
     <string name="btn_remove_history">Remove from history</string>
     <string name="tv_search_history">Search history</string>
     <string name="purchase_history">Purchase History</string>
+    <string name="product_name_here">Product name here</string>
+    <string name="add_note_to_shoppinglist">Add Note to shoppinglist</string>
+    <string name="add_product">Add product</string>
+    <string name="add_personal_note">add personal note</string>
 
 </resources>

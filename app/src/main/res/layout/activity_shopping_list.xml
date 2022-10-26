@@ -45,7 +45,7 @@
                 android:id="@+id/btn_addProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="add personal note"
+                android:text="@string/add_personal_note"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/red_salmon"
                 android:layout_gravity="center_horizontal"
