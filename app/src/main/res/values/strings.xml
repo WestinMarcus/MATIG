@@ -56,5 +56,14 @@
     <string name="add_note_to_shoppinglist">Add Note to shoppinglist</string>
     <string name="add_product">Add product</string>
     <string name="add_personal_note">add personal note</string>
+    <string name="create_account">Create account</string>
+    <string name="register">Register</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="emails">Email</string>
+    <string name="yy_mm_dd">YY/MM/DD</string>
+    <string name="passwordet">Password</string>
+    <string name="notiser">Notiser</string>
+    <string name="already_have_an_account_log_in_here">Already have an account? Log in here</string>
 
 </resources>

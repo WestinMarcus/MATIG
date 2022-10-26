@@ -28,10 +28,16 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         val registerButton: Button = findViewById(R.id.button)
+        val backBtn : ImageView = findViewById(R.id.image_back_settings)
 
         registerButton.setOnClickListener{
             performSignUp()
            // verify()
+        }
+        backBtn.setOnClickListener{
+            finish()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 

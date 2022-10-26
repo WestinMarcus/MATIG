@@ -57,5 +57,14 @@
     <string name="add_note_to_shoppinglist">Lägg till i shoppinglista</string>
     <string name="add_product">Lägg till produkt</string>
     <string name="add_personal_note">Lägg till egen vara</string>
+    <string name="create_account">Skapa konto</string>
+    <string name="register">Registrera</string>
+    <string name="first_name">Förnamn</string>
+    <string name="last_name">Efternamn</string>
+    <string name="emails">Email</string>
+    <string name="yy_mm_dd">YY/MM/DD</string>
+    <string name="passwordet">Lösenord</string>
+    <string name="notiser">Notiser</string>
+    <string name="already_have_an_account_log_in_here">Har du redan ett konto? Logga in här</string>
 
 </resources>
