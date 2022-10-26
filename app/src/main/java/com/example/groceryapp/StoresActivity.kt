@@ -11,6 +11,8 @@ import android.widget.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firestore.admin.v1.Index
+import kotlinx.coroutines.selects.select
 import java.util.*
 
 class StoresActivity : AppCompatActivity() {
@@ -89,26 +91,26 @@ class StoresActivity : AppCompatActivity() {
                 {
                     /*---------------Gets list of all store from all chains---------------*/
                     db.collection("store list")
-                        .document("Butik info")
-                        .collection("$chainName")
-                        .get()
-                        .addOnSuccessListener { stores ->
-                            for (store in stores)
-                            {
-                                storeAdressList.add(store.getString("Adress") ?: "default")
+                    .document("Butik info")
+                    .collection("$chainName")
+                    .get()
+                    .addOnSuccessListener { stores ->
+                        for (store in stores)
+                        {
+                            storeAdressList.add(store.getString("Adress") ?: "default")
 
-                                val (storeLat, storeLong) = convertAddressToCoordinates(storeAdressList.last())
-                                val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
+                            val (storeLat, storeLong) = convertAddressToCoordinates(storeAdressList.last())
+                            val distance = calculateDistance(Pair(userLat, userLong), Pair(storeLat, storeLong))
 
-                                storeList.add(""+distance+"m - \t\t"+ store.id)
-                                //Log.i(TAG, "Distance from user to ${storeList.last()}: ${distance}m")
-                            }
-                            storeList.sort()
-                            mListView.adapter = CustomAdapter(this, storeList)
+                            storeList.add(" "+distance+"m -\t"+ store.id)
+                            //Log.i(TAG, "Distance from user to ${storeList.last()}: ${distance}m")
                         }
-                        .addOnFailureListener { exception ->
-                            Log.e(TAG, "Error getting documents.", exception)
-                        }
+                        storeList.sort()
+                        mListView.adapter = CustomAdapter(this, storeList)
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e(TAG, "Error getting documents.", exception)
+                    }
                 }
             }
             .addOnFailureListener {
@@ -116,7 +118,9 @@ class StoresActivity : AppCompatActivity() {
             }
 
         mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            val selectedStore = parent.getItemAtPosition(position)
+            var selectedStore = parent.getItemAtPosition(position)
+            Log.i(TAG, "store clicked: $selectedStore")
+            selectedStore = removeDistance(selectedStore.toString())
             val intent = Intent(this, ItemListActivity::class.java)
             intent.putExtra("store", "$selectedStore")
 
@@ -148,6 +152,14 @@ class StoresActivity : AppCompatActivity() {
         val long = String.format("%.4f", addressList.first().longitude)
 
         return Pair(lat, long)
+    }
+    private fun removeDistance(address: String): String
+    {
+        var fixedAddress = ""
+        val index = address.indexOf("-")
+        fixedAddress = address.substring(index+2) //+2 = " /t"
+
+        return fixedAddress
     }
 }
 

@@ -39,6 +39,7 @@ class ItemListActivity : AppCompatActivity() {
                  chainName = chain
             }
         }
+        Log.i(TAG, "In itemlist: $chainName, $store")
         val userid = Firebase.auth.currentUser?.uid
         val db = Firebase.firestore
         val foodItemList = mutableListOf<FoodItem>()
@@ -167,8 +168,6 @@ class ItemListActivity : AppCompatActivity() {
     }
     private fun removePriceSign(price: String): String
     {
-        Log.i(TAG, "itemlist price: $price")
-
         var fixedPrice = ""
         if (price.contains(":-"))
         {
@@ -182,7 +181,6 @@ class ItemListActivity : AppCompatActivity() {
         {
             fixedPrice = price
         }
-        Log.i(TAG, "itemlist fixedPrice: $price")
         return fixedPrice
     }
 }
