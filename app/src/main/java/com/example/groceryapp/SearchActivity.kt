@@ -75,12 +75,14 @@ class SearchActivity : AppCompatActivity() {
         val db = Firebase.firestore
         val storeChainList = mutableListOf<String>()
         val storeList = mutableListOf<String>()
+        val tempList = mutableListOf<String>()
         val storeAdressList = mutableListOf<String>()
-        val mListView = findViewById<ListView>(R.id.lv_search)
         val search = findViewById<SearchView>(R.id.searchview)
-        mListView.visibility = ListView.VISIBLE
+
         val newRecyclerView : RecyclerView = findViewById(R.id.rv_food_list)
-        newRecyclerView.visibility = RecyclerView.GONE
+        newRecyclerView.layoutManager = LinearLayoutManager(this)
+        newRecyclerView.setHasFixedSize(true)
+        val adapter = StoreAdapter(tempList)
 
         db.collection("Store chains")
             .get()
@@ -98,30 +100,52 @@ class SearchActivity : AppCompatActivity() {
                                 storeList.add(document.id)
                                 storeAdressList.add(document.getString("Adress") ?: "default")
                             }
-                            val customAdapter = CustomAdapter(this, storeList)
-                            mListView.adapter = customAdapter
+
+                            tempList.addAll(storeList)
+                            newRecyclerView.adapter = adapter
+
                         }.addOnFailureListener { exception -> Log.w(TAG, "Error getting documents.", exception) }
                 }
             }
 
-        val customAdapter = CustomAdapter(this, storeList)
-        mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            val selectedStore = parent.getItemAtPosition(position)
-            val intent = Intent(this, ItemListActivity::class.java)
-            intent.putExtra("store", "$selectedStore")
-            startActivity(intent)
-        }
+
+        adapter.setOnItemClickListener(object : StoreAdapter.onItemClickListener {
+            override fun onItemClick(position: Int) {
+
+                val intent = Intent(this@SearchActivity, ItemListActivity::class.java)
+                intent.putExtra("store", tempList[position])
+                startActivity(intent)
+
+            }
+        })
+
         search.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                search.clearFocus()
-                if(storeList.contains(p0)){
-                    customAdapter.filter.filter(p0)
-                }
                 return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                customAdapter.filter.filter(p0)
+                tempList.clear()
+                val searchText = p0!!.toLowerCase(Locale.getDefault())
+                if(searchText.isNotEmpty()){
+
+                    storeList.forEach{
+
+                        if (it.toLowerCase(Locale.getDefault()).contains(searchText)){
+                            tempList.add(it)
+                        }
+
+                    }
+
+                    newRecyclerView.adapter!!.notifyDataSetChanged()
+
+                } else {
+
+                    tempList.clear()
+                    tempList.addAll(storeList)
+                    newRecyclerView.adapter!!.notifyDataSetChanged()
+
+                }
                 return false
             }
         })
@@ -129,21 +153,14 @@ class SearchActivity : AppCompatActivity() {
 
     private fun setProducts(){
         val searchProductList = mutableListOf<String>()
-        val searchPriceList = mutableListOf<String>()
-        val storeList = mutableListOf<String>()
         val foodItemList = mutableListOf<FoodItem>()
         val tempList = mutableListOf<FoodItem>()
 
-        val mListView : ListView = findViewById(R.id.lv_search)
-        mListView.visibility = ListView.GONE
-
         val newRecyclerView : RecyclerView = findViewById(R.id.rv_food_list)
-        newRecyclerView.visibility = RecyclerView.VISIBLE
         newRecyclerView.layoutManager = LinearLayoutManager(this)
         newRecyclerView.setHasFixedSize(true)
-        newRecyclerView.visibility = RecyclerView.VISIBLE
 
-        var adapter = FoodItemAdapter(tempList)
+        val adapter = FoodItemAdapter(tempList)
 
         val db = Firebase.firestore
         val search = findViewById<SearchView>(R.id.searchview)
@@ -178,13 +195,6 @@ class SearchActivity : AppCompatActivity() {
 
         })
 
-        /*mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            val product = parent.getItemAtPosition(position)
-            val intent = Intent(this, PopOutActivity::class.java)
-            intent.putExtra("product", "$product")
-            Log.w(TAG, "clicked in search: product: $product ")
-            startActivity(intent)
-        }*/
         search.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
