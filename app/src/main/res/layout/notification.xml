@@ -15,16 +15,16 @@
             android:layout_marginTop="10dp"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/img" />
+            android:src="@drawable/salmone" />
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:text="@string/title"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_toRightOf="@id/app_logo"
+            android:layout_toEndOf="@id/app_logo"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"/>
 
