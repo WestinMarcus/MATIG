@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GroceryApp</string>
+    <string name="app_name">MAT:IG</string>
     <string name="btn_create_account">Create Account</string>
     <string name="lbl_already_have_acc">Already have an account?</string>
     <string name="btn_login">LOGIN</string>

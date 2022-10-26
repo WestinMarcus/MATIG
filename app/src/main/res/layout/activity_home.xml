@@ -69,7 +69,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/red_salmon"
-            app:srcCompat="@drawable/ic_baseline_house_24" />
+            app:srcCompat="@drawable/home_salmon" />
 
         <ImageButton
             android:id="@+id/btn_favorites"
@@ -77,7 +77,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/red_salmon"
-            app:srcCompat="@android:drawable/btn_star_big_off" />
+            app:srcCompat="@drawable/ic_baseline_star_24" />
 
         <ImageButton
             android:id="@+id/btn_search"
@@ -85,7 +85,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/red_salmon"
-            app:srcCompat="@android:drawable/ic_menu_search" />
+            app:srcCompat="@drawable/search_white" />
 
         <ImageButton
             android:id="@+id/btn_shoppingList"
@@ -93,7 +93,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/red_salmon"
-            app:srcCompat="@drawable/ic_baseline_shopping_cart_24" />
+            app:srcCompat="@drawable/cart_white" />
 
         <ImageButton
             android:id="@+id/btn_settings"
@@ -101,7 +101,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/red_salmon"
-            app:srcCompat="@android:drawable/ic_menu_manage" />
+            app:srcCompat="@drawable/settings_white" />
 
 
     </LinearLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">GroceryApp</string>
+    <string name="app_name">MAT:IG</string>
     <string name="btn_create_account">Skapa konto</string>
     <string name="lbl_already_have_acc">Har du redan ett konto?</string>
     <string name="btn_login">Logga in</string>
