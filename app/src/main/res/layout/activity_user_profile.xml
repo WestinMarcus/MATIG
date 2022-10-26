@@ -175,6 +175,8 @@
                     android:id="@+id/btn_update"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/red_salmon"
                     android:text="@string/update" />
             </com.google.android.material.textfield.TextInputLayout>
 

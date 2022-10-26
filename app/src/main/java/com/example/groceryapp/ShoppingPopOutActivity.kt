@@ -49,7 +49,6 @@ class ShoppingPopOutActivity : AppCompatActivity() {
             val productMap = document.data
 
             store = getStoreFromProductName(product)
-
             productMap?.put("Storename", store)
 
             if(chain != "Lidl")
@@ -83,7 +82,6 @@ class ShoppingPopOutActivity : AppCompatActivity() {
                 inputText = productPriceVol + "kr/l"
                 priceRelative.text = inputText
             }
-
         }
         /*------------purchase product and remove from shopping list------------------*/
         purchaseBtn.setOnClickListener {
