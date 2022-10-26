@@ -51,11 +51,11 @@ class HistoryPopOutActivity : AppCompatActivity() {
 
             if(chain != "Lidl")
             {
-                productInfo = document.getString("Övrig information") ?: "default"
+                productInfo = document.getString("Övrig information") ?: ""
             }
-            val productPrice = document.getString("Pris") ?: "default"
-            val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
-            val productPriceVol = document.getString("Jämfört pris(lit)") ?: "default"
+            val productPrice = document.getString("Pris") ?: ""
+            val productPriceWeight = document.getString("Jämfört pris(kg)") ?: ""
+            val productPriceVol = document.getString("Jämfört pris(lit)") ?: ""
 
             price.text = "Pris: $productPrice"
             info.text = productInfo

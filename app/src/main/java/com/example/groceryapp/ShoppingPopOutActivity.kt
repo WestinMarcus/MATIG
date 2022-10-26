@@ -54,11 +54,11 @@ class ShoppingPopOutActivity : AppCompatActivity() {
 
             if(chain != "Lidl")
             {
-                productInfo = document.getString("Övrig information") ?: "default"
+                productInfo = document.getString("Övrig information") ?: ""
             }
-            val productPrice = document.getString("Pris") ?: "default"
-            val productPriceWeight = document.getString("Jämfört pris(kg)") ?: "default"
-            val productPriceVol = document.getString("Jämfört pris(lit)") ?: "default"
+            val productPrice = document.getString("Pris") ?: ""
+            val productPriceWeight = document.getString("Jämfört pris(kg)") ?: ""
+            val productPriceVol = document.getString("Jämfört pris(lit)") ?: ""
 
             if(productPrice == "")
             {
@@ -71,10 +71,10 @@ class ShoppingPopOutActivity : AppCompatActivity() {
             val inputText: String
             if (productPriceWeight == "") {
                 priceRelative.text = productPriceWeight
-            }else if (productPriceWeight != "information saknas") {
+            }else if (productPriceWeight != "Information saknas" && productPriceWeight != "information saknas") {
                 inputText = productPriceWeight + "kr/kg"
                 priceRelative.text = inputText
-            }else if (productPriceVol != "information saknas") {
+            }else if (productPriceVol != "Information saknas" && productPriceVol != "information saknas") {
                 inputText = productPriceVol + "kr/l"
                 priceRelative.text = inputText
             }
