@@ -44,10 +44,10 @@
             android:id="@+id/distance_pin_IV"
             android:layout_width="60dp"
             android:layout_height="55dp"
-            android:layout_weight="1"
             android:layout_marginRight="5dp"
+            android:layout_weight="1"
             android:background="@color/red_salmon"
-            app:srcCompat="@drawable/ic_baseline_pin_drop_svart" />
+            app:srcCompat="@drawable/ic_baseline_pin_drop" />
 
     </LinearLayout>
 
@@ -68,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/grey"
+            android:background="@color/red_salmon"
             app:srcCompat="@drawable/ic_baseline_house_24" />
 
         <ImageButton
@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/grey"
+            android:background="@color/red_salmon"
             app:srcCompat="@android:drawable/btn_star_big_off" />
 
         <ImageButton
@@ -84,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/grey"
+            android:background="@color/red_salmon"
             app:srcCompat="@android:drawable/ic_menu_search" />
 
         <ImageButton
@@ -92,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/grey"
+            android:background="@color/red_salmon"
             app:srcCompat="@drawable/ic_baseline_shopping_cart_24" />
 
         <ImageButton
@@ -100,7 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/grey"
+            android:background="@color/red_salmon"
             app:srcCompat="@android:drawable/ic_menu_manage" />
 
 
