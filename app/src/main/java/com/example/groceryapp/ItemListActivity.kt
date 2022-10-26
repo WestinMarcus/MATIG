@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.internal.ContextUtils.getActivity
 import com.google.android.material.tabs.TabLayout.TabGravity
@@ -15,6 +17,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.*
 
 class ItemListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,10 +41,14 @@ class ItemListActivity : AppCompatActivity() {
         }
         val userid = Firebase.auth.currentUser?.uid
         val db = Firebase.firestore
-        val foodItemList = mutableListOf<String>()
-        val priceList = mutableListOf<String>()
-        var shoppingListAdapter: ShoppingListAdapter
-        val foodListView = findViewById<ListView>(R.id.lvFoodItems)
+        val foodItemList = mutableListOf<FoodItem>()
+        val tempList = mutableListOf<FoodItem>()
+
+        val newRecyclerView : RecyclerView = findViewById(R.id.rv_food_list)
+        newRecyclerView.layoutManager = LinearLayoutManager(this)
+        newRecyclerView.setHasFixedSize(true)
+        val adapter = FoodItemAdapter(tempList)
+
         val addFavBtn = findViewById<ImageButton>(R.id.btn_addFavorite)
         //val removeFavBtn = findViewById<Button>(R.id.btn_removeFavorite)
         val search = findViewById<SearchView>(R.id.sv_itemList)
@@ -51,36 +58,34 @@ class ItemListActivity : AppCompatActivity() {
         .addOnSuccessListener { result ->
             for (document in result)
             {
-                foodItemList.add(document.id)
                 val price = document.getString("Pris") ?: ""
-                priceList.add(price)
+                val newItem = FoodItem(document.id, price)
+                foodItemList.add(newItem)
             }
-            shoppingListAdapter = ShoppingListAdapter(this, foodItemList, priceList)
-            foodListView.adapter = shoppingListAdapter
+            tempList.addAll(foodItemList)
+
+            newRecyclerView.adapter = adapter
         }
-        shoppingListAdapter = ShoppingListAdapter(this, foodItemList, priceList)
-        foodListView.adapter = shoppingListAdapter
 
         //pop out dialog för vald produkt
-        foodListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            val product = parent.getItemAtPosition(position)
-            val intent = Intent(this, PopOutActivity::class.java)
+        adapter.setOnItemClickListener(object : FoodItemAdapter.onItemClickListener{
+            override fun onItemClick(position: Int) {
+                val product = tempList[position].item
+                val intent = Intent(this@ItemListActivity, PopOutActivity::class.java)
 
-            var productName = ""
-            if(chainName == "ICA")
-            {
-                productName = "Ica: ${product}"
-            }
-            else
-            {
-                productName = "$chainName: ${product}"
-            }
-            intent.putExtra("product", "$productName")
-            intent.putExtra("store", "$store")
-            intent.putExtra("chain", "$chainName")
+                var productName = ""
+                if (chainName == "ICA") {
+                    productName = "Ica: ${product}"
+                } else {
+                    productName = "$chainName: ${product}"
+                }
+                intent.putExtra("product", "$productName")
+                intent.putExtra("store", "$store")
+                intent.putExtra("chain", "$chainName")
 
-            startActivity(intent)
-        }
+                startActivity(intent)
+            }
+        })
 
 
 
@@ -152,20 +157,33 @@ class ItemListActivity : AppCompatActivity() {
 
         search.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                //search = sökbaren
-                search.clearFocus()
-                if(foodItemList.contains(p0)){
-                    //arrayAdapter
-                    shoppingListAdapter.filter.filter(p0)
-                }
                 return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                shoppingListAdapter.filter.filter(p0)
+                tempList.clear()
+                val searchText = p0!!.toLowerCase(Locale.getDefault())
+                if(searchText.isNotEmpty()){
+
+                    foodItemList.forEach{
+
+                        if (it.item.toLowerCase(Locale.getDefault()).contains(searchText)){
+                            tempList.add(it)
+                        }
+
+                    }
+
+                    newRecyclerView.adapter!!.notifyDataSetChanged()
+
+                } else {
+
+                    tempList.clear()
+                    tempList.addAll(foodItemList)
+                    newRecyclerView.adapter!!.notifyDataSetChanged()
+
+                }
                 return false
             }
-
         })
 
 
