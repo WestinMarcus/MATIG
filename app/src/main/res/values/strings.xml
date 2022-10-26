@@ -9,7 +9,7 @@
     <string name="lbl_phone_nr">Phone Number</string>
     <string name="lbl_password">Password</string>
     <string name="lbl_password_again">Type password again</string>
-    <string name="btn_stores">Stores</string>
+    <string name="btn_stores">Search products</string>
     <string name="userprofile">Userprofile</string>
     <string name="welcome">Welcome</string>
     <string name="update">UPDATE</string>
@@ -42,7 +42,7 @@
     <string name="tv_languages">Languages</string>
     <string name="btn_changelang">Apply</string>
     <string name="Search_stores">Search</string>
-    <string name="btn_products">Products</string>
+    <string name="btn_products">Search Stores</string>
     <string name="popul_ra_aff_rer_n_ra_dig"><![CDATA[Popular stores close to you!]]></string>
     <string name="tv_favorites">Favorites</string>
     <string name="btn_del">Add</string>

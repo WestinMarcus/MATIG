@@ -10,7 +10,7 @@
     <string name="lbl_phone_nr">Telefonnummer</string>
     <string name="lbl_password">Lösenord</string>
     <string name="lbl_password_again">Skriv lösenordet igen</string>
-    <string name="btn_stores">Butiker</string>
+    <string name="btn_stores">Sök produkter</string>
     <string name="userprofile">Profil</string>
     <string name="welcome">Välkommen</string>
     <string name="update">Uppdatera</string>
@@ -43,7 +43,7 @@
     <string name="tv_languages">Språk</string>
     <string name="btn_changelang">Tillämpa</string>
     <string name="Search_stores">Sök på affärer</string>
-    <string name="btn_products">Produkter</string>
+    <string name="btn_products">Sök butiker</string>
     <string name="popul_ra_aff_rer_n_ra_dig"><![CDATA[Populära affärer nära dig!]]></string>
     <string name="tv_favorites">Favoriter</string>
     <string name="btn_del">Add</string>
