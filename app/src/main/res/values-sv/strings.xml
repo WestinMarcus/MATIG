@@ -69,5 +69,6 @@
     <string name="tv_forgot_password">Glömt lösenord?</string>
     <string name="tv_register_now">Inget konto? Registrera nu</string>
     <string name="frequently_asked_questions">Vanligt ställda frågor</string>
+    <string name="tv_submit">SKICKA IN</string>
 
 </resources>
