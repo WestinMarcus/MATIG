@@ -49,22 +49,22 @@ class ShoppingPopOutActivity : AppCompatActivity() {
             val productMap = document.data
 
             store = getStoreFromProductName(product)
-
             productMap?.put("Storename", store)
 
             if(chain != "Lidl")
             {
                 productInfo = document.getString("Övrig information") ?: ""
             }
-            val productPrice = document.getString("Pris") ?: ""
-            val productPriceWeight = document.getString("Jämfört pris(kg)") ?: ""
-            val productPriceVol = document.getString("Jämfört pris(lit)") ?: ""
+            var productPrice = document.getString("Pris") ?: ""
+            var productPriceWeight = document.getString("Jämfört pris(kg)") ?: ""
+            var productPriceVol = document.getString("Jämfört pris(lit)") ?: ""
 
             if(productPrice == "")
             {
                 price.text = ""
             }else{
-                price.text = "Pris: $productPrice"
+                productPrice = removePriceSign(productPrice)
+                price.text = "Pris: ${productPrice}kr"
             }
 
             info.text = productInfo
@@ -72,13 +72,16 @@ class ShoppingPopOutActivity : AppCompatActivity() {
             if (productPriceWeight == "") {
                 priceRelative.text = productPriceWeight
             }else if (productPriceWeight != "Information saknas" && productPriceWeight != "information saknas") {
+                productPriceWeight = removePriceSign(productPriceWeight)
+                productPriceWeight = fixDecimals(productPriceWeight)
                 inputText = productPriceWeight + "kr/kg"
                 priceRelative.text = inputText
             }else if (productPriceVol != "Information saknas" && productPriceVol != "information saknas") {
+                productPriceVol = removePriceSign(productPriceVol)
+                productPriceVol = fixDecimals(productPriceVol)
                 inputText = productPriceVol + "kr/l"
                 priceRelative.text = inputText
             }
-
         }
         /*------------purchase product and remove from shopping list------------------*/
         purchaseBtn.setOnClickListener {
@@ -150,5 +153,29 @@ class ShoppingPopOutActivity : AppCompatActivity() {
             }
         }
         return storeName
+    }
+    private fun fixDecimals(value: String): String
+    {
+        val floatValue = value.toFloat()
+        val fixedValue = String.format("%.2f", floatValue)
+
+        return fixedValue
+    }
+    private fun removePriceSign(price: String): String
+    {
+        var fixedPrice = ""
+        if (price.contains(":-"))
+        {
+            fixedPrice = price.dropLast(2)
+        }
+        else if (price.contains("%"))
+        {
+            fixedPrice = price.dropLast(1)
+        }
+        else
+        {
+            fixedPrice = price
+        }
+        return fixedPrice
     }
 }

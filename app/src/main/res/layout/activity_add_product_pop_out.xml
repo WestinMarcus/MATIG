@@ -65,6 +65,8 @@
                 android:id="@+id/btn_addProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/red_salmon"
                 android:text="Add Note to shoppinglist" />
         </LinearLayout>
     </LinearLayout>

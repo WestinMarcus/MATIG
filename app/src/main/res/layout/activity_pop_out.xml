@@ -90,6 +90,8 @@
                 android:id="@+id/btn_addToShoppingList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/red_salmon"
                 android:layout_weight="1"
                 android:text="ADD TO SHOPPING LIST" />
 
