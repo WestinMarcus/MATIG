@@ -119,7 +119,6 @@ class StoresActivity : AppCompatActivity() {
 
         mListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             var selectedStore = parent.getItemAtPosition(position)
-            Log.i(TAG, "store clicked: $selectedStore")
             selectedStore = removeDistance(selectedStore.toString())
             val intent = Intent(this, ItemListActivity::class.java)
             intent.putExtra("store", "$selectedStore")
@@ -155,11 +154,9 @@ class StoresActivity : AppCompatActivity() {
     }
     private fun removeDistance(address: String): String
     {
-        var fixedAddress = ""
         val index = address.indexOf("-")
-        fixedAddress = address.substring(index+2) //+2 = " /t"
 
-        return fixedAddress
+        return address.substring(index+2) //+2 = " /t"
     }
 }
 
